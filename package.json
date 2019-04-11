@@ -1,0 +1,25 @@
+{
+  "name": "TheSeer-Discord",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RagnarLothbrok-Odin/TheSeer-Discord.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/issues"
+  },
+  "homepage": "https://github.com/RagnarLothbrok-Odin/TheSeer-Discord#readme",
+  "dependencies": {
+    "better-sqlite3": "^5.4.0",
+    "discord.js": "^11.4.2",
+    "fs": "0.0.1-security"
+  }
+}
