@@ -127,7 +127,6 @@ client.on("message", message => {
   let command = messageArray[0].toLowerCase();
   let args = messageArray.slice(1);
   let argresult = args.join(" ");
-  const evalargs = message.content.split(" ").slice(1);
 
   // custom prefixes
   const prefixes = db.prepare("SELECT count(*) FROM setprefix WHERE guildid = ?").get(message.guild.id);
