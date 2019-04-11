@@ -79,6 +79,15 @@ client.on("ready", () => {
     db.pragma("synchronous = 1");
     db.pragma("journal_mode = wal");
   }
+    // setprefix table
+  const botadd = db.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'botadd';").get();
+  if (!botadd['count(*)']) {
+    console.log('botadd table created!');
+    db.prepare("CREATE TABLE botadd (guildid TEXT PRIMARY KEY, botid TEXT);").run();
+    db.prepare("CREATE UNIQUE INDEX idx_botadd_id ON botadd (guildid);").run();
+    db.pragma("synchronous = 1");
+    db.pragma("journal_mode = wal");
+  }
 });
 
 client.on("guildDelete", guild => {
@@ -90,6 +99,11 @@ client.on("guildDelete", guild => {
   const delpre = db.prepare("SELECT count(*) FROM setprefix WHERE guildid = ?;").get(guild.id);
   if (delpre['count(*)']) {
     db.prepare("DELETE FROM setprefix WHERE guildid = ?").run(guild.id);
+  }
+    // delbot table
+  const delbot = db.prepare("SELECT count(*) FROM botadd WHERE guildid = ?;").get(guild.id);
+  if (delbot['count(*)']) {
+    db.prepare("DELETE FROM botadd WHERE guildid = ?").run(guild.id);
   }
 });
 
@@ -112,7 +126,7 @@ client.on('guildCreate', guild => {
   });
   let embed = new Discord.RichEmbed()
     .setTitle(`Hello, I'm **The Seer**! Thanks for inviting me!`)
-    .setDescription(`The prefix for all my commands is \`-\`, e.g: \`-help\`.`);
+    .setDescription(`The prefix for all my commands is \`ts;\`, e.g: \`ts;help\`.`);
   defaultChannel.send({
     embed
   });
@@ -146,7 +160,7 @@ client.on("message", message => {
 
   if (command === prefixgen + 'prefix') {
     let embed = new Discord.RichEmbed()
-      .setColor(color)
+      .setColor('36393F')
       .setDescription(`This server's prefix is: \`${prefixcommand}\``);
     message.channel.send(embed);
   }
