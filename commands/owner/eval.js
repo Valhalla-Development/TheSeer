@@ -7,7 +7,7 @@ const {
   RichEmbed
 } = require("discord.js");
 const SQLite = require('better-sqlite3');
-const db = new SQLite('./Storage/db/db.sqlite');
+const db = new SQLite('./db/db.sqlite');
 
 module.exports = {
   config: {
