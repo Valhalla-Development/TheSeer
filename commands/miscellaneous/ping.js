@@ -8,8 +8,8 @@ module.exports = {
     },
     run: async (bot, message, args) => {
 
-        let pingMessage = language.ping.ping;
-        const ping = pingMessage.replace("${ping}", Math.round(client.ping));
+        let pingMessage = ":ping_pong: **| Pong! My ping is: ${ping} ms**";
+        const ping = pingMessage.replace("${ping}", Math.round(bot.ping));
 
         message.channel.send(`${ping}`);
     }
