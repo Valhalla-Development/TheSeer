@@ -37,7 +37,7 @@ module.exports = {
                 .setAuthor(`${message.guild.me.displayName} Help`, message.guild.iconURL)
                 .setThumbnail(bot.user.displayAvatarURL)
                 .setTimestamp()
-                .setDescription(`These are the avaliable commands for the TestBOT!\nThe bot prefix is: **${prefix}**`)
+                .setDescription(`These are the avaliable commands for the The Seer!\nThe bot prefix is: **${prefix}**`)
                 .setFooter("Test Bot 2k19", bot.user.displayAvatarURL);
             message.channel.send(embed);
         } else {
