@@ -4,6 +4,9 @@ const {
 const {
     ownerid
 } = require("../../botconfig.json");
+const {
+    prefix
+} = require("../../botconfig.json");
 const SQLite = require('better-sqlite3');
 const db = new SQLite('./db/db.sqlite');
 
@@ -27,7 +30,7 @@ module.exports = {
         if (args[0] === undefined) {
             const noInput = new RichEmbed()
                 .setColor(`8e2430`)
-                .setDescription(`incorrect usage...`);
+                .setDescription(`Incorrect usage! Correct usage: \`${prefix}add <@bot>\``);
             message.channel.send(noInput);
             return;
         }
@@ -43,6 +46,16 @@ module.exports = {
             return;
         }
 
+        if (mentionBot.id === '559113940919910406') {
+            const notMe = new RichEmbed()
+                .setColor(`8e2430`)
+                .setDescription(`I can not monitor myself! :slight_frown:`);
+            message.channel.send(notMe).then(msg => {
+                msg.delete(10000);
+            });
+            return;
+        }
+        
         if (!mentionBot.user.bot) {
             const notaBot = new RichEmbed()
                 .setColor(`8e2430`)
@@ -52,12 +65,8 @@ module.exports = {
             });
             return;
         } else {
-            const checkExists = db.prepare("SELECT * FROM watchedbots WHERE (guildid, botid) = (guildid, botid);");
-            checkExists.get({
-                guildid: `${message.guild.id}`,
-                botid: `${mentionBot.id}`
-            });
-            if (checkExists) {
+            const checkExists = db.prepare(`SELECT count(*) FROM watchedbots WHERE (guildid, botid) = (${message.guild.id}, ${mentionBot.id});`).get();
+            if (checkExists['count(*)']) {
                 const alreadyMonit = new RichEmbed()
                     .setColor(`8e2430`)
                     .setDescription(`<@${mentionBot.id}> is already being monitored!`);
