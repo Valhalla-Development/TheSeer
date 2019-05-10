@@ -1,6 +1,6 @@
 node_modules/
-Storage/config.json
-Storage/db/db.sqlite
-Storage/db/db.sqlite-shm
-Storage/db/db.sqlite-wal
 .jshintrc
+botconfig.json
+db/db.sqlite
+db/db.sqlite-shm
+db/db.sqlite-wal
