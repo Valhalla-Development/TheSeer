@@ -13,7 +13,7 @@ module.exports = {
     },
     run: async (bot, message, args) => {
 
-        if (message.author.id != ownerid) return message.channel.send("You're the bot the owner!");
+        if (message.author.id != ownerid) return;
 
         if (!args[0]) return message.channel.send("Please provide a command to reload!");
 
