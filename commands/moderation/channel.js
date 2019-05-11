@@ -51,7 +51,7 @@ module.exports = {
             if (checkExists) {
                 const alreadyMonit = new RichEmbed()
                     .setColor(`8e2430`)
-                    .setDescription(`${lchan} has been set as the alert channel! t:slight_smile:`);
+                    .setDescription(`${lchan} has been set as the alert channel! :slight_smile:`);
                 message.channel.send(alreadyMonit).then(msg => {
                     msg.delete(10000);
                 });
@@ -64,7 +64,7 @@ module.exports = {
             } else {
                 const success = new RichEmbed()
                     .setColor(`8e2430`)
-                    .setDescription(`${lchan} has been set as the alert channel! b:slight_smile:`);
+                    .setDescription(`${lchan} has been set as the alert channel! :slight_smile:`);
                 message.channel.send(success).then(msg => {
                     msg.delete(20000);
                 });
