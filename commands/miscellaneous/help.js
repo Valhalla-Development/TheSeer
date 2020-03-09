@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-plusplus */
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { prefix } = require('../../botconfig.json');
 const { cyan } = require('../../colours.json');
 
@@ -16,7 +16,7 @@ module.exports = {
   run: async (bot, message, args) => {
     const arr = [];
     const types = ['Moderation', 'Miscellaneous'];
-    const embed = new RichEmbed();
+    const embed = new MessageEmbed();
 
     if (!args[0]) {
       for (let i = 0; i < types.length; i++) {

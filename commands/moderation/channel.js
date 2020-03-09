@@ -1,4 +1,4 @@
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const SQLite = require('better-sqlite3');
 const { ownerid } = require('../../botconfig.json');
 const { prefix } = require('../../botconfig.json');
@@ -22,7 +22,7 @@ module.exports = {
     }
 
     if (args[0] === undefined) {
-      const noInput = new RichEmbed()
+      const noInput = new MessageEmbed()
         .setColor('8e2430')
         .setDescription(`Incorrect usage! Correct usage: \`${prefix}channel <#channel>\``);
       message.channel.send(noInput);
@@ -32,7 +32,7 @@ module.exports = {
     const lchan = message.mentions.channels.first();
 
     if (!lchan) {
-      const notaBot = new RichEmbed()
+      const notaBot = new MessageEmbed()
         .setColor('8e2430')
         .setDescription('You need to tag a channel!');
       message.channel.send(notaBot).then((msg) => {
@@ -41,7 +41,7 @@ module.exports = {
     } else {
       const checkExists = db.prepare(`SELECT chanid FROM watchedbots WHERE (guildid) = (${message.guild.id});`).get();
       if (checkExists) {
-        const alreadyMonit = new RichEmbed()
+        const alreadyMonit = new MessageEmbed()
           .setColor('8e2430')
           .setDescription(`${lchan} has been set as the alert channel! :slight_smile:`);
         message.channel.send(alreadyMonit).then((msg) => {
@@ -53,7 +53,7 @@ module.exports = {
           chanid: `${lchan.id}`,
         });
       } else {
-        const success = new RichEmbed()
+        const success = new MessageEmbed()
           .setColor('8e2430')
           .setDescription(`${lchan} has been set as the alert channel! :slight_smile:`);
         message.channel.send(success).then((msg) => {

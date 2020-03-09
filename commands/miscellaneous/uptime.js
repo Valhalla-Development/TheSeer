@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const moment = require('moment');
 
 module.exports = {
@@ -41,7 +41,7 @@ module.exports = {
     } seconds`;
 
     const duration = moment.duration(bot.uptime);
-    const botembed = new RichEmbed()
+    const botembed = new MessageEmbed()
       .setTitle('Uptime')
       .setColor('RANDOM')
       .setDescription(`${uptime}`);

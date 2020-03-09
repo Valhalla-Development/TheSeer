@@ -1,4 +1,4 @@
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const SQLite = require('better-sqlite3');
 const { ownerid } = require('../../botconfig.json');
 const { prefix } = require('../../botconfig.json');
@@ -22,7 +22,7 @@ module.exports = {
     }
 
     if (args[0] === undefined) {
-      const noInput = new RichEmbed()
+      const noInput = new MessageEmbed()
         .setColor('8e2430')
         .setDescription(`Incorrect usage! Correct usage: \`${prefix}remove <@bot>\``);
       message.channel.send(noInput);
@@ -31,7 +31,7 @@ module.exports = {
 
     const mentionBot = message.mentions.members.first();
     if (mentionBot === undefined) {
-      const noMention = new RichEmbed()
+      const noMention = new MessageEmbed()
         .setColor('8e2430')
         .setDescription('You need to mention a bot!');
       message.channel.send(noMention).then((msg) => {
@@ -41,7 +41,7 @@ module.exports = {
     }
 
     if (mentionBot.id === '559113940919910406') {
-      const notMe = new RichEmbed()
+      const notMe = new MessageEmbed()
         .setColor('8e2430')
         .setDescription('I can not monitor myself! :slight_frown:');
       message.channel.send(notMe).then((msg) => {
@@ -51,7 +51,7 @@ module.exports = {
     }
 
     if (!mentionBot.user.bot) {
-      const notaBot = new RichEmbed()
+      const notaBot = new MessageEmbed()
         .setColor('8e2430')
         .setDescription('The specified user was not a bot!');
       message.channel.send(notaBot).then((msg) => {
@@ -60,14 +60,14 @@ module.exports = {
     } else {
       const checkExists = db.prepare(`SELECT count(*) FROM watchedbots WHERE (guildid, botid) = (${message.guild.id}, ${mentionBot.id});`).get();
       if (!checkExists['count(*)']) {
-        const alreadyMonit = new RichEmbed()
+        const alreadyMonit = new MessageEmbed()
           .setColor('8e2430')
           .setDescription(`<@${mentionBot.id}> is not being monitored!`);
         message.channel.send(alreadyMonit).then((msg) => {
           msg.delete(10000);
         });
       } else {
-        const success = new RichEmbed()
+        const success = new MessageEmbed()
           .setColor('8e2430')
           .setDescription(`<@${mentionBot.id}> has been removed from the watchlist :slight_smile:`);
         message.channel.send(success).then((msg) => {
