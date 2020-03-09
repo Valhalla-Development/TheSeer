@@ -1,7 +1,7 @@
 {
   "name": "theseer-discord",
   "version": "1.0.0",
-  "description": "",
+  "description": "WIP - This is not a functional bot yet! [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ba81abdd29a444e29c8dee1655fd269c)](https://app.codacy.com/app/hudsonjd/TheSeer-Discord?utm_source=github.com&utm_medium=referral&utm_content=RagnarLothbrok-Odin/TheSeer-Discord&utm_campaign=Badge_Grade_Dashboard)",
   "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,10 +16,14 @@
     "url": "https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/issues"
   },
   "homepage": "https://github.com/RagnarLothbrok-Odin/TheSeer-Discord#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1"
+  },
   "dependencies": {
-    "better-sqlite3": "^5.4.0",
-    "discord.js": "^11.4.2",
-    "jscs": "^3.0.7",
+    "better-sqlite3": "^6.0.1",
+    "discord.js": "^12.0.2",
     "moment": "^2.24.0"
   }
 }

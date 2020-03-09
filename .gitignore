@@ -1,6 +1,6 @@
 node_modules/
-.jshintrc
 botconfig.json
 db/db.sqlite
 db/db.sqlite-shm
 db/db.sqlite-wal
+.DS_Store
