@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 const { MessageEmbed } = require('discord.js');
 const SQLite = require('better-sqlite3');
-const { ownerid, prefix } = require('../../botconfig.json');
+const { ownerid, prefix, color } = require('../../botconfig.json');
 
 const db = new SQLite('./db/db.sqlite');
 
@@ -40,7 +40,7 @@ module.exports = {
         console.log(`\n${message.author.username}#${message.author.discriminator} Try To Get The Bot Token On ${message.guild.name} (ServerID: ${message.guild.id}).\n`);
         return message.channel.send('', {
           embed: {
-            color: 0xFF5733,
+            color,
             title: ':exclamation::exclamation: No :exclamation::exclamation:',
             description: 'No Token For You!',
           },
@@ -51,7 +51,7 @@ module.exports = {
         .addField(`${bot.user.username} - JavaScript Eval Success:`, '** **')
         .addField(':inbox_tray: **INPUT**', `\`\`\`${args.join(' ')}\`\`\``)
         .addField(':outbox_tray: **OUTPUT**', `\`\`\`${clean(evaled)}\`\`\``)
-        .setColor(0xFF5733)
+        .setColor(color)
         .setFooter(message.createdAt, message.author.avatarURL);
       message.channel.send({
         embed,
@@ -60,7 +60,7 @@ module.exports = {
       message.channel.send(new MessageEmbed()
         .addField(`${bot.user.username} - JavaScript Eval Error:`, 'There Was a Problem With The Code That You Are Trying To Run!')
         .addField(':no_entry: ERROR', `\`\`\`${clean(err)}\`\`\``)
-        .setColor(0xFF5733)
+        .setColor(color)
         .setFooter(message.createdAt, message.author.avatarURL))
 
         .catch((error) => message.channel.send(`**ERROR:** ${error.message}`));
