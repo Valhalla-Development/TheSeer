@@ -2,17 +2,28 @@
 /* eslint-disable prefer-const */
 const { MessageEmbed } = require('discord.js');
 const moment = require('moment');
+const { color } = require('../../botconfig.json');
 
 module.exports = {
   config: {
     name: 'uptime',
     description: 'Displays the bots current uptime!',
-    usage: '!uptime',
+    usage: `${prefix}uptime`,
     category: 'miscellaneous',
     accessableby: 'Members',
     aliases: ['ut'],
   },
   run: async (bot, message) => {
+    if (!message.member.guild.me.hasPermission('EMBED_LINKS')) {
+      message.channel.send('I need the permission `Embed Links` permission for this command!').then((msg) => {
+        msg.delete({ timeout: 10000 });
+      });
+    }
+
+    if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
+      message.delete();
+    }
+
     function convertMS(ms) {
       let d; let h; let m; let
         s;
@@ -43,7 +54,7 @@ module.exports = {
     const duration = moment.duration(bot.uptime);
     const botembed = new MessageEmbed()
       .setTitle('Uptime')
-      .setColor('RANDOM')
+      .setColor(color)
       .setDescription(`${uptime}`);
 
     message.channel.send(botembed);
