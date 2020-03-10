@@ -18,7 +18,7 @@ module.exports = async (bot) => {
 
   // activity
   const watchbotgrab = db.prepare('SELECT count(*) FROM watchedbots').get();
-  bot.user.setActivity(`${watchbotgrab['count(*)']} Bots Across ${bot.guilds.size} Guilds | ${prefix}help`, {
+  bot.user.setActivity(`${watchbotgrab['count(*)']} Bots Across ${bot.guilds.cache.size} Guilds | ${prefix}help`, {
     type: 'WATCHING',
   });
 };
