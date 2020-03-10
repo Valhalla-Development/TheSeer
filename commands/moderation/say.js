@@ -1,9 +1,12 @@
 /* eslint-disable consistent-return */
+const { MessageEmbed } = require('discord.js');
+const { prefix, color } = require('../../botconfig.json');
+
 module.exports = {
   config: {
     name: 'say',
     description: 'sends a message that was inputted to a channel',
-    usage: '!say',
+    usage: `${prefix}say`,
     category: 'moderation',
     accessableby: 'Staff',
     aliases: ['acc', 'announcement'],
@@ -11,10 +14,20 @@ module.exports = {
   run: async (bot, message, args) => {
     if (!message.member.hasPermission(['MANAGE_MESSAGES', 'ADMINISTRATOR'])) return message.channel.send('You can not use this command!');
 
+    if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
+      message.delete();
+    }
+
+    if (!args[0]) {
+      const noArgs = new MessageEmbed()
+        .setColor(color)
+        .setDescription(`Incorrect usage! Correct usage: \`${prefix}say <#channel> <message>\`\nNote: Channel variable is not needed.`);
+      message.channel.send(noArgs).then((m) => m.delete({ timeout: 10000 }));
+      return;
+    }
     let argsresult;
     const mChannel = message.mentions.channels.first();
 
-    message.delete();
     if (mChannel) {
       argsresult = args.slice(1).join(' ');
       mChannel.send(argsresult);
