@@ -1,46 +1,77 @@
-/* eslint-disable max-len */
-/* eslint-disable no-plusplus */
 const { MessageEmbed } = require('discord.js');
-const { prefix, color } = require('../../botconfig.json');
+const SQLite = require('better-sqlite3');
+const db = new SQLite('./db/db.sqlite');
+const { ownerID, color, prefix } = require('../../botconfig.json');
 
 module.exports = {
   config: {
     name: 'help',
-    aliases: ['h', 'halp', 'commands'],
-    usage: `${prefix}usage`,
+    aliases: ['commands'],
+    usage: `${prefix}help <command>`,
     category: 'miscellaneous',
-    description: '',
-    accessableby: 'Members',
+    description: 'Shows a list of commands',
+    accessableby: 'Everyone',
   },
   run: async (bot, message, args) => {
+    if (!message.member.guild.me.hasPermission('EMBED_LINKS')) {
+      message.channel.send('I need the permission `Embed Links` for this command!');
+      return;
+    }
+    if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
+      message.delete();
+    }
+
     const arr = [];
-    const types = ['Moderation', 'Miscellaneous'];
+    const types = [
+      'Miscellaneous',
+      'Moderation',
+    ];
     const embed = new MessageEmbed();
 
     if (!args[0]) {
       for (let i = 0; i < types.length; i++) {
-        arr.push(bot.commands.filter((c) => c.config.category === types[i].toLowerCase()).map((c) => `\`${c.config.name}\``).join(' '));
+        arr.push(
+          bot.commands
+            .filter((c) => c.config.category === types[i].toLowerCase())
+            .map((c) => `\`${c.config.name.charAt(0).toUpperCase() + c.config.name.substring(1)}\`,`)
+            .join(' '),
+        );
         try {
-          embed.addField(types[i], arr[i]);
+          embed.addFields({ name: types[i], value: arr[i] });
         } catch (e) {
-          embed.addBlankField();
+          embed.addFields({ name: '\u200b', value: '\u200b' });
         }
       }
 
-      embed.setColor(color)
-        .setAuthor(`${message.guild.me.displayName} Help`, message.guild.iconURL)
-        .setThumbnail(bot.user.displayAvatarURL)
+      embed
+        .setColor(color)
+        .setAuthor(bot.user.username, bot.user.avatarURL())
         .setTimestamp()
-        .setDescription(`These are the avaliable commands for the The Seer!\nThe bot prefix is: **${prefix}**`)
-        .setFooter('The Seer', bot.user.displayAvatarURL);
+        .setDescription(
+          `Hey, I'm [**__The Seer__**]! A bot that monitors other bots!!\nRun \`${prefix}help <command>\` to see command specific instructions!\nAll commands must be preceded by \`${prefix}\``,
+        )
       message.channel.send(embed);
     } else {
-      const command = bot.commands.get(args[0].toLowerCase()) ? bot.commands.get(args[0].toLowerCase()).config : bot.commands.get(bot.aliases.get(args[0].toLowerCase())).config;
+      const command = bot.commands.get(args[0].toLowerCase())
+        ? bot.commands.get(args[0].toLowerCase()).config
+        : bot.commands.get(bot.aliases.get(args[0].toLowerCase())).config;
+      const cUsagePrefix = command.usage.replace('${prefix}', prefix);
+      if (command.accessableby === 'Owner') {
+        return;
+      }
+      const lower = command.name;
+      const upper = lower.charAt(0).toUpperCase() + lower.substring(1);
 
-      embed.setColor(color)
-        .setAuthor(`${message.guild.me.displayName} Help`, message.guild.iconURL)
-        .setThumbnail(bot.user.displayAvatarURL)
-        .setDescription(`The bot prefix is: ${prefix}\n\n**Command:** ${command.name}\n**Description:** ${command.description || 'No Description'}\n**Usage:** ${command.usage || 'No Usage'}\n**Accessable by:** ${command.accessableby || 'Members'}\n**Aliases:** ${command.aliases ? command.aliases.join(', ') : 'None'}`);
+      embed
+        .setColor(color)
+        .setAuthor(bot.user.username, bot.user.avatarURL())
+        .setDescription(
+          `The bot prefix is: ${prefix}\n\n**Command:** \`${
+            upper
+          }\`\n**Description:** \`${command.description || 'No Description'}\`\n**Usage:** \`${cUsagePrefix || 'No Usage'}\`\n**Accessable by:** \`${command.accessableby || 'Members'}\`\n**Aliases:** \`${
+            command.aliases ? command.aliases.join(', ') : 'None'
+          }\``,
+        );
       message.channel.send(embed);
     }
   },
