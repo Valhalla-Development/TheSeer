@@ -1,16 +1,33 @@
 /* eslint-disable no-template-curly-in-string */
+const { MessageEmbed } = require('discord.js');
+const { color } = require('../../botconfig.json');
+
 module.exports = {
   config: {
     name: 'ping',
     description: 'PONG! Displays the api & bot latency',
-    usage: '!ping',
+    usage: `${prefix}ping`,
     category: 'miscellaneous',
     accessableby: 'Members',
   },
   run: async (bot, message) => {
-    const pingMessage = ':ping_pong: **| Pong! My ping is: ${ping} ms**';
-    const ping = pingMessage.replace('${ping}', Math.round(bot.ping));
+    if (!message.member.guild.me.hasPermission('EMBED_LINKS')) {
+      message.channel.send('I need the permission `Embed Links` permission for this command!').then((msg) => {
+        msg.delete({ timeout: 10000 });
+      });
+    }
 
-    message.channel.send(`${ping}`);
+    if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
+      message.delete();
+    }
+
+    const ping = Math.round(bot.ws.ping);
+
+    const embed = new MessageEmbed()
+      .setColor(color)
+      .setDescription(`My ping is: \`${ping}\` ms`);
+    message.channel.send(embed).then((msg) => {
+      msg.delete({ timeout: 10000 });
+    });
   },
 };
