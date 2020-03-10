@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 const { MessageEmbed } = require('discord.js');
-const { color } = require('../../botconfig.json');
+const { color, prefix } = require('../../botconfig.json');
 
 module.exports = {
   config: {

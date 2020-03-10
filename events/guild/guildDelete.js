@@ -1,7 +1,6 @@
-const SQLite = require('better-sqlite3');
 const { prefix } = require('../../botconfig.json');
-
-const db = new SQLite('./storage/db/db.sqlite');
+const SQLite = require('better-sqlite3');
+const db = new SQLite('./db/db.sqlite');
 
 module.exports = async (bot, guild) => {
   // when the bot is removed from a guild.

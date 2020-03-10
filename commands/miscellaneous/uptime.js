@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 const { MessageEmbed } = require('discord.js');
-const moment = require('moment');
-const { color } = require('../../botconfig.json');
+const { color, prefix } = require('../../botconfig.json');
 
 module.exports = {
   config: {
@@ -51,12 +50,13 @@ module.exports = {
       u.s
     } seconds`;
 
-    const duration = moment.duration(bot.uptime);
     const botembed = new MessageEmbed()
       .setTitle('Uptime')
       .setColor(color)
       .setDescription(`${uptime}`);
 
-    message.channel.send(botembed);
+    message.channel.send(botembed).then((msg) => {
+      msg.delete({ timeout: 10000 });
+    });
   },
 };

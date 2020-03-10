@@ -4,11 +4,10 @@
 /* eslint-disable no-unused-vars */
 const { MessageEmbed } = require('discord.js');
 const SQLite = require('better-sqlite3');
-
-const db = new SQLite('./storage/db/db.sqlite');
+const db = new SQLite('./db/db.sqlite');
 const { readdirSync } = require('fs');
 const { join } = require('path');
-const { ownerID, color } = require('../../botconfig.json');
+const { ownerID, color, prefix } = require('../../botconfig.json');
 
 module.exports = {
   config: {
@@ -34,7 +33,9 @@ module.exports = {
       const noArgs = new MessageEmbed()
         .setColor(color)
         .setDescription('Please provide a command to reload!');
-      message.channel.send(noArgs);
+      message.channel.send(noArgs).then((msg) => {
+        msg.delete({ timeout: 10000 });
+      });
       return;
     }
     const commandName = args[0].toLowerCase();
@@ -42,7 +43,9 @@ module.exports = {
       const notaCommand = new MessageEmbed()
         .setColor(color)
         .setDescription(':x: That command does not exist! Try again.');
-      message.channel.send(notaCommand);
+      message.channel.send(notaCommand).then((msg) => {
+        msg.delete({ timeout: 10000 });
+      });
       return;
     }
     readdirSync(join(__dirname, '..')).forEach((f) => {
@@ -58,12 +61,16 @@ module.exports = {
           const success = new MessageEmbed()
             .setColor(color)
             .setDescription(`Successfully reloaded \`${commandName}\``);
-          return message.channel.send(success);
+          return message.channel.send(success).then((msg) => {
+            msg.delete({ timeout: 10000 });
+          });
         } catch (e) {
           const errorCatch = new MessageEmbed()
             .setColor(color)
             .setDescription(`Could not reload: \`${args[0].toUpperCase()}\``);
-          return message.channel.send(errorCatch);
+          return message.channel.send(errorCatch).then((msg) => {
+            msg.delete({ timeout: 10000 });
+          });
         }
       }
     });
