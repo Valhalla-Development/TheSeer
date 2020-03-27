@@ -8,7 +8,7 @@ module.exports = {
   config: {
     name: 'channel',
     description: 'sets the channel for the watchlist',
-    usage: `${prefix}channel <#channel>`,
+    usage: `${prefix}channel <#channel/off>`,
     category: 'moderation',
     accessableby: 'Staff',
   },
@@ -35,6 +35,16 @@ module.exports = {
         .setColor(color)
         .setDescription(`Incorrect usage! Correct usage: \`${prefix}channel <#channel>\``);
       message.channel.send(noInput).then((msg) => {
+        msg.delete({ timeout: 10000 });
+      });
+      return;
+    }
+
+    if (args[0] === 'off') {
+      const disable = new MessageEmbed()
+        .setColor(color)
+        .setDescription('wagwan bredrin');
+      message.channel.send(disable).then((msg) => {
         msg.delete({ timeout: 10000 });
       });
       return;
