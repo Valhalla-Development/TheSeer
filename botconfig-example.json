@@ -1,5 +1,6 @@
 {
     "token": "BOT-TOKEN",
     "ownerid": "OWNER-ID",
-    "prefix": "ts;"
+    "prefix": "ts;",
+    "logging": true
 }
