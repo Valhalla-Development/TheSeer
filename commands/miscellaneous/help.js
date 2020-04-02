@@ -1,7 +1,7 @@
+/* eslint-disable no-template-curly-in-string */
+/* eslint-disable no-plusplus */
 const { MessageEmbed } = require('discord.js');
-const SQLite = require('better-sqlite3');
-const db = new SQLite('./db/db.sqlite');
-const { ownerID, color, prefix } = require('../../botconfig.json');
+const { color, prefix } = require('../../botconfig.json');
 
 module.exports = {
   config: {
@@ -16,9 +16,6 @@ module.exports = {
     if (!message.member.guild.me.hasPermission('EMBED_LINKS')) {
       message.channel.send('I need the permission `Embed Links` for this command!');
       return;
-    }
-    if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
-      message.delete();
     }
 
     const arr = [];
@@ -49,7 +46,7 @@ module.exports = {
         .setTimestamp()
         .setDescription(
           `Hey, I'm [**__The Seer__**]! A bot that monitors other bots!!\nRun \`${prefix}help <command>\` to see command specific instructions!\nAll commands must be preceded by \`${prefix}\``,
-        )
+        );
       message.channel.send(embed);
     } else {
       const command = bot.commands.get(args[0].toLowerCase())

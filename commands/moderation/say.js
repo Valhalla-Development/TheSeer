@@ -14,10 +14,6 @@ module.exports = {
   run: async (bot, message, args) => {
     if (!message.member.hasPermission(['MANAGE_MESSAGES', 'ADMINISTRATOR'])) return message.channel.send('You can not use this command!');
 
-    if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
-      message.delete();
-    }
-
     if (!args[0]) {
       const noArgs = new MessageEmbed()
         .setColor(color)

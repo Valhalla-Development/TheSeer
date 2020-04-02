@@ -19,10 +19,6 @@ module.exports = {
       });
     }
 
-    if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
-      message.delete();
-    }
-
     function convertMS(ms) {
       let d; let h; let m; let
         s;

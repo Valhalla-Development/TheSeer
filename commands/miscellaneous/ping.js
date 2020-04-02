@@ -17,10 +17,6 @@ module.exports = {
       });
     }
 
-    if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
-      message.delete();
-    }
-
     const ping = Math.round(bot.ws.ping);
 
     const embed = new MessageEmbed()

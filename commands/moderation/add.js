@@ -26,10 +26,6 @@ module.exports = {
       });
     }
 
-    if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
-      message.delete();
-    }
-
     if (!args[0]) {
       const noInput = new MessageEmbed()
         .setColor(color)

@@ -1,5 +1,6 @@
-const { prefix } = require('../../botconfig.json');
 const SQLite = require('better-sqlite3');
+const { prefix } = require('../../botconfig.json');
+
 const db = new SQLite('./db/db.sqlite');
 
 module.exports = async (bot, guild) => {
