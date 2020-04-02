@@ -4,6 +4,7 @@
 /* eslint-disable no-unused-vars */
 const { MessageEmbed } = require('discord.js');
 const SQLite = require('better-sqlite3');
+
 const db = new SQLite('./db/db.sqlite');
 const { readdirSync } = require('fs');
 const { join } = require('path');
@@ -21,10 +22,6 @@ module.exports = {
     if (!message.member.guild.me.hasPermission('EMBED_LINKS')) {
       message.channel.send('I need the permission `Embed Links` for this command!');
       return;
-    }
-
-    if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
-      message.delete();
     }
 
     if (message.author.id !== ownerID) return;
