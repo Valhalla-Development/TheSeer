@@ -24,7 +24,6 @@ module.exports = async (bot, oldPresence, newPresence) => {
 
   const statusList = ['online', 'idle', 'dnd'];
   if (statusList.includes(oldPresence.status) && statusList.includes(newPresence.status)) return;
-  console.log(statusList.includes(oldPresence.status) && statusList.includes(newPresence.status));
   let botid;
   let channelid;
   let dmid;
