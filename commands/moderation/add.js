@@ -41,6 +41,7 @@ module.exports = {
     }
 
     const mentionBot = message.mentions.members.first();
+
     if (!mentionBot) {
       const noMention = new MessageEmbed()
         .setColor(color)
@@ -68,28 +69,62 @@ module.exports = {
       message.channel.send(notaBot).then((msg) => {
         msg.delete({ timeout: 10000 });
       });
-    } else {
-      const checkExists = db.prepare('SELECT count(*) FROM watchedbots WHERE (guildid, botid) = (?, ?);').get(message.guild.id, mentionBot.id);
-      if (checkExists['count(*)']) {
-        const alreadyMonit = new MessageEmbed()
-          .setColor(color)
-          .setDescription(`<@${mentionBot.id}> is already being monitored!`);
-        message.channel.send(alreadyMonit).then((msg) => {
-          msg.delete({ timeout: 10000 });
+      return;
+    }
+
+    const botList = [];
+    const checkExists = db.prepare('SELECT * FROM watchedbots WHERE guildid = ?;').get(message.guild.id);
+    if (checkExists) {
+      if (checkExists.botid) {
+        const foundBotList = JSON.parse(checkExists.botid);
+        if (foundBotList.includes(mentionBot.id)) {
+          const alreadyMonit = new MessageEmbed()
+            .setColor(color)
+            .setDescription(`<@${mentionBot.id}> is already being monitored!`);
+          message.channel.send(alreadyMonit).then((msg) => {
+            msg.delete({ timeout: 10000 });
+          });
+          return;
+        }
+        foundBotList.push(mentionBot.id);
+        const update = db.prepare('UPDATE watchedbots SET botid = (@botid) WHERE guildid = (@guildid)');
+        update.run({
+          guildid: `${message.guild.id}`,
+          botid: JSON.stringify(foundBotList),
         });
-      } else {
         const success = new MessageEmbed()
           .setColor(color)
           .setDescription(`<@${mentionBot.id}> is now being monitored :slight_smile:`);
         message.channel.send(success).then((msg) => {
           msg.delete({ timeout: 10000 });
         });
-        const insert = db.prepare('INSERT INTO watchedbots (guildid, botid) VALUES (@guildid, @botid);');
-        insert.run({
+      } else {
+        botList.push(mentionBot.id);
+        const update = db.prepare('UPDATE watchedbots SET botid = (@botid) WHERE guildid = (@guildid)');
+        update.run({
           guildid: `${message.guild.id}`,
-          botid: `${mentionBot.id}`,
+          botid: JSON.stringify(botList),
+        });
+        const success = new MessageEmbed()
+          .setColor(color)
+          .setDescription(`<@${mentionBot.id}> is now being monitored :slight_smile:`);
+        message.channel.send(success).then((msg) => {
+          msg.delete({ timeout: 10000 });
         });
       }
+    } else {
+      botList.push(mentionBot.id);
+      const insert = db.prepare('INSERT INTO watchedbots SET (guildid, botid) VALUES (@guildid, @botid)');
+      insert.run({
+        guildid: `${message.guild.id}`,
+        botid: JSON.stringify(botList),
+      });
+      const success = new MessageEmbed()
+        .setColor(color)
+        .setDescription(`<@${mentionBot.id}> is now being monitored :slight_smile:`);
+      message.channel.send(success).then((msg) => {
+        msg.delete({ timeout: 10000 });
+      });
     }
   },
 };
