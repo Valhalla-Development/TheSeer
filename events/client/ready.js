@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const SQLite = require('better-sqlite3');
 const { prefix } = require('../../botconfig.json');
 
@@ -17,8 +18,15 @@ module.exports = async (bot) => {
   }
 
   // activity
-  const watchbotgrab = db.prepare('SELECT count(*) FROM watchedbots').get();
-  bot.user.setActivity(`${watchbotgrab['count(*)']} Bots Across ${bot.guilds.cache.size} Guilds | ${prefix}help`, {
+  const dataGrab = db.prepare('SELECT botid FROM watchedbots').all();
+  let count = 0;
+  for (guild of dataGrab) {
+    if (guild.botid) {
+      const arr = guild.botid.slice(1, guild.botid.length - 1).split(',');
+      count += arr.length;
+    }
+  }
+  bot.user.setActivity(`${count} Bots Across ${bot.guilds.cache.size} Guilds | ${prefix}help`, {
     type: 'WATCHING',
   });
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { MessageEmbed } = require('discord.js');
 const SQLite = require('better-sqlite3');
 const { prefix, ownerid, color } = require('../../botconfig.json');
@@ -79,9 +80,10 @@ module.exports = {
       const foundBotList = JSON.parse(checkExists.botid);
       if (foundBotList.includes(mentionBot.id)) {
         if (foundBotList.length === 1) {
+          console.log(foundBotList.length);
           const alreadyMonit = new MessageEmbed()
             .setColor(color)
-            .setDescription(`<@${mentionBot.id}> will no longer be monitored!`);
+            .setDescription(`<@${mentionBot.id}> will no longer be monitored! A`);
           message.channel.send(alreadyMonit).then((msg) => {
             msg.delete({ timeout: 10000 });
           });
@@ -89,6 +91,18 @@ module.exports = {
           update.run({
             guildid: `${message.guild.id}`,
             botid: null,
+          });
+          // activity
+          const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
+          let count = 0;
+          for (guild of activityGrab) {
+            if (guild.botid) {
+              const arr = guild.botid.slice(1, guild.botid.length - 1).split(',');
+              count += arr.length;
+            }
+          }
+          bot.user.setActivity(`${count} Bots Across ${bot.guilds.cache.size} Guilds | ${prefix}help`, {
+            type: 'WATCHING',
           });
           return;
         }
@@ -109,6 +123,18 @@ module.exports = {
             updateRoleList.run({
               guildid: `${message.guild.id}`,
               botid: JSON.stringify(foundBotList),
+            });
+            // activity
+            const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
+            let count = 0;
+            for (guild of activityGrab) {
+              if (guild.botid) {
+                const arr = guild.botid.slice(1, guild.botid.length - 1).split(',');
+                count += arr.length;
+              }
+            }
+            bot.user.setActivity(`${count} Bots Across ${bot.guilds.cache.size} Guilds | ${prefix}help`, {
+              type: 'WATCHING',
             });
           }
         }

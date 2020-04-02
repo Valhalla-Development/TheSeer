@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { MessageEmbed } = require('discord.js');
 const SQLite = require('better-sqlite3');
 const { ownerid, prefix, color } = require('../../botconfig.json');
@@ -88,6 +89,18 @@ module.exports = {
           guildid: `${message.guild.id}`,
           botid: JSON.stringify(foundBotList),
         });
+        // activity
+        const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
+        let count = 0;
+        for (guild of activityGrab) {
+          if (guild.botid) {
+            const arr = guild.botid.slice(1, guild.botid.length - 1).split(',');
+            count += arr.length;
+          }
+        }
+        bot.user.setActivity(`${count} Bots Across ${bot.guilds.cache.size} Guilds | ${prefix}help`, {
+          type: 'WATCHING',
+        });
         const success = new MessageEmbed()
           .setColor(color)
           .setDescription(`<@${mentionBot.id}> is now being monitored :slight_smile:`);
@@ -101,6 +114,19 @@ module.exports = {
           guildid: `${message.guild.id}`,
           botid: JSON.stringify(botList),
         });
+        // activity
+        const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
+        let count = 0;
+        for (guild of activityGrab) {
+          if (guild.botid) {
+            const arr = guild.botid.slice(1, guild.botid.length - 1).split(',');
+            count += arr.length;
+          }
+        }
+        bot.user.setActivity(`${count} Bots Across ${bot.guilds.cache.size} Guilds | ${prefix}help`, {
+          type: 'WATCHING',
+        });
+
         const success = new MessageEmbed()
           .setColor(color)
           .setDescription(`<@${mentionBot.id}> is now being monitored :slight_smile:`);
@@ -110,11 +136,24 @@ module.exports = {
       }
     } else {
       botList.push(mentionBot.id);
-      const insert = db.prepare('INSERT INTO watchedbots SET (guildid, botid) VALUES (@guildid, @botid)');
+      const insert = db.prepare('INSERT INTO watchedbots (guildid, botid) VALUES (@guildid, @botid)');
       insert.run({
         guildid: `${message.guild.id}`,
         botid: JSON.stringify(botList),
       });
+      // activity
+      const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
+      let count = 0;
+      for (guild of activityGrab) {
+        if (guild.botid) {
+          const arr = guild.botid.slice(1, guild.botid.length - 1).split(',');
+          count += arr.length;
+        }
+      }
+      bot.user.setActivity(`${count} Bots Across ${bot.guilds.cache.size} Guilds | ${prefix}help`, {
+        type: 'WATCHING',
+      });
+
       const success = new MessageEmbed()
         .setColor(color)
         .setDescription(`<@${mentionBot.id}> is now being monitored :slight_smile:`);
