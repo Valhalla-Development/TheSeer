@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const moment = require('moment');
 const { prefix, logging } = require('../../botconfig.json');
 
@@ -25,9 +26,9 @@ module.exports = async (bot, message) => {
       )}\x1b[0m] Command \`${cmd}\` was executed by \x1b[36m${
         message.author.tag
       }\x1b[0m (Guild: \x1b[36m${message.guild.name}\x1b[0m)`;
-      if (bot.user.id === '508756879564865539') {
-        bot.channels.cache.get('694680953133596682').send(`${cmd} - was executed by ${message.author.tag} - In guild: ${message.guild.name}`, { code: 'css' });
-      }
+
+      // These blocked lines can send the command log to a channel of your choosing, simply replace the id with a channel id of your choosing.
+      // bot.channels.cache.get('694680953133596682').send(`${cmd} - was executed by ${message.author.tag} - In guild: ${message.guild.name}`, { code: 'css' });
       console.log(LoggingNoArgs);
     } else {
       const LoggingArgs = `[\x1b[36m${moment().format(
@@ -35,9 +36,7 @@ module.exports = async (bot, message) => {
       )}\x1b[0m] Command \`${cmd} ${oargresult}\` was executed by \x1b[36m${
         message.author.tag
       }\x1b[0m (Guild: \x1b[36m${message.guild.name}\x1b[0m)`;
-      if (bot.user.id === '508756879564865539') {
-        bot.channels.cache.get('694680953133596682').send(`${cmd} ${oargresult} - was executed by ${message.author.tag} - In guild: ${message.guild.name}`, { code: 'css' });
-      }
+      // bot.channels.cache.get('694680953133596682').send(`${cmd} ${oargresult} - was executed by ${message.author.tag} - In guild: ${message.guild.name}`, { code: 'css' });
       console.log(LoggingArgs);
     }
   }
