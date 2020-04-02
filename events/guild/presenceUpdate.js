@@ -20,6 +20,11 @@ module.exports = async (bot, oldPresence, newPresence) => {
     .setColor('#27d200')
     .setTimestamp();
 
+  if (oldPresence.status === newPresence.status) return;
+
+  const statusList = ['online', 'idle', 'dnd'];
+  if (statusList.includes(oldPresence.status) && statusList.includes(newPresence.status)) return;
+  console.log(statusList.includes(oldPresence.status) && statusList.includes(newPresence.status));
   let botid;
   let channelid;
   let dmid;
@@ -27,10 +32,9 @@ module.exports = async (bot, oldPresence, newPresence) => {
   if (watchedbots.chanid) {
     channelid = bot.channels.cache.find((a) => a.id === watchedbots.chanid);
     if (newPresence.userID === botid) {
-      if (newPresence.status === 'offline') { // 151516555757223936
+      if (newPresence.status === 'offline') {
         channelid.send(offlineEmbed);
       } else {
-        console.log(newPresence);
         channelid.send(onlineEmbed);
       }
     }
