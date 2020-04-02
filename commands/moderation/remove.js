@@ -25,10 +25,6 @@ module.exports = {
       });
     }
 
-    if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
-      message.delete();
-    }
-
     if (!args[0]) {
       const noInput = new MessageEmbed()
         .setColor(color)
@@ -67,26 +63,61 @@ module.exports = {
       message.channel.send(notaBot).then((msg) => {
         msg.delete({ timeout: 10000 });
       });
-    } else {
-      const checkExists = db.prepare('SELECT count(*) FROM watchedbots WHERE (guildid, botid) = (?, ?);').get(message.guild.id, mentionBot.id);
-      if (!checkExists['count(*)']) {
+      return;
+    }
+    const checkExists = db.prepare('SELECT * FROM watchedbots WHERE guildid = ?;').get(message.guild.id);
+    if (!checkExists) {
+      const noMonit = new MessageEmbed()
+        .setColor(color)
+        .setDescription('No bots are being monitored!');
+      message.channel.send(noMonit).then((msg) => {
+        msg.delete({ timeout: 10000 });
+      });
+      return;
+    }
+    if (checkExists.botid) {
+      const foundBotList = JSON.parse(checkExists.botid);
+      if (foundBotList.includes(mentionBot.id)) {
+        if (foundBotList.length === 1) {
+          const alreadyMonit = new MessageEmbed()
+            .setColor(color)
+            .setDescription(`<@${mentionBot.id}> will no longer be monitored!`);
+          message.channel.send(alreadyMonit).then((msg) => {
+            msg.delete({ timeout: 10000 });
+          });
+          const update = db.prepare('UPDATE watchedbots SET botid = (@botid) WHERE guildid = (@guildid)');
+          update.run({
+            guildid: `${message.guild.id}`,
+            botid: null,
+          });
+          return;
+        }
         const alreadyMonit = new MessageEmbed()
           .setColor(color)
-          .setDescription(`<@${mentionBot.id}> is not being monitored!`);
+          .setDescription(`<@${mentionBot.id}> will no longer be monitored!`);
         message.channel.send(alreadyMonit).then((msg) => {
           msg.delete({ timeout: 10000 });
         });
+        const mentions = message.mentions.members.map((memID) => memID.id);
+        for (const botid of mentions) {
+          if (foundBotList.includes(mentionBot.id)) {
+            const index = foundBotList.indexOf(botid);
+            foundBotList.splice(index, 1);
+            const updateRoleList = db.prepare(
+              'UPDATE watchedbots SET botid = (@botid) WHERE guildid = (@guildid)',
+            );
+            updateRoleList.run({
+              guildid: `${message.guild.id}`,
+              botid: JSON.stringify(foundBotList),
+            });
+          }
+        }
       } else {
-        const success = new MessageEmbed()
+        const noMonit = new MessageEmbed()
           .setColor(color)
-          .setDescription(`<@${mentionBot.id}> has been removed from the watchlist :slight_smile:`);
-        message.channel.send(success).then((msg) => {
+          .setDescription(`<@${mentionBot.id}> is not being monitored!`);
+        message.channel.send(noMonit).then((msg) => {
           msg.delete({ timeout: 10000 });
-        });
-        const remove = db.prepare('DELETE FROM watchedbots WHERE (guildid, botid) = (@guildid, @botid);');
-        remove.run({
-          guildid: `${message.guild.id}`,
-          botid: `${mentionBot.id}`,
         });
       }
     }
