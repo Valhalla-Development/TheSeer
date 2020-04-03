@@ -6,7 +6,7 @@ The Seer is a bot designed to monitor other bots status, this can be useful if y
 
 You will be alerted if a bot of your choosing either goes offline, or online.
 
-You can either host this bot yourself, or you can invite it to your server by [clicking here](https://dillinger.io/).
+You can either host this bot yourself, or you can invite it to your server by [clicking here](https://discordapp.com/oauth2/authorize?client_id=559113940919910406&scope=bot&permissions=387264 ).
 ### Usage (Invite):
   - Invite the bot by [clicking me](https://dillinger.io/)
   - Once the bot is in your guild, all you need to do to set it up is run the following commands:
