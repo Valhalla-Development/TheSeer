@@ -15,6 +15,7 @@
 </a>
 <br>
 </div>
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ba81abdd29a444e29c8dee1655fd269c)](https://app.codacy.com/app/hudsonjd/TheSeer-Discord?utm_source=github.com&utm_medium=referral&utm_content=RagnarLothbrok-Odin/TheSeer-Discord&utm_campaign=Badge_Grade_Dashboard)
 
 The Seer is a bot designed to monitor other bots status, this can be useful if you are a developer and wish to monitor your bots while you work on them. You can opt to receive alerts via DM, or a channel of your choosing.
