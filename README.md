@@ -1,5 +1,20 @@
 # The Seer - Discord Bot
 
+<div align="center">
+<a href="https://discord.gg/Q3ZhdRJ">
+<img src="https://img.shields.io/discord/495602800802398212.svg?colorB=Blue&logo=discord&label=Support&style=for-the-badge" alt="Support">
+</a>
+<a href="https://github.com/RagnarLothbrok-Odin/TheSeer-Discord">
+<img src="https://img.shields.io/github/languages/top/RagnarLothbrok-Odin/TheSeer-Discord.svg?style=for-the-badge">
+</a>
+<a href="https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/issues">
+<img src="https://img.shields.io/github/issues/RagnarLothbrok-Odin/TheSeer-Discord.svg?style=for-the-badge">
+</a>
+<a href="https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/pulls">
+<img src="https://img.shields.io/github/issues-pr/RagnarLothbrok-Odin/TheSeer-Discord.svg?style=for-the-badge">
+</a>
+<br>
+</div>
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ba81abdd29a444e29c8dee1655fd269c)](https://app.codacy.com/app/hudsonjd/TheSeer-Discord?utm_source=github.com&utm_medium=referral&utm_content=RagnarLothbrok-Odin/TheSeer-Discord&utm_campaign=Badge_Grade_Dashboard)
 
 The Seer is a bot designed to monitor other bots status, this can be useful if you are a developer and wish to monitor your bots while you work on them. You can opt to receive alerts via DM, or a channel of your choosing.
@@ -7,7 +22,7 @@ The Seer is a bot designed to monitor other bots status, this can be useful if y
 You will be alerted if a bot of your choosing either goes offline, or online.
 
 You can either host this bot yourself, or you can invite it to your server by [clicking here](https://discordapp.com/oauth2/authorize?client_id=559113940919910406&scope=bot&permissions=387264 ).
-### Usage (Invite):
+## Usage (Invite):
   - Invite the bot by [clicking me](https://dillinger.io/)
   - Once the bot is in your guild, all you need to do to set it up is run the following commands:
 Note: Two of these commands are optional, however you must enable at least one to receive alerts.
@@ -17,7 +32,7 @@ Note: Two of these commands are optional, however you must enable at least one t
   ts;dm <on/off> // (optional) if enabled, you will receive DM alerts for the bot
   ```
     
-### Usage (Self Host)
+## Usage (Self Host)
 I am going to asume you have the basics installed on your host/computer (i.e. node, npm etc.)
 
   - Download the source, by clicking 'Clone or download -> Download ZIP', or [click me](https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/archive/master.zip)
