@@ -24,7 +24,7 @@ I am going to asume you have the basics installed on your host/computer (i.e. no
   - Extract the zip with software of your choosing
   - Inside you will find a file name 'botconfig-example.json', you must add your token, and ownerid. After you have edited the file, edit the file name to 'botconfig.json', alternatively you can copy the example file and rename it. If you are unsure where to find your bot token & owner id, please refer to these links: [bot token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token) | [owner id](https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
   - Open a console window in the root directory of the bot, then run the command:
-  ```sh
+  ```text
   $ npm install // installs required modules, once completed run the next command:
   $ node . // this will start your bot, you are now ready to use your bot!
    ```
