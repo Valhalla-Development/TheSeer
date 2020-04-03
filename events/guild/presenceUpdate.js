@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const { MessageEmbed } = require('discord.js');
 const SQLite = require('better-sqlite3');
 
@@ -20,26 +21,30 @@ module.exports = async (bot, oldPresence, newPresence) => {
     .setColor('#27d200')
     .setTimestamp();
 
-  if (oldPresence.status === newPresence.status) return;
-
   const statusList = ['online', 'idle', 'dnd'];
-  if (statusList.includes(oldPresence.status) && statusList.includes(newPresence.status)) return;
-  let botid;
   let channelid;
   let dmid;
-  if (watchedbots.botid) botid = watchedbots.botid;
+
   if (watchedbots.chanid) {
     channelid = bot.channels.cache.find((a) => a.id === watchedbots.chanid);
-    if (newPresence.userID === botid) {
-      if (newPresence.status === 'offline') {
-        channelid.send(offlineEmbed);
-      } else {
-        channelid.send(onlineEmbed);
+    if (watchedbots.botid) {
+      const foundBotList = JSON.parse(watchedbots.botid);
+      if (foundBotList.includes(newPresence.userID)) {
+        if (oldPresence.status === newPresence.status) return;
+        if (statusList.includes(oldPresence.status) && statusList.includes(newPresence.status)) return;
+        if (newPresence.status === 'offline') {
+          channelid.send(offlineEmbed);
+        } else {
+          channelid.send(onlineEmbed);
+        }
       }
     }
   }
   if (watchedbots.dmid) {
-    if (newPresence.userID === botid) {
+    const foundBotList = JSON.parse(watchedbots.botid);
+    if (foundBotList.includes(newPresence.userID)) {
+      if (oldPresence.status === newPresence.status) return;
+      if (statusList.includes(oldPresence.status) && statusList.includes(newPresence.status)) return;
       dmid = bot.users.cache.find((a) => a.id === watchedbots.dmid);
       if (newPresence.status === 'offline') {
         dmid.send(offlineEmbed);
