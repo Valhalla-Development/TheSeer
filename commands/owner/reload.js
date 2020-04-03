@@ -10,6 +10,9 @@ const { readdirSync } = require('fs');
 const { join } = require('path');
 const { ownerID, color, prefix } = require('../../botconfig.json');
 
+// This needs more testing, not 100% functional as is
+
+
 module.exports = {
   config: {
     name: 'reload',

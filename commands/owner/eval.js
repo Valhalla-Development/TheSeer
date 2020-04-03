@@ -16,6 +16,8 @@ module.exports = {
     usage: `${prefix}eval <input>`,
   },
   run: async (bot, message, args) => {
+    // Not my code, but works as intended
+
     if (message.author.id !== ownerid) return;
 
     function clean(text) {

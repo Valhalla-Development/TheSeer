@@ -5,13 +5,13 @@ const { prefix } = require('../../botconfig.json');
 const db = new SQLite('./db/db.sqlite');
 
 module.exports = async (bot) => {
-  console.log(`${bot.user.username} is online`);
+  console.log(`${bot.user.username} is online`); // posts in console when online
 
   setTimeout(() => {
     console.log(`Invite link: https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=387264\n`);
   }, 1000);
 
-  // watched bots table
+  // watched bots table creation
   const watchedbots = db.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'watchedbots';").get();
   if (!watchedbots['count(*)']) {
     console.log('watchedbots table created!');

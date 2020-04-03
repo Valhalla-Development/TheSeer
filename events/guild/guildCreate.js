@@ -5,7 +5,7 @@ const { prefix } = require('../../botconfig.json');
 const db = new SQLite('./db/db.sqlite');
 
 module.exports = async (bot, guild) => {
-  console.log(
+  console.log( // logs in console when the bot is added to a guild
     `New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${
       guild.memberCount
     } members!`,
@@ -16,7 +16,7 @@ module.exports = async (bot, guild) => {
     type: 'WATCHING',
   });
 
-  let defaultChannel = '';
+  let defaultChannel = ''; // finds the default channel
   guild.channels.cache.forEach((channel) => {
     if (channel.type === 'text' && defaultChannel === '') {
       if (channel.permissionsFor(guild.me).has('SEND_MESSAGES')) {
@@ -24,7 +24,7 @@ module.exports = async (bot, guild) => {
       }
     }
   });
-  const embed = new MessageEmbed()
+  const embed = new MessageEmbed() // remove this if you like, this sends the following message to the first channel it can
     .setTitle('Hello, I\'m **The Seer**! Thanks for inviting me!')
     .setDescription('The prefix for all my commands is `ts;`, e.g: `ts;help`.\nIf you find any bugs, report them with `-bugreport <bug>`');
   defaultChannel.send({

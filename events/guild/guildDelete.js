@@ -13,7 +13,7 @@ module.exports = async (bot, guild) => {
     type: 'WATCHING',
   });
 
-  // watched bots table
+  // watched bots table delete
   const delpre = db
     .prepare('SELECT count(*) FROM watchedbots WHERE guildid = ?;')
     .get(guild.id);

@@ -25,8 +25,8 @@ module.exports = {
         );
       message.channel.send(noArgs);
     }
-    if (args[0] === 'guildMemberUpdate') {
-      bot.emit('guildMemberUpdate', message.member);
+    if (args[0] === 'presenceUpdate') { // emits the event, mainly used for testing
+      bot.emit('presenceUpdate', message.member);
     }
   },
 };
