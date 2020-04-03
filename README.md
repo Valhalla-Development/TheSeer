@@ -1,7 +1,5 @@
 # The Seer - Discord Bot
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/539c2d29d8e34346bbec2f95ceb3a20b)](https://app.codacy.com/manual/hudsonjd/TheSeer-Discord?utm_source=github.com&utm_medium=referral&utm_content=RagnarLothbrok-Odin/TheSeer-Discord&utm_campaign=Badge_Grade_Settings)
-
 <div align="center">
 <a href="https://discord.gg/Q3ZhdRJ">
 <img src="https://img.shields.io/discord/495602800802398212.svg?colorB=Blue&logo=discord&label=Support&style=for-the-badge" alt="Support">
@@ -17,6 +15,8 @@
 </a>
 <br>
 </div>
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/539c2d29d8e34346bbec2f95ceb3a20b)](https://app.codacy.com/manual/hudsonjd/TheSeer-Discord?utm_source=github.com&utm_medium=referral&utm_content=RagnarLothbrok-Odin/TheSeer-Discord&utm_campaign=Badge_Grade_Settings)
 
 The Seer is a bot designed to monitor other bots status, this can be useful if you are a developer and wish to monitor your bots while you work on them. You can opt to receive alerts via DM, or a channel of your choosing.
 
