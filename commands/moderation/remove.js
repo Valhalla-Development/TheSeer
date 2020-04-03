@@ -14,7 +14,7 @@ module.exports = {
     accessableby: 'Staff',
   },
   run: async (bot, message, args) => {
-    if ((!message.member.hasPermission('MANAGE_GUILD') && (message.author.id !== ownerid))) {
+    if ((!message.member.hasPermission('MANAGE_GUILD') && (message.author.id !== ownerid))) { // returns if the user does not have manage guild, or is the not the owner
       message.channel.send('You need the `MANAGE_SERVER` permission to use this command!').then((msg) => {
         msg.delete({ timeout: 10000 });
       });
@@ -47,7 +47,7 @@ module.exports = {
       return;
     }
 
-    if (mentionBot.id === '559113940919910406') {
+    if (mentionBot.id === bot.user.id) {
       const notMe = new MessageEmbed()
         .setColor(color)
         .setDescription('I can not monitor myself! :slight_frown:');
@@ -67,6 +67,8 @@ module.exports = {
       return;
     }
     const checkExists = db.prepare('SELECT * FROM watchedbots WHERE guildid = ?;').get(message.guild.id);
+    const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
+
     if (!checkExists) {
       const noMonit = new MessageEmbed()
         .setColor(color)
@@ -93,7 +95,6 @@ module.exports = {
             botid: null,
           });
           // activity
-          const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
           let count = 0;
           for (guild of activityGrab) {
             if (guild.botid) {
@@ -125,7 +126,6 @@ module.exports = {
               botid: JSON.stringify(foundBotList),
             });
             // activity
-            const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
             let count = 0;
             for (guild of activityGrab) {
               if (guild.botid) {

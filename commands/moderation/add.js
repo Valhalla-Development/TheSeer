@@ -49,7 +49,7 @@ module.exports = {
       return;
     }
 
-    if (mentionBot.id === '559113940919910406') {
+    if (mentionBot.id === bot.user.id) {
       const notMe = new MessageEmbed()
         .setColor(color)
         .setDescription('I can not monitor myself! :slight_frown:');
@@ -71,6 +71,8 @@ module.exports = {
 
     const botList = [];
     const checkExists = db.prepare('SELECT * FROM watchedbots WHERE guildid = ?;').get(message.guild.id);
+    const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
+
     if (checkExists) {
       if (checkExists.botid) {
         const foundBotList = JSON.parse(checkExists.botid);
@@ -90,7 +92,6 @@ module.exports = {
           botid: JSON.stringify(foundBotList),
         });
         // activity
-        const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
         let count = 0;
         for (guild of activityGrab) {
           if (guild.botid) {
@@ -115,7 +116,6 @@ module.exports = {
           botid: JSON.stringify(botList),
         });
         // activity
-        const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
         let count = 0;
         for (guild of activityGrab) {
           if (guild.botid) {
@@ -142,7 +142,6 @@ module.exports = {
         botid: JSON.stringify(botList),
       });
       // activity
-      const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
       let count = 0;
       for (guild of activityGrab) {
         if (guild.botid) {
