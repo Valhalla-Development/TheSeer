@@ -82,7 +82,6 @@ module.exports = {
       const foundBotList = JSON.parse(checkExists.botid);
       if (foundBotList.includes(mentionBot.id)) {
         if (foundBotList.length === 1) {
-          console.log(foundBotList.length);
           const alreadyMonit = new MessageEmbed()
             .setColor(color)
             .setDescription(`<@${mentionBot.id}> will no longer be monitored! A`);
