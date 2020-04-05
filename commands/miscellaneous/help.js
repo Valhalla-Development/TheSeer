@@ -46,7 +46,8 @@ module.exports = {
         .setTimestamp()
         .setDescription(
           `Hey, I'm [**__The Seer__**]! A bot that monitors other bots!!\nRun \`${prefix}help <command>\` to see command specific instructions!\nAll commands must be preceded by \`${prefix}\``,
-        );
+        )
+        .setFooter(`My prefix is ${prefix}`, bot.user.avatarURL());
       message.channel.send(embed);
     } else {
       const command = bot.commands.get(args[0].toLowerCase())
