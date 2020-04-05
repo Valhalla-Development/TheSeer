@@ -15,7 +15,6 @@ module.exports = async (bot, message) => {
   const commandfile = bot.commands.get(cmd) || bot.commands.get(bot.aliases.get(cmd));
   if (commandfile) {
     commandfile.run(bot, message, args);
-    console.log(commandfile.config.name);
     if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
       const cmdToDel = ['help', 'invite', 'ping', 'support', 'uptime', 'say'];
       if (cmdToDel.includes(commandfile.config.name)) {
