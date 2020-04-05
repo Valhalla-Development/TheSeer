@@ -13,9 +13,11 @@ module.exports = async (bot, message) => {
 
   if (!message.content.startsWith(prefix)) return;
   const commandfile = bot.commands.get(cmd) || bot.commands.get(bot.aliases.get(cmd));
-  if (commandfile) commandfile.run(bot, message, args);
-  if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
-    message.delete();
+  if (commandfile) {
+    commandfile.run(bot, message, args);
+    if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
+      message.delete();
+    }
   }
 
   // Logging
