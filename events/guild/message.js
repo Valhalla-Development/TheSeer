@@ -18,7 +18,6 @@ module.exports = async (bot, message) => {
     console.log(commandfile.config.name);
     if (message.member.guild.me.hasPermission('MANAGE_MESSAGES')) {
       const cmdToDel = ['help', 'invite', 'ping', 'support', 'uptime', 'say'];
-      console.log(cmdToDel.includes(commandfile.config.name));
       if (cmdToDel.includes(commandfile.config.name)) {
         message.delete();
       }
