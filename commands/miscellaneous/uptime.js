@@ -51,8 +51,6 @@ module.exports = {
       .setColor(color)
       .setDescription(`${uptime}`);
 
-    message.channel.send(botembed).then((msg) => {
-      msg.delete({ timeout: 10000 });
-    });
+    message.channel.send(botembed);
   },
 };

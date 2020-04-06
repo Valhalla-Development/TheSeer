@@ -22,8 +22,6 @@ module.exports = {
     const embed = new MessageEmbed()
       .setColor(color)
       .setDescription(`My ping is: \`${ping}\` ms`);
-    message.channel.send(embed).then((msg) => {
-      msg.delete({ timeout: 10000 });
-    });
+    message.channel.send(embed);
   },
 };
