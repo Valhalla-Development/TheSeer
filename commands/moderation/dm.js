@@ -54,7 +54,7 @@ module.exports = {
           const turnedOn = new MessageEmbed()
             .setColor(color)
             .setDescription('You will now receive DM alerts!');
-          message.author.send(turnedOn).then(() => {
+          message.author.send(turnedOn).then(() => { // This sends a test message via DM, if it fails, it means the user has DMs disabled
             message.channel.send(turnedOn).then((msg) => {
               msg.delete({ timeout: 10000 });
             });
@@ -69,7 +69,7 @@ module.exports = {
         const turnedOn = new MessageEmbed()
           .setColor(color)
           .setDescription('You will now receive DM alerts!');
-        message.author.send(turnedOn).then(() => {
+        message.author.send(turnedOn).then(() => { // This sends a test message via DM, if it fails, it means the user has DMs disabled
           message.channel.send(turnedOn).then((msg) => {
             msg.delete({ timeout: 10000 });
           });
