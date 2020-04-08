@@ -6,6 +6,7 @@ const db = new SQLite('./db/db.sqlite');
 
 module.exports = async (bot) => {
   console.log(`${bot.user.username} is online`); // posts in console when online
+  console.log(`Scanning for guilds...\n\x1b[36m[-]\x1b[0m ${bot.guilds.cache.map((n) => `${n.name} (ID: \x1b[36m${n.id}\x1b[0m)`).join('\x1b[36m\n[-]\x1b[0m ')}`);
 
   setTimeout(() => {
     console.log(`Invite link: https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&scope=bot&permissions=387264\n`);
