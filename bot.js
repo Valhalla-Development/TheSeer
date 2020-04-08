@@ -17,7 +17,7 @@ if (process.version.slice(1).split('.')[0] < 12) { // Check Node version
 
 if (logging !== true && logging !== false) { // Checks if logging is enabled/disabled, exits if neither is selected
   console.log(
-    new TypeError('[Ragnarok] The \'logging\' value must be true or false.'),
+    new TypeError('[The Seer] The \'logging\' value must be true or false.'),
   );
   process.exit(1);
 }
