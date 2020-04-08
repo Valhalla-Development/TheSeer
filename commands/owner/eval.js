@@ -25,7 +25,6 @@ module.exports = {
       return text;
     }
 
-    console.log(`\n${message.author.username}#${message.author.discriminator} Used .Eval Command On ${message.guild.name}`);
     const argresult = args.join(' ');
     if (message.author.id !== ownerid) {
       // Check if user have Permissions to use the command
@@ -39,7 +38,7 @@ module.exports = {
 
       if (typeof evaled !== 'string') evaled = require('util').inspect(evaled);
       if (evaled.includes(bot.token)) {
-        console.log(`\n${message.author.username}#${message.author.discriminator} Try To Get The Bot Token On ${message.guild.name} (ServerID: ${message.guild.id}).\n`);
+        console.log(`\n${message.author.username}#${message.author.discriminator} Tried to get the bot token on ${message.guild.name} (ServerID: ${message.guild.id}).\n`);
         return message.channel.send('', {
           embed: {
             color,
