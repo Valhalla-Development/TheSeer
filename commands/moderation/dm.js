@@ -36,6 +36,10 @@ module.exports = {
       return;
     }
 
+    const noDm = new MessageEmbed()
+      .setColor(color)
+      .setDescription('You need to have DM from server members enabled!');
+
     const checkExists = db.prepare('SELECT dmid FROM watchedbots WHERE guildid = ?;').get(message.guild.id);
     if (args[0] === 'on') {
       if (checkExists) {
@@ -50,27 +54,31 @@ module.exports = {
           const turnedOn = new MessageEmbed()
             .setColor(color)
             .setDescription('You will now receive DM alerts!');
-          message.channel.send(turnedOn).then((msg) => {
-            msg.delete({ timeout: 10000 });
-          });
-          const update = db.prepare('UPDATE watchedbots SET dmid = (@dmid) WHERE guildid = (@guildid);');
-          update.run({
-            guildid: `${message.guild.id}`,
-            dmid: `${message.author.id}`,
-          });
+          message.author.send(turnedOn).then(() => {
+            message.channel.send(turnedOn).then((msg) => {
+              msg.delete({ timeout: 10000 });
+            });
+            const update = db.prepare('UPDATE watchedbots SET dmid = (@dmid) WHERE guildid = (@guildid);');
+            update.run({
+              guildid: `${message.guild.id}`,
+              dmid: `${message.author.id}`,
+            });
+          }).catch(() => message.channel.send(noDm));
         }
       } else {
         const turnedOn = new MessageEmbed()
           .setColor(color)
           .setDescription('You will now receive DM alerts!');
-        message.channel.send(turnedOn).then((msg) => {
-          msg.delete({ timeout: 10000 });
-        });
-        const insert = db.prepare('INSERT INTO watchedbots (guildid, dmid) VALUES (@guildid, @dmid);');
-        insert.run({
-          guildid: `${message.guild.id}`,
-          dmid: `${message.author.id}`,
-        });
+        message.author.send(turnedOn).then(() => {
+          message.channel.send(turnedOn).then((msg) => {
+            msg.delete({ timeout: 10000 });
+          });
+          const insert = db.prepare('INSERT INTO watchedbots (guildid, dmid) VALUES (@guildid, @dmid);');
+          insert.run({
+            guildid: `${message.guild.id}`,
+            dmid: `${message.author.id}`,
+          });
+        }).catch(() => message.channel.send(noDm));
       }
     } else if (args[0] === 'off') {
       if (checkExists) {
