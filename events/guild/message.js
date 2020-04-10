@@ -11,7 +11,7 @@ module.exports = async (bot, message) => {
   const oargresult = logArgs.join(' ');
   const cmd = args.shift().toLowerCase();
 
-  if (!message.content.startsWith(prefix)) return;
+  if (!message.content.toLowerCase().startsWith(prefix)) return;
   const commandfile = bot.commands.get(cmd) || bot.commands.get(bot.aliases.get(cmd));
   if (commandfile) {
     commandfile.run(bot, message, args);
