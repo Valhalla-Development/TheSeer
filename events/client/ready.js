@@ -23,11 +23,12 @@ module.exports = async (bot) => {
   }
 
   // activity
-  const dataGrab = db.prepare('SELECT botid FROM watchedbots').all();
+  const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
   let count = 0;
-  for (guild of dataGrab) {
-    if (guild.botid) {
-      const arr = guild.botid.slice(1, guild.botid.length - 1).split(',');
+  let dbdata;
+  for (dbdata of activityGrab) {
+    if (dbdata.botid) {
+      const arr = dbdata.botid.slice(1, dbdata.botid.length - 1).split(',');
       count += arr.length;
     }
   }
