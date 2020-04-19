@@ -71,7 +71,16 @@ module.exports = {
 
     const botList = [];
     const checkExists = db.prepare('SELECT * FROM watchedbots WHERE guildid = ?;').get(message.guild.id);
+    // activity
     const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
+    let count = 0;
+    let dbdata;
+    for (dbdata of activityGrab) {
+      if (dbdata.botid) {
+        const arr = dbdata.botid.slice(1, dbdata.botid.length - 1).split(',');
+        count += arr.length;
+      }
+    }
 
     if (checkExists) {
       if (checkExists.botid) {
@@ -92,13 +101,6 @@ module.exports = {
           botid: JSON.stringify(foundBotList),
         });
         // activity
-        let count = 0;
-        for (guild of activityGrab) {
-          if (guild.botid) {
-            const arr = guild.botid.slice(1, guild.botid.length - 1).split(',');
-            count += arr.length;
-          }
-        }
         bot.user.setActivity(`${count} Bots Across ${bot.guilds.cache.size} Guilds | ${prefix}help`, {
           type: 'WATCHING',
         });
@@ -116,13 +118,6 @@ module.exports = {
           botid: JSON.stringify(botList),
         });
         // activity
-        let count = 0;
-        for (guild of activityGrab) {
-          if (guild.botid) {
-            const arr = guild.botid.slice(1, guild.botid.length - 1).split(',');
-            count += arr.length;
-          }
-        }
         bot.user.setActivity(`${count} Bots Across ${bot.guilds.cache.size} Guilds | ${prefix}help`, {
           type: 'WATCHING',
         });
@@ -142,13 +137,6 @@ module.exports = {
         botid: JSON.stringify(botList),
       });
       // activity
-      let count = 0;
-      for (guild of activityGrab) {
-        if (guild.botid) {
-          const arr = guild.botid.slice(1, guild.botid.length - 1).split(',');
-          count += arr.length;
-        }
-      }
       bot.user.setActivity(`${count} Bots Across ${bot.guilds.cache.size} Guilds | ${prefix}help`, {
         type: 'WATCHING',
       });
