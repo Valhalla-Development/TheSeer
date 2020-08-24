@@ -20,6 +20,14 @@ module.exports = class Util {
 		return `${path.dirname(require.main.filename)}${path.sep}`;
 	}
 
+	removeDuplicates(arr) {
+		return [...new Set(arr)];
+	}
+
+	capitalise(string) {
+		return string.split(' ').map(str => str.slice(0, 1).toUpperCase() + str.slice(1)).join(' ');
+	}
+
 	async loadCommands() {
 		return glob(`${this.directory}Commands/**/*.js`).then(commands => {
 			for (const commandFile of commands) {
