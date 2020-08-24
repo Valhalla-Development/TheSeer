@@ -1,6 +1,13 @@
+# Node FIles
 node_modules/
-botconfig.json
-db/db.sqlite
-db/db.sqlite-shm
-db/db.sqlite-wal
+
+# Database files
+Storage/DB/db.sqlite
+Storage/DB/db.sqlite-shm
+Storage/DB/db.sqlite-wal
+
+# Config File
+config.json
+
+# Irritating file create by Mac
 .DS_Store
