@@ -6,6 +6,10 @@ module.exports = class extends Event {
 	async run(message) {
 		if (!message.guild || message.author.bot) return;
 
+		if (!message.guild.me.hasPermission('SEND_MESSAGES')) {
+			return;
+		}
+
 		const mentionRegex = RegExp(`^<@!${this.client.user.id}>$`);
 
 		if (message.content.match(mentionRegex)) message.channel.send(`My prefix for ${message.guild.name} is \`${this.client.prefix}\`.`);
