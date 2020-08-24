@@ -1,0 +1,8 @@
+{
+  "token": "REDACTED",
+  "supportGuild": "REDACTED",
+  "supportChannel": "REDACTED",
+  "ownerID": "REDACTED",
+  "prefix": "ts;",
+  "logging": true
+}
