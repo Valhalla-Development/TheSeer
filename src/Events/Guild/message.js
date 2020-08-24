@@ -13,6 +13,9 @@ module.exports = class extends Event {
 		const [cmd, ...args] = message.content.slice(this.client.prefix.length).trim().split(/ +/g);
 
 		const command = this.client.commands.get(cmd.toLowerCase()) || this.client.commands.get(this.client.aliases.get(cmd.toLowerCase()));
+
+		if (!message.content.startsWith(this.client.prefix)) return;
+
 		if (command) {
 			command.run(message, args);
 		}
