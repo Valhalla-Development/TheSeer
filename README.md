@@ -1,5 +1,8 @@
 # The Seer - Discord Bot
 
+## Project has gone stale due to my focus on my other Discord bot, planning on updating some if The Seer code when I have finished with my current goal on my other bot.
+
+
 <div align="center">
 <a href="https://discord.gg/Q3ZhdRJ">
 <img src="https://img.shields.io/discord/495602800802398212.svg?colorB=Blue&logo=discord&label=Support&style=for-the-badge" alt="Support">
@@ -41,6 +44,6 @@ I am going to asume you have the basics installed on your host/computer (i.e. no
   - Inside you will find a file named 'botconfig-example.json', you must add your token, and ownerid. After you have edited the file, edit the file name to 'botconfig.json', alternatively you can copy the example file and rename it. If you are unsure where to find your bot token & owner id, please refer to these links: [bot token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token) | [owner id](https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
   - Open a console window in the root directory of the bot, then run the following command:
   ```text
-  $ npm install // installs required modules, once completed run the next command:
+  $ yarn install // installs required modules, once completed run the next command:
   $ node . // this will start your bot, you are now ready to use your bot!
    ```

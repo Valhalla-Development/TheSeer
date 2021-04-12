@@ -1,18 +1,16 @@
 {
   "name": "theseer",
-  "version": "2.1.011",
-  "description": "A bot that monitors other bots!",
+  "version": "2.1.1",
+  "description": "A bot that monitors other bots.",
   "main": "src/index",
   "repository": "https://github.com/RagnarLothbrok-Odin/TheSeer-Discord.git",
   "author": "Ragnar Lothbrok <30740511+RagnarLothbrok-Odin@users.noreply.github.com>",
   "license": "MIT",
-  "devDependencies": {
-    "eslint": "^7.7.0",
-    "eslint-config-tesseract": "^0.0.3"
-  },
   "dependencies": {
-    "better-sqlite3": "^7.1.0",
-    "discord.js": "^12.3.1",
-    "moment": "^2.27.0"
+    "better-sqlite3": "^7.1.4",
+    "discord.js": "^12.5.3",
+    "glob": "^7.1.6",
+    "moment": "^2.29.1",
+    "ms": "^2.1.3"
   }
 }
