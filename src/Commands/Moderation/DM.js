@@ -18,7 +18,7 @@ module.exports = class extends Command {
 			const embed = new MessageEmbed()
 				.setColor(message.guild.me.displayHexColor || 'A10000')
 				.addField(`**${this.client.user.username} - DM**`,
-					`**◎ Error:** You need to have \`MANAGE_SERVER\` permission to use this command`);
+					`**◎ Error:** You need to have \`MANAGE_GUILD\` permission to use this command`);
 			message.channel.send(embed).then((m) => m.delete({ timeout: 15000 }));
 			return;
 		}
