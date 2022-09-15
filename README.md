@@ -33,18 +33,18 @@ You can either host this bot yourself, or you can invite it to your server by [c
   Note: Two of these commands are optional, however you must enable at least one to receive alerts.
 
 ```text
-ts;add <@bot> // tag a bot of your choosing, there is no limit to how many bots you can watch
-ts;channel <#channel> // (optional) tag a channel you wish the alerts to be sent to
-ts;dm <on/off> // (optional) if enabled, you will receive DM alerts for the bot
+/add <@bot> // tag a bot of your choosing, there is no limit to how many bots you can watch
+/channel <#channel> // (optional) tag a channel you wish the alerts to be sent to
+/dm// (optional) if enabled, you will receive DM alerts for the bot
 ```
 
 ## Usage (Self Host)
 
-I am going to asume you have the basics installed on your host/computer (i.e. node, npm etc.)
+I am going to assume you have the basics installed on your host/computer (i.e. node, npm etc.)
 
 - Download the source, by clicking 'Clone or download -> Download ZIP', or [click me](https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/archive/master.zip)
 - Extract the zip with software of your choosing
-- Inside you will find a file named 'botconfig-example.json', you must add your token, and ownerid. After you have edited the file, edit the file name to 'botconfig.json', alternatively you can copy the example file and rename it. If you are unsure where to find your bot token & owner id, please refer to these links: [bot token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token) | [owner id](https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
+- Inside you will find a file named 'config-example.json', you must add the specified values. After you have edited the file, edit the file name to 'config.json', alternatively you can copy the example file and rename it. If you are unsure where to find your bot token & owner id, please refer to these links: [bot token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token) | [owner id](https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
 - Open a console window in the root directory of the bot, then run the following command:
 
 ```text
