@@ -10,18 +10,17 @@ export const EventF = class extends Event {
     // Selects table from db, if does not exist, return
     const watchedbots = db.prepare('SELECT * FROM watchedbots WHERE guildid = ?').get(newPresence.guild.id);
 
-    if (!watchedbots) {
-      return;
-    }
+    if (!watchedbots) return;
+
     const offlineEmbed = new EmbedBuilder()
       .setTitle('The Seer Report')
-      .setDescription(`<@${newPresence.userID}> is **OFFLINE**`)
+      .setDescription(`<@${newPresence.userId}> is **OFFLINE**`)
       .setColor('#ff2f2f')
       .setTimestamp();
 
     const onlineEmbed = new EmbedBuilder()
       .setTitle('The Seer Report')
-      .setDescription(`<@${newPresence.userID}> is **ONLINE**`)
+      .setDescription(`<@${newPresence.userId}> is **ONLINE**`)
       .setColor('#27d200')
       .setTimestamp();
 
@@ -30,47 +29,31 @@ export const EventF = class extends Event {
     let channelid;
     let dmid;
 
-    if (watchedbots.chanid) {
-      // if the channel is present in db, find it
-      channelid = this.client.channels.cache.find((a) => a.id === watchedbots.chanid);
-      if (watchedbots.botid) {
-        // there is botid data in db, parse the array
-        const foundBotList = JSON.parse(watchedbots.botid);
-        // if the presenceUpdate id exists in the db...
-        if (foundBotList.includes(newPresence.userID)) {
-          // if the status has not changed (this event also monitors activity changes)
-          if (oldPresence.status === newPresence.status) return;
-          // if the status changed between online, idle or dnd, return
-          if (statusList.includes(oldPresence.status) && statusList.includes(newPresence.status)) return;
-          // if the status changed to offline
-          if (newPresence.status === 'offline') {
-            channelid.send(offlineEmbed);
-            // if it changed to online
-          } else {
-            channelid.send(onlineEmbed);
-          }
-        }
-      }
-    }
+    if (!oldPresence || !oldPresence.status) return;
 
-    // if dmid data in db
-    if (watchedbots.dmid) {
-      // parse the data
-      const foundBotList = JSON.parse(watchedbots.botid);
-      // if the presenceUpdate id exists in the db
-      if (foundBotList.includes(newPresence.userID)) {
-        // if the status has not changed (this event also monitors activity changes)
-        if (oldPresence.status === newPresence.status) return;
-        // if the status changed between online, idle or dnd, return
-        if (statusList.includes(oldPresence.status) && statusList.includes(newPresence.status)) return;
-        // if the dmid is present in db, find it
-        dmid = this.client.users.cache.find((a) => a.id === watchedbots.dmid);
-        // if the status changed to offline
-        if (newPresence.status === 'offline') {
-          dmid.send(offlineEmbed);
-          // if the status changed to online
-        } else {
-          dmid.send(onlineEmbed);
+    if (newPresence.status) {
+      if (watchedbots.chanid) {
+        // if the channel is present in db, find it
+        channelid = this.client.channels.cache.get(watchedbots.chanid);
+
+        if (watchedbots.botid) {
+          // there is botid data in db, parse the array
+          const foundBotList = JSON.parse(watchedbots.botid);
+          // if the presenceUpdate id exists in the db...
+          if (foundBotList.includes(newPresence.userId)) {
+            // if the status has not changed (this event also monitors activity changes)
+            if (oldPresence.status === newPresence.status) return;
+            // if the status changed between online, idle or dnd, return
+            if (statusList.includes(oldPresence.status) && statusList.includes(newPresence.status)) return;
+            // if the status changed to offline
+            if (newPresence.status === 'offline') {
+              channelid.send({ embeds: [offlineEmbed] });
+              if (watchedbots.dmid) dmid.send({ embeds: [offlineEmbed] });
+            } else {
+              channelid.send({ embeds: [onlineEmbed] });
+              if (watchedbots.dmid) dmid.send({ embeds: [onlineEmbed] });
+            }
+          }
         }
       }
     }
