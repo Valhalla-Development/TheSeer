@@ -1,16 +1,24 @@
-const Command = require('../../Structures/Command');
+import { ButtonBuilder, ActionRowBuilder, ButtonStyle, EmbedBuilder } from 'discord.js';
+import Command from '../../Structures/Command.js';
 
-module.exports = class extends Command {
+export const CommandF = class extends Command {
+  constructor(...args) {
+    super(...args, {
+      description: 'Displays an invite link to the bots support server.',
+      category: 'Miscellaneous'
+    });
+  }
 
-	constructor(...args) {
-		super(...args, {
-			description: 'Displays an invite link to the bots support server.',
-			category: 'Informative'
-		});
-	}
+  async run(interaction) {
+    const embed = new EmbedBuilder()
+      .setColor(this.client.utils.color(interaction.guild.members.me.displayHexColor))
+      .addFields({ name: `**${this.client.user.username} - Support**`, value: 'Need support?' });
 
-	async run(message) {
-		message.channel.send('**◎ Support Server Invite**: https://discord.gg/Q3ZhdRJ');
-	}
+    const buttonA = new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel('Join Guild').setURL('https://discord.gg/Q3ZhdRJ');
 
+    const row = new ActionRowBuilder().addComponents(buttonA);
+    interaction.reply({ components: [row], embeds: [embed] });
+  }
 };
+
+export default CommandF;

@@ -1,57 +1,59 @@
-const { Client, Collection } = require('discord.js');
-const Util = require('./Util.js');
+import { Client, Collection, PermissionsBitField, GatewayIntentBits, Partials } from 'discord.js';
+import Util from './Util.js';
 
-module.exports = class TheSeerClient extends Client {
+export const TheSeerClient = class TheSeerClient extends Client {
+  constructor(options = {}) {
+    super({
+      intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.DirectMessages, GatewayIntentBits.GuildPresences],
+      partials: [Partials.User, Partials.Channel, Partials.GuildMember]
+    });
+    this.validate(options);
 
-	constructor(options = {}) {
-		super({
-			disableMentions: 'everyone'
-		});
-		this.validate(options);
+    this.commands = new Collection();
 
-		this.commands = new Collection();
+    this.events = new Collection();
 
-		this.aliases = new Collection();
+    this.utils = new Util(this);
 
-		this.events = new Collection();
+    this.config = options;
 
-		this.utils = new Util(this);
+    // Error function for notifiers
+    function sendError(client, message) {
+      const channel = client.channels.cache.get('685973401772621843');
+      if (!channel) return;
 
-		this.owners = options.ownerID;
+      channel.send(`\`\`\`js\n${message}\`\`\``);
+    }
 
-		// error notifiers
-		this.on('error', (err) => {
-			console.error(err);
-		});
+    process.on('uncaughtException', (error) => {
+      console.error(error);
+      sendError(this, error.stack);
+    });
 
-		this.on('warn', (err) => {
-			console.warn(err);
-		});
+    process.on('unhandledRejection', (error) => {
+      console.error(error);
+      sendError(this, error.stack);
+    });
+  }
 
-		if (process.version.slice(1).split('.')[0] < 12) {
-			console.log(new Error(`[${this.user.username}] You must have NodeJS 12 or higher installed on your PC.`));
-			process.exit(1);
-		}
-	}
+  validate(options) {
+    if (typeof options !== 'object') throw new TypeError('Options should be a type of Object.');
 
-	validate(options) {
-		if (typeof options !== 'object') throw new TypeError('Options should be a type of Object.');
+    if (!options.token) throw new Error('You must pass the token for the client.');
+    this.token = options.token;
 
-		if (!options.token) throw new Error('You must pass the token for the client.');
-		this.token = options.token;
+    if (options.logging !== true && options.logging !== false) throw new Error('The \'logging\' value must be true or false.');
+    this.logging = options.logging;
 
-		if (options.logging !== true && options.logging !== false) throw new Error('The \'logging\' value must be true or false.');
-		this.logging = options.logging;
+    if (!options.defaultPerms) throw new Error('You must pass default perm(s) for the Client.');
+    this.defaultPerms = new PermissionsBitField(options.defaultPerms).freeze();
+  }
 
-		if (!options.prefix) throw new Error('You must pass a prefix for the client.');
-		if (typeof options.prefix !== 'string') throw new TypeError('Prefix should be a type of String.');
-		this.prefix = options.prefix;
-	}
-
-	async start(token = this.token) {
-		this.utils.loadCommands();
-		this.utils.loadEvents();
-		super.login(token);
-	}
-
+  async start(token = this.token) {
+    await this.utils.loadCommands();
+    await this.utils.loadEvents();
+    await super.login(token);
+  }
 };
+
+export default TheSeerClient;

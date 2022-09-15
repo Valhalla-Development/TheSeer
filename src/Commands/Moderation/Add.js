@@ -1,150 +1,86 @@
-const Command = require('../../Structures/Command');
-const { MessageEmbed } = require('discord.js');
-const SQLite = require('better-sqlite3');
+import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import SQLite from 'better-sqlite3';
+import Command from '../../Structures/Command.js';
+
 const db = new SQLite('./Storage/DB/db.sqlite');
 
-module.exports = class extends Command {
+const data = new SlashCommandBuilder()
+  .setName('add')
+  .setDescription('Adds a bot to the watchlist')
+  .addUserOption((option) => option.setName('target').setDescription('The bot you wish to monitor').setRequired(true));
 
-	constructor(...args) {
-		super(...args, {
-			description: 'Adds a bot to the watchlist.',
-			category: 'Moderation',
-			usage: '<@bot>'
-		});
-	}
+export const CommandF = class extends Command {
+  constructor(...args) {
+    super(...args, {
+      description: 'Adds a bot to the watchlist',
+      category: 'Moderation',
+      userPerms: ['ManageGuild'],
+      options: data
+    });
+  }
 
-	async run(message, args) {
-		if (!message.member.hasPermission('MANAGE_GUILD') && !this.client.owners.includes(message.author.id)) {
-			const embed = new MessageEmbed()
-				.setColor(message.guild.me.displayHexColor || 'A10000')
-				.addField(`**${this.client.user.username} - Add**`,
-					`**◎ Error:** You need to have \`MANAGE_GUILD\` permission to use this command`);
-			message.channel.send(embed).then((m) => m.delete({ timeout: 15000 }));
-			return;
-		}
+  async run(interaction) {
+    const fetchDb = db.prepare('SELECT * FROM watchedbots WHERE guildid = ?;').get(interaction.guild.id);
 
-		if (!message.member.guild.me.hasPermission('EMBED_LINKS')) {
-			const embed = new MessageEmbed()
-				.setColor(message.guild.me.displayHexColor || 'A10000')
-				.addField(`**${this.client.user.username} - Add**`,
-					`**◎ Error:** I need to have \`EMBED_LINKS\` permission to use this command`);
-			message.channel.send(embed).then((m) => m.delete({ timeout: 15000 }));
-			return;
-		}
+    const target = interaction.options.getUser('target');
 
-		if (!args[0]) {
-			const embed = new MessageEmbed()
-				.setColor(message.guild.me.displayHexColor || 'A10000')
-				.addField(`**${this.client.user.username} - Add**`,
-					`**◎ Error:** Incorrect usage! Please use: \`${this.client.prefix}add <@bot>`);
-			message.channel.send(embed).then((m) => m.delete({ timeout: 15000 }));
-			return;
-		}
+    if (!fetchDb || (!fetchDb.chanid && fetchDb.dmid)) {
+      // also do if it cant find the channel bub like it was deleted
+      const embed = new EmbedBuilder().setColor(this.client.utils.color(interaction.guild.members.me.displayHexColor)).addFields({
+        name: `**${this.client.user.username} - Add**`,
+        value: '**◎ Error:** Please set a channel, or enable DM alerts before configuring the target.'
+      });
+      interaction.reply({ ephemeral: true, embeds: [embed] });
+      return;
+    }
 
-		const mentionBot = message.mentions.members.first();
+    if (target.id === this.client.user.id) {
+      const embed = new EmbedBuilder().setColor(this.client.utils.color(interaction.guild.members.me.displayHexColor)).addFields({
+        name: `**${this.client.user.username} - Add**`,
+        value: '**◎ Error:** I can not monitor myself.'
+      });
+      interaction.reply({ ephemeral: true, embeds: [embed] });
+      return;
+    }
 
-		if (!mentionBot) {
-			const embed = new MessageEmbed()
-				.setColor(message.guild.me.displayHexColor || 'A10000')
-				.addField(`**${this.client.user.username} - Add**`,
-					`**◎ Error:** You need to mention a bot!`);
-			message.channel.send(embed).then((m) => m.delete({ timeout: 15000 }));
-			return;
-		}
+    if (!target.bot) {
+      const embed = new EmbedBuilder().setColor(this.client.utils.color(interaction.guild.members.me.displayHexColor)).addFields({
+        name: `**${this.client.user.username} - Add**`,
+        value: '**◎ Error:** The target was not a bot.'
+      });
+      interaction.reply({ ephemeral: true, embeds: [embed] });
+      return;
+    }
 
-		if (mentionBot.id === this.client.user.id) {
-			const embed = new MessageEmbed()
-				.setColor(message.guild.me.displayHexColor || 'A10000')
-				.addField(`**${this.client.user.username} - Add**`,
-					`**◎ Error:** I can not monitor myself.`);
-			message.channel.send(embed).then((m) => m.delete({ timeout: 15000 }));
-			return;
-		}
+    let foundDb;
 
-		if (!mentionBot.user.bot) {
-			const embed = new MessageEmbed()
-				.setColor(message.guild.me.displayHexColor || 'A10000')
-				.addField(`**${this.client.user.username} - Add**`,
-					`**◎ Error:** the tagged user, was not a bot.`);
-			message.channel.send(embed).then((m) => m.delete({ timeout: 15000 }));
-			return;
-		}
+    if (!fetchDb || !fetchDb.botid) {
+      foundDb = [];
+    } else {
+      foundDb = await JSON.parse(fetchDb.botid);
+    }
 
-		const botList = [];
-		const checkExists = db.prepare('SELECT * FROM watchedbots WHERE guildid = ?;').get(message.guild.id);
-		// activity
-		const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
-		let count = 0;
-		let dbdata;
-		for (dbdata of activityGrab) {
-			if (dbdata.botid) {
-				const arr = dbdata.botid.slice(1, dbdata.botid.length - 1).split(',');
-				count += arr.length;
-			}
-		}
+    if (foundDb.includes(target.id)) {
+      const embed = new EmbedBuilder().setColor(this.client.utils.color(interaction.guild.members.me.displayHexColor)).addFields({
+        name: `**${this.client.user.username} - Add**`,
+        value: '**◎ Error:** The target is already being monitored.'
+      });
+      interaction.reply({ ephemeral: true, embeds: [embed] });
+    } else {
+      foundDb.push(target.id);
+      const update = db.prepare('UPDATE watchedbots SET botid = (@botid) WHERE guildid = (@guildid)');
+      update.run({
+        guildid: `${interaction.guild.id}`,
+        botid: JSON.stringify(foundDb)
+      });
 
-		if (checkExists) {
-			if (checkExists.botid) {
-				const foundBotList = JSON.parse(checkExists.botid);
-				if (foundBotList.includes(mentionBot.id)) {
-					const embed = new MessageEmbed()
-						.setColor(message.guild.me.displayHexColor || 'A10000')
-						.addField(`**${this.client.user.username} - Add**`,
-							`**◎ Error:** <@${mentionBot.id}> is already being monitored.`);
-					message.channel.send(embed).then((m) => m.delete({ timeout: 15000 }));
-					return;
-				}
-				foundBotList.push(mentionBot.id);
-				const update = db.prepare('UPDATE watchedbots SET botid = (@botid) WHERE guildid = (@guildid)');
-				update.run({
-					guildid: `${message.guild.id}`,
-					botid: JSON.stringify(foundBotList)
-				});
-				// activity
-				this.client.user.setActivity(`${count.toLocaleString('en')} Bots Across ${this.client.guilds.cache.size.toLocaleString('en')} Guilds | ${this.client.prefix}help`, {
-					type: 'WATCHING'
-				});
-				const embed = new MessageEmbed()
-					.setColor(message.guild.me.displayHexColor || 'A10000')
-					.addField(`**${this.client.user.username} - Add**`,
-						`**◎ Success:** <@${mentionBot.id}> is now being monitored.`);
-				message.channel.send(embed);
-			} else {
-				botList.push(mentionBot.id);
-				const update = db.prepare('UPDATE watchedbots SET botid = (@botid) WHERE guildid = (@guildid)');
-				update.run({
-					guildid: `${message.guild.id}`,
-					botid: JSON.stringify(botList)
-				});
-				// activity
-				this.client.user.setActivity(`${count.toLocaleString('en')} Bots Across ${this.client.guilds.cache.size.toLocaleString('en')} Guilds | ${this.client.prefix}help`, {
-					type: 'WATCHING'
-				});
-
-				const embed = new MessageEmbed()
-					.setColor(message.guild.me.displayHexColor || 'A10000')
-					.addField(`**${this.client.user.username} - Add**`,
-						`**◎ Success:** <@${mentionBot.id}> is now being monitored.`);
-				message.channel.send(embed);
-			}
-		} else {
-			botList.push(mentionBot.id);
-			const insert = db.prepare('INSERT INTO watchedbots (guildid, botid) VALUES (@guildid, @botid)');
-			insert.run({
-				guildid: `${message.guild.id}`,
-				botid: JSON.stringify(botList)
-			});
-			// activity
-			this.client.user.setActivity(`${count.toLocaleString('en')} Bots Across ${this.client.guilds.cache.size.toLocaleString('en')} Guilds | ${this.client.prefix}help`, {
-				type: 'WATCHING'
-			});
-
-			const embed = new MessageEmbed()
-				.setColor(message.guild.me.displayHexColor || 'A10000')
-				.addField(`**${this.client.user.username} - Add**`,
-					`**◎ Success:** <@${mentionBot.id}> is now being monitored.`);
-			message.channel.send(embed);
-		}
-	}
-
+      const embed = new EmbedBuilder().setColor(this.client.utils.color(interaction.guild.members.me.displayHexColor)).addFields({
+        name: `**${this.client.user.username} - Add**`,
+        value: '**◎ Success:** The target is now being monitored.'
+      });
+      interaction.reply({ ephemeral: true, embeds: [embed] });
+    }
+  }
 };
+
+export default CommandF;

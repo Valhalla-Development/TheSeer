@@ -1,5 +1,6 @@
-const TheSeerClient = require('./Structures/TheSeerClient');
-const config = require('../config.json');
+import TheSeerClient from './Structures/TheSeerClient.js';
 
-const client = new TheSeerClient(config);
+import * as config from '../config.json' assert { type: 'json' };
+
+const client = new TheSeerClient(config.default);
 client.start();

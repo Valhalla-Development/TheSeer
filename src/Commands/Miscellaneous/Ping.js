@@ -1,30 +1,33 @@
-const Command = require('../../Structures/Command');
-const { MessageEmbed } = require('discord.js');
+import { EmbedBuilder } from 'discord.js';
+import Command from '../../Structures/Command.js';
 
-module.exports = class extends Command {
+export const CommandF = class extends Command {
+  constructor(...args) {
+    super(...args, {
+      description: 'Displays bot and API ping.',
+      category: 'Miscellaneous'
+    });
+  }
 
-	constructor(...args) {
-		super(...args, {
-			aliases: ['pong'],
-			description: 'Displays bot and API ping.',
-			category: 'Informative'
-		});
-	}
+  async run(interaction) {
+    const msg = await interaction.channel.send({ content: 'Pinging...' });
 
-	async run(message) {
-		const msg = await message.channel.send('Pinging...');
+    const latency = msg.createdTimestamp - interaction.createdTimestamp;
 
-		const latency = msg.createdTimestamp - message.createdTimestamp;
+    if (msg && msg.deletable) {
+      msg.delete();
+    }
 
-		msg.delete();
+    const embed = new EmbedBuilder().setColor(this.client.utils.color(interaction.guild.members.me.displayHexColor)).addFields([
+      {
+        name: `**${this.client.user.username} - Ping**`,
+        value: `**◎ Bot Latency:** \`${latency}ms\`
+				**◎ API Latency:** \`${Math.round(this.client.ws.ping)}ms\``
+      }
+    ]);
 
-		const embed = new MessageEmbed()
-			.setColor(message.guild.me.displayHexColor || 'A10000')
-			.addField(`**${this.client.user.username} - Ping**`, [
-				`**◎ Bot Latency:** \`${latency}ms\``,
-				`**◎ API Latency:** \`${Math.round(this.client.ws.ping)}ms\``
-			]);
-		message.channel.send(embed);
-	}
-
+    interaction.reply({ embeds: [embed] });
+  }
 };
+
+export default CommandF;

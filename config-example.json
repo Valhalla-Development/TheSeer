@@ -1,8 +1,9 @@
 {
-  "token": "REDACTED",
-  "supportGuild": "REDACTED",
-  "supportChannel": "REDACTED",
-  "ownerID": "REDACTED",
-  "prefix": "ts;",
-  "logging": true
+  "applicationID": "Bot Application ID",
+  "token": "Bot Token",
+  "supportGuild": "Support Guild",
+  "supportChannel": "Support Channel",
+  "ownerID": "Owner of Bot",
+  "logging": true,
+  "defaultPerms": ["ViewChannel", "SendMessages", "EmbedLinks"]
 }

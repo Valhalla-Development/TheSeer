@@ -1,85 +1,37 @@
-const Command = require('../../Structures/Command');
-const { MessageEmbed } = require('discord.js');
-const SQLite = require('better-sqlite3');
+import { EmbedBuilder } from 'discord.js';
+import SQLite from 'better-sqlite3';
+import Command from '../../Structures/Command.js';
+
 const db = new SQLite('./Storage/DB/db.sqlite');
 
-module.exports = class extends Command {
+export const CommandF = class extends Command {
+  constructor(...args) {
+    super(...args, {
+      description: 'Disables monitoring',
+      category: 'Moderation',
+      userPerms: ['ManageGuild']
+    });
+  }
 
-	constructor(...args) {
-		super(...args, {
-			description: 'Clears the database for the guild.',
-			category: 'Moderation'
-		});
-	}
+  async run(interaction) {
+    const fetchDb = db.prepare('SELECT * FROM watchedbots WHERE guildid = ?;').get(interaction.guild.id);
 
-	async run(message) {
-		if (!message.member.hasPermission('MANAGE_GUILD') && !this.client.owners.includes(message.author.id)) {
-			const embed = new MessageEmbed()
-				.setColor(message.guild.me.displayHexColor || 'A10000')
-				.addField(`**${this.client.user.username} - Channel**`,
-					`**◎ Error:** You need to have \`MANAGE_GUILD\` permission to use this command`);
-			message.channel.send(embed).then((m) => m.delete({ timeout: 15000 }));
-			return;
-		}
+    if (!fetchDb) {
+      const embed = new EmbedBuilder().setColor(this.client.utils.color(interaction.guild.members.me.displayHexColor)).addFields({
+        name: `**${this.client.user.username} - Clear**`,
+        value: `**◎ Error:** ${this.client.user} is not enabled in this server.`
+      });
+      interaction.reply({ ephemeral: true, embeds: [embed] });
+    } else {
+      db.prepare('DELETE FROM watchedbots WHERE guildid = ?').run(interaction.guild.id);
 
-		if (!message.member.guild.me.hasPermission('EMBED_LINKS')) {
-			const embed = new MessageEmbed()
-				.setColor(message.guild.me.displayHexColor || 'A10000')
-				.addField(`**${this.client.user.username} - Channel**`,
-					`**◎ Error:** I need to have \`EMBED_LINKS\` permission to use this command`);
-			message.channel.send(embed).then((m) => m.delete({ timeout: 15000 }));
-			return;
-		}
-
-		this.client.getTable = db.prepare('SELECT * FROM watchedbots WHERE guildid = ?');
-
-		let status;
-		if (message.guild.id) {
-			status = this.client.getTable.get(message.guild.id);
-		}
-
-		if (!status) {
-			const embed = new MessageEmbed()
-				.setColor(message.guild.me.displayHexColor || 'A10000')
-				.addField(`**${this.client.user.username} - Clear**`,
-					`**◎ Error:** I found no data in the database!`);
-			message.channel.send(embed).then((m) => m.delete({ timeout: 15000 }));
-			return;
-		}
-
-		const embed = new MessageEmbed()
-			.setColor(message.guild.me.displayHexColor || 'A10000')
-			.setFooter('This action will be cancled in 30 seconds.')
-			.addField(`**${this.client.user.username} - Clear**`,
-				`**◎ Awaiting:** Are you sure you wish to clear the database?\n**This action is irreversible**\nReact with ✅ to continue.`);
-		message.channel.send(embed).then(async (a) => {
-			a.react('✅');
-
-			const filter = (reaction, user) => ['✅'].includes(reaction.emoji.name) && user.id === message.author.id;
-
-			a.awaitReactions(filter, { max: 1, time: 30000, errors: ['time'] })
-				.then(collected => {
-					const reaction = collected.first();
-
-					if (reaction.emoji.name === '✅') {
-						a.delete();
-						const embed1 = new MessageEmbed()
-							.setColor(message.guild.me.displayHexColor || 'A10000')
-							.addField(`**${this.client.user.username} - Clear**`,
-								`**◎ Success:** Database cleared!`);
-						message.channel.send(embed1);
-						db.prepare('DELETE FROM watchedbots WHERE guildid = ?').run(message.guild.id);
-						return;
-					}
-				}).catch(() => {
-					const embed2 = new MessageEmbed()
-						.setColor(message.guild.me.displayHexColor || 'A10000')
-						.addField(`**${this.client.user.username} - Clear**`,
-							`**◎ Error:** Clear canclled. You did not react in the given time.`);
-					message.channel.send(embed2).then((m) => m.delete({ timeout: 15000 }));
-					a.delete();
-				});
-		});
-	}
-
+      const embed = new EmbedBuilder().setColor(this.client.utils.color(interaction.guild.members.me.displayHexColor)).addFields({
+        name: `**${this.client.user.username} - Channel**`,
+        value: `**◎ Success:** ${this.client.user} has been disabled in this server.`
+      });
+      interaction.reply({ ephemeral: true, embeds: [embed] });
+    }
+  }
 };
+
+export default CommandF;
