@@ -17,7 +17,7 @@ export const CommandF = class extends Command {
     const buttonA = new ButtonBuilder()
       .setStyle(ButtonStyle.Link)
       .setLabel('Invite')
-      .setURL(`https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot%20applications.commands&permissions=1514550062326`);
+      .setURL(`https://discord.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=2147535872`);
 
     const row = new ActionRowBuilder().addComponents(buttonA);
     interaction.reply({ components: [row], embeds: [embed] });
