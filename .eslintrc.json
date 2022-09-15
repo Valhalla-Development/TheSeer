@@ -1,8 +1,0 @@
-{
-    "extends": "tesseract",
-    "rules": {
-        "id-length": "off",
-        "max-len": "off",
-        "complexity": "off"
-    }
-}

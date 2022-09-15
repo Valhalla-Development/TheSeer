@@ -1,17 +1,21 @@
-module.exports = class Command {
+import { PermissionsBitField } from 'discord.js';
 
-	constructor(client, name, options = {}) {
-		this.client = client;
-		this.name = options.name || name;
-		this.aliases = options.aliases || [];
-		this.description = options.description || 'No description provided.';
-		this.category = options.category || 'Misc';
-		this.usage = `${this.client.prefix}${this.name} ${options.usage || ''}`.trim();
-	}
+export const Command = class Command {
+  constructor(client, name, options = {}) {
+    this.client = client;
+    this.name = options.name || name;
+    this.type = options.type || 1;
+    this.description = options.description || 'No description provided';
+    this.category = options.category;
+    this.options = options.options || [];
+    this.userPerms = new PermissionsBitField(options.userPerms).freeze();
+    this.botPerms = new PermissionsBitField(options.botPerms).freeze();
+  }
 
-	// eslint-disable-next-line no-unused-vars
-	async run(message, args) {
-		throw new Error(`Command ${this.name} doesn't provide a run method!`);
-	}
-
+  // eslint-disable-next-line no-unused-vars
+  async run(interaction) {
+    throw new Error(`${this.name} does not provide run method !`);
+  }
 };
+
+export default Command;

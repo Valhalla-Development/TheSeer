@@ -1,23 +1,23 @@
-const Command = require('../../Structures/Command');
-const { MessageEmbed } = require('discord.js');
-const ms = require('ms');
+import { EmbedBuilder } from 'discord.js';
+import Command from '../../Structures/Command.js';
 
-module.exports = class extends Command {
+export const CommandF = class extends Command {
+  constructor(...args) {
+    super(...args, {
+      description: 'Displays bot uptime.',
+      category: 'Miscellaneous'
+    });
+  }
 
-	constructor(...args) {
-		super(...args, {
-			description: 'Displays bot uptime.',
-			category: 'Informative'
-		});
-	}
+  async run(interaction) {
+    const nowInMs = Date.now() - this.client.uptime;
+    const nowInSecond = Math.round(nowInMs / 1000);
 
-	async run(message) {
-		const botembed = new MessageEmbed()
-			.setTitle('Uptime')
-			.setColor(message.guild.me.displayHexColor || 'A10000')
-			.setDescription(`My uptime is \`${ms(this.client.uptime, { long: true })}\``);
-
-		message.channel.send(botembed);
-	}
-
+    const embed = new EmbedBuilder()
+      .setColor(this.client.utils.color(interaction.guild.members.me.displayHexColor))
+      .addFields({ name: `**${this.client.user.username} - Uptime**`, value: `**◎ My uptime is:** <t:${nowInSecond}:R>` });
+    interaction.reply({ embeds: [embed] });
+  }
 };
+
+export default CommandF;
