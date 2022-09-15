@@ -33,7 +33,7 @@ export const EventF = class extends Event {
     setTimeout(() => {
       console.log(
         `Invite link: ${chalk.blue.bold.underline(
-          `https://discordapp.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=2050485471`
+          `https://discord.com/oauth2/authorize?client_id=${this.client.user.id}&scope=bot&permissions=2147535872`
         )}\n`
       );
     }, 1000);
