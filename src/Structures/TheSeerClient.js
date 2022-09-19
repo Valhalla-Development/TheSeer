@@ -1,4 +1,4 @@
-import { Client, Collection, PermissionsBitField, GatewayIntentBits, Partials } from 'discord.js';
+import { Client, Collection, PermissionsBitField, GatewayIntentBits, Partials, codeBlock } from 'discord.js';
 import Util from './Util.js';
 
 export const TheSeerClient = class TheSeerClient extends Client {
@@ -22,13 +22,8 @@ export const TheSeerClient = class TheSeerClient extends Client {
       const channel = client.channels.cache.get('685973401772621843');
       if (!channel) return;
 
-      channel.send(`\`\`\`js\n${message}\`\`\``);
+      channel.send(codeBlock('js', message));
     }
-
-    process.on('uncaughtException', (error) => {
-      console.error(error);
-      sendError(this, error.stack);
-    });
 
     process.on('unhandledRejection', (error) => {
       console.error(error);
