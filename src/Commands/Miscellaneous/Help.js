@@ -16,7 +16,7 @@ export const CommandF = class extends Command {
     const embed = new EmbedBuilder()
       .setColor(this.client.utils.color(interaction.guild.members.me.displayHexColor))
       .setDescription(
-        `Hey, I'm **__${this.client.user.username}__**, A bot that monitors other bots!
+        `Hey, I'm **__${this.client.user.username}__**, I monitor other bots!
       You can press a button below to see available commands within its category.`
       )
       .setAuthor({ name: `${interaction.guild.name} Help`, iconURL: interaction.guild.iconURL() })
