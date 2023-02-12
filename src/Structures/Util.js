@@ -5,7 +5,6 @@ import { promisify } from 'util';
 import { REST, Routes } from 'discord.js';
 import glob from 'glob';
 import url from 'url';
-import chalk from 'chalk';
 import Event from './Event.js';
 import Command from './Command.js';
 
@@ -74,10 +73,8 @@ export const Util = class Util {
         try {
           if (this.client.config.applicationID === '509122286561787904') {
             await rest.put(Routes.applicationGuildCommands(this.client.config.applicationID, this.client.config.supportGuild), { body: cmds });
-            console.log(`${chalk.whiteBright('Loaded')} ${chalk.red.bold(`${cmds.length}`)} ${chalk.whiteBright('Commands!')}`);
           } else {
             await rest.put(Routes.applicationCommands(this.client.config.applicationID), { body: cmds });
-            console.log(`${chalk.whiteBright('Loaded')} ${chalk.red.bold(`${cmds.length}`)} ${chalk.whiteBright('Commands!')}`);
           }
         } catch (err) {
           console.log(err);
