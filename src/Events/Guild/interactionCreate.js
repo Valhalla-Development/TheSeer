@@ -10,7 +10,7 @@ export const EventF = class extends Event {
       if (!command) return;
 
       try {
-        const botPermCheck = command.botPerms ? this.client.defaultPerms.add(command.botPerms) : this.client.defaultPerms;
+        const botPermCheck = command.botPerms ? this.client.DefaultPerms.add(command.botPerms) : this.client.DefaultPerms;
         if (botPermCheck) {
           const missing = interaction.channel.permissionsFor(this.client.user).missing(botPermCheck);
           if (missing.length) {
@@ -37,7 +37,7 @@ export const EventF = class extends Event {
           }
         }
 
-        const userPermCheck = command.userPerms ? this.client.defaultPerms.add(command.userPerms) : this.client.defaultPerms;
+        const userPermCheck = command.userPerms ? this.client.DefaultPerms.add(command.userPerms) : this.client.DefaultPerms;
         const missing = interaction.channel.permissionsFor(interaction.member).missing(userPermCheck);
         if (missing.length) {
           const embed = new EmbedBuilder().setColor(this.client.utils.color(interaction.guild.members.me.displayHexColor)).addFields({
@@ -53,7 +53,7 @@ export const EventF = class extends Event {
         console.log(error);
       }
 
-      if (this.client.logging === true) {
+      if (this.client.logging === 'true') {
         const nowInMs = Date.now();
         const nowInSecond = Math.round(nowInMs / 1000);
 

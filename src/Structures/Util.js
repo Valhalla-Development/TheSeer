@@ -67,14 +67,14 @@ export const Util = class Util {
         });
       }
 
-      const rest = new REST({ version: '10' }).setToken(this.client.token);
+      const rest = new REST({ version: '10' }).setToken(this.client.Token);
 
       (async () => {
         try {
-          if (this.client.config.applicationID === '509122286561787904') {
-            await rest.put(Routes.applicationGuildCommands(this.client.config.applicationID, this.client.config.supportGuild), { body: cmds });
+          if (this.client.config.ApplicationId === '509122286561787904') {
+            await rest.put(Routes.applicationGuildCommands(this.client.config.ApplicationId, this.client.config.SupportGuild), { body: cmds });
           } else {
-            await rest.put(Routes.applicationCommands(this.client.config.applicationID), { body: cmds });
+            await rest.put(Routes.applicationCommands(this.client.config.ApplicationId), { body: cmds });
           }
         } catch (err) {
           console.log(err);

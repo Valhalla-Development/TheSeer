@@ -32,19 +32,25 @@ export const TheSeerClient = class TheSeerClient extends Client {
   }
 
   validate(options) {
-    if (typeof options !== 'object') throw new TypeError('Options should be a type of Object.');
+    const invalidOptionsTypeError = 'Options should be a type of Object.';
+    const missingTokenError = 'You must pass the token for the client.';
+    const invalidLoggingValueError = 'The \'logging\' value must be true or false.';
+    const missingDefaultPermsError = 'You must pass default perm(s) for the Client.';
 
-    if (!options.token) throw new Error('You must pass the token for the client.');
-    this.token = options.token;
+    if (typeof options !== 'object') throw new TypeError(invalidOptionsTypeError);
 
-    if (options.logging !== true && options.logging !== false) throw new Error('The \'logging\' value must be true or false.');
-    this.logging = options.logging;
+    if (!options.Token) throw new Error(missingTokenError);
+    this.Token = options.Token;
 
-    if (!options.defaultPerms) throw new Error('You must pass default perm(s) for the Client.');
-    this.defaultPerms = new PermissionsBitField(options.defaultPerms).freeze();
+    if (options.Logging !== 'true' && options.Logging !== 'false') throw new Error(invalidLoggingValueError);
+    this.Logging = options.Logging;
+
+    if (!options.DefaultPerms) throw new Error(missingDefaultPermsError);
+    const defaultPerms = options.DefaultPerms.split(',');
+    this.DefaultPerms = new PermissionsBitField(defaultPerms).freeze();
   }
 
-  async start(token = this.token) {
+  async start(token = this.Token) {
     await this.utils.loadCommands();
     await this.utils.loadEvents();
     await super.login(token);

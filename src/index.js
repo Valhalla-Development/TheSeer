@@ -1,6 +1,7 @@
 import TheSeerClient from './Structures/TheSeerClient.js';
+import 'dotenv/config';
 
-import * as config from '../config.json' assert { type: 'json' };
+const config = process.env;
 
-const client = new TheSeerClient(config.default);
+const client = new TheSeerClient(config);
 client.start();
