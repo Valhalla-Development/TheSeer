@@ -7,7 +7,7 @@ Storage/DB/db.sqlite-shm
 Storage/DB/db.sqlite-wal
 
 # Config File
-config.json
+.env
 
 # Irritating file create by Mac
 .DS_Store

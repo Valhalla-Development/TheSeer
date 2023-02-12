@@ -44,7 +44,7 @@ I am going to assume you have the basics installed on your host/computer (i.e. n
 
 - Download the source, by clicking 'Clone or download -> Download ZIP', or [click me](https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/archive/master.zip)
 - Extract the zip with software of your choosing
-- Inside you will find a file named 'config-example.json', you must add the specified values. After you have edited the file, edit the file name to 'config.json', alternatively you can copy the example file and rename it. If you are unsure where to find your bot token & owner id, please refer to these links: [bot token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token) | [owner id](https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
+- Inside you will find a file named '.env.example', you must add the specified values. After you have edited the file, edit the file name to '.env', alternatively you can copy the example file and rename it. If you are unsure where to find your bot token & owner id, please refer to these links: [bot token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token) | [owner id](https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
 - Open a console window in the root directory of the bot, then run the following command:
 
 ```text

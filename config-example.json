@@ -1,9 +1,0 @@
-{
-  "applicationID": "Bot Application ID",
-  "token": "Bot Token",
-  "supportGuild": "Support Guild",
-  "supportChannel": "Support Channel",
-  "ownerID": "Owner of Bot",
-  "logging": true,
-  "defaultPerms": ["ViewChannel", "SendMessages", "EmbedLinks"]
-}
