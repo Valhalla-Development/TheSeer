@@ -11,3 +11,6 @@ Storage/DB/db.sqlite-wal
 
 # Irritating file create by Mac
 .DS_Store
+
+# Package stuff
+yarn.lock
