@@ -1,16 +1,8 @@
 # Node FIles
 node_modules/
 
-# Database files
-Storage/DB/db.sqlite
-Storage/DB/db.sqlite-shm
-Storage/DB/db.sqlite-wal
-
 # Config File
 .env
 
 # Irritating file create by Mac
 .DS_Store
-
-# Package stuff
-yarn.lock
