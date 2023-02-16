@@ -1,5 +1,4 @@
 import { dirname, importx } from "@discordx/importer";
-import type { Interaction, Message } from "discord.js";
 import { IntentsBitField, Partials } from "discord.js";
 import { Client } from "discordx";
 import 'dotenv/config'
@@ -16,13 +15,17 @@ export const bot = new Client({
 });
 
 async function run() {
+    const missingTokenError = 'You must pass the token for the client.';
+    const invalidLoggingValueError = "The 'logging' value must be true or false.";
+    const missingDefaultPermsError = 'You must pass default perm(s) for the Client.';
+
     await importx(`${dirname(import.meta.url)}/{Events,Commands}/**/*.{ts,js}`);
 
-    if (!process.env.Token) {
-        throw Error("Could not find Token in your environment");
-    }
+    if (process.env.Logging !== 'true' && process.env.Logging !== 'false') throw new Error(invalidLoggingValueError);
+    if (!process.env.DefaultPerms) throw new Error(missingDefaultPermsError);
+    if (!process.env.Token) throw Error(missingTokenError);
 
     await bot.login(process.env.Token);
 }
 
-run();
+await run();
