@@ -19,7 +19,7 @@ async function run() {
     const invalidLoggingValueError = "The 'logging' value must be true or false.";
     const missingDefaultPermsError = 'You must pass default perm(s) for the Client.';
 
-    await importx(`${dirname(import.meta.url)}/{Events,Commands}/**/*.{ts,js}`);
+    await importx(`${dirname(import.meta.url)}/{events,commands}/**/*.{ts,js}`);
 
     if (process.env.Logging !== 'true' && process.env.Logging !== 'false') throw new Error(invalidLoggingValueError);
     if (!process.env.DefaultPerms) throw new Error(missingDefaultPermsError);
