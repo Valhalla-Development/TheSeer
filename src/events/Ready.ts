@@ -1,12 +1,12 @@
 import type { Client } from 'discordx';
 import { ActivityType } from 'discord.js';
-import { Discord, On } from 'discordx';
+import { Discord, Once } from 'discordx';
 import si from 'systeminformation';
 import chalk from 'chalk';
 
 @Discord()
 export class Ready {
-    @On({ event: 'ready' })
+    @Once({ event: 'ready' })
     async onReady([client]: [Client]) {
         // Init slash commands
         await client.initApplicationCommands();
@@ -47,27 +47,7 @@ export class Ready {
         console.log(chalk.white.bold('Discord.js Version:'), chalk.green.bold(process.env.npm_package_dependencies_discord_js?.substring(1)));
         console.log(chalk.white.bold(`${client.user?.username} Version:`), chalk.green.bold(process.env.npm_package_version), '\n');
 
-        // Watched Bots Table
-        /* const watchedBots = db.prepare('SELECT count(*) FROM sqlite_master WHERE type=\'table\' AND name = \'watchedbots\';').get();
-        if (!watchedBots['count(*)']) {
-          console.log('Watched Bots Table Created!');
-          db.prepare('CREATE TABLE watchedbots (guildid TEXT, botid TEXT, chanid TEXT, dmid TEXT);').run();
-          db.prepare('CREATE UNIQUE INDEX idx_watchedbots_id ON watchedbots (guildid);').run();
-          db.pragma('synchronous = 1');
-          db.pragma('journal_mode = wal');
-        } */
-
-        // activity
-        /* const activityGrab = db.prepare('SELECT botid FROM watchedbots').all();
-        let count = 0;
-        let dbdata;
-        for (dbdata of activityGrab) {
-          if (dbdata.botid) {
-            const arr = dbdata.botid.slice(1, dbdata.botid.length - 1).split(',');
-            count += arr.length;
-          }
-        } */
-        const count = 1; // temp
+        const count = 1; // placeholder
         client.user?.setActivity(`${count.toLocaleString('en')} Bots Across ${client.guilds.cache.size.toLocaleString('en')} Guilds`, {
             type: ActivityType.Watching
         });
