@@ -5,3 +5,7 @@ export function deletableCheck(message, time) {
         }
     }, time);
 }
+
+export function capitalise(string) {
+    return string.replace(/\S+/g, (word) => word.slice(0, 1).toUpperCase() + word.slice(1));
+}
