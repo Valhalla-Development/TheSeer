@@ -47,7 +47,7 @@ export class Ready {
         console.log(chalk.white.bold('Discord.js Version:'), chalk.green.bold(process.env.npm_package_dependencies_discord_js?.substring(1)));
         console.log(chalk.white.bold(`${client.user?.username} Version:`), chalk.green.bold(process.env.npm_package_version), '\n');
 
-        const count = 1; // placeholder
+        const count = 1; //! placeholder
         client.user?.setActivity(`${count.toLocaleString('en')} Bots Across ${client.guilds.cache.size.toLocaleString('en')} Guilds`, {
             type: ActivityType.Watching,
         });
