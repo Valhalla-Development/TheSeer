@@ -1,7 +1,7 @@
 import type { Client } from 'discordx';
+import { Discord, Slash } from 'discordx';
 import type { CommandInteraction } from 'discord.js';
 import { EmbedBuilder } from 'discord.js';
-import { Discord, Slash } from 'discordx';
 import { Category } from '@discordx/utilities';
 import { deletableCheck } from '../../utils/Util.js';
 
@@ -20,8 +20,8 @@ export class Ping {
             {
                 name: `**${client.user?.username} - Ping**`,
                 value: `**◎ Bot Latency:** \`${latency}ms\`
-          **◎ API Latency:** \`${Math.round(client.ws.ping)}ms\``
-            }
+          **◎ API Latency:** \`${Math.round(client.ws.ping)}ms\``,
+            },
         ]);
 
         await interaction.reply({ embeds: [embed] });

@@ -1,7 +1,9 @@
-import { dirname, importx } from "@discordx/importer";
-import { IntentsBitField, Partials, codeBlock, EmbedBuilder, ChannelType } from "discord.js";
-import { Client } from "discordx";
-import 'dotenv/config'
+import { dirname, importx } from '@discordx/importer';
+import {
+    ChannelType, codeBlock, EmbedBuilder, IntentsBitField, Partials,
+} from 'discord.js';
+import { Client } from 'discordx';
+import 'dotenv/config';
 
 export const client = new Client({
     intents: [
@@ -17,7 +19,7 @@ export const client = new Client({
 process.on('unhandledRejection', (error: Error) => {
     if (!error.stack) return;
 
-    console.error(error.stack)
+    console.error(error.stack);
 
     if (process.env.Logging && process.env.Logging.toLowerCase() === 'true') {
         if (!process.env.LoggingChannel) return;
@@ -40,20 +42,20 @@ process.on('unhandledRejection', (error: Error) => {
         }
 
         const embed = new EmbedBuilder().setTitle('Error').setDescription(truncateDescription(fullString));
-        channel.send({embeds: [embed]});
+        channel.send({ embeds: [embed] });
     }
-})
+});
 
 async function run() {
     const missingTokenError = 'You must pass the token for the client.';
-    const invalidLoggingValueError = "The 'logging' value must be true or false.";
+    const invalidLoggingValueError = 'The \'logging\' value must be true or false.';
     const missingDefaultPermsError = 'You must pass default perm(s) for the Client.';
     const invalidLoggingChannel = 'You must pass a logging channel if logging is set to true.';
 
     await importx(`${dirname(import.meta.url)}/{events,commands}/**/*.{ts,js}`);
 
     if (process.env.Logging !== 'true' && process.env.Logging !== 'false') throw new Error(invalidLoggingValueError);
-    if (process.env.Logging === 'true' && !process.env.LoggingChannel) throw new Error(invalidLoggingChannel)
+    if (process.env.Logging === 'true' && !process.env.LoggingChannel) throw new Error(invalidLoggingChannel);
     if (!process.env.DefaultPerms) throw new Error(missingDefaultPermsError);
     if (!process.env.Token) throw Error(missingTokenError);
 
