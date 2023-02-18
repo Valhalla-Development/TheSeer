@@ -7,14 +7,13 @@ import moment from 'moment';
 export class InteractionCreate {
     @On({ event: 'interactionCreate' })
     async onInteraction([interaction]: ArgsOf<'interactionCreate'>, client: Client) {
-        if (!interaction.guild || !interaction.channel || interaction.channel.type !== ChannelType.GuildText) return;
+        if (!interaction.guild || !interaction.channel || interaction.channel.type !== ChannelType.GuildText
+            || !interaction.isChatInputCommand()) return;
 
-        if (interaction.isChatInputCommand()) {
-            try {
-                await client.executeInteraction(interaction);
-            } catch (err) {
-                console.error(err);
-            }
+        try {
+            await client.executeInteraction(interaction);
+        } catch (err) {
+            console.error(err);
         }
 
         if (process.env.Logging && process.env.Logging.toLowerCase() === 'true') {
