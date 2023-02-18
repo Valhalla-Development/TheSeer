@@ -6,6 +6,6 @@ import { ActivityType } from 'discord.js';
 export class PresenceUpdate {
     @On({ event: 'presenceUpdate' })
     async onPresenceUpdate([oldPresence, newPresence]: ArgsOf<'presenceUpdate'>, client: Client) {
-        //! TO-DO
+        // TODO
     }
 }

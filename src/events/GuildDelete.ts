@@ -15,11 +15,11 @@ export class GuildDelete {
             chalk.white.bold(')'),
         );
 
-        const count = 1;//! placeholder
+        const count = 1;// TODO placeholder
         client.user?.setActivity(`${count.toLocaleString('en')} Bots Across ${client.guilds.cache.size.toLocaleString('en')} Guilds`, {
             type: ActivityType.Watching,
         });
 
-        //! Delete all from database
+        // TODO Delete all from database
     }
 }
