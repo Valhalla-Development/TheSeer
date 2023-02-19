@@ -79,7 +79,7 @@ export class Help {
             })
             .addFields({
                 name: `**Help - ${capitalise(selectedCategory)}**`,
-                value: `\`${Array.from(commandNames).join('`, `')}\``,
+                value: `\`${commandNames.join('`, `')}\``,
             });
 
         await interaction.update({ embeds: [embed] });
