@@ -2,10 +2,8 @@ import type { Client } from 'discordx';
 import {
     DApplicationCommand, Discord, MetadataStorage, SelectMenuComponent, Slash,
 } from 'discordx';
-import type { CommandInteraction, SelectMenuComponentOptionData } from 'discord.js';
-import {
-    ActionRowBuilder, EmbedBuilder, SelectMenuInteraction, StringSelectMenuBuilder,
-} from 'discord.js';
+import type { CommandInteraction, SelectMenuComponentOptionData, StringSelectMenuInteraction } from 'discord.js';
+import { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder } from 'discord.js';
 import { Category, ICategory } from '@discordx/utilities';
 import { capitalise, deletableCheck } from '../../utils/Util.js';
 
@@ -52,8 +50,18 @@ export class Help {
     }
 
     @SelectMenuComponent({ id: 'helpSelect' })
-    async handle(interaction: SelectMenuInteraction, client: Client): Promise<void> {
-        console.log(interaction.message);
+    async handle(interaction: StringSelectMenuInteraction, client: Client): Promise<void> {
+        if (interaction.user.id !== interaction.message.interaction?.user.id) {
+            const wrongUser = new EmbedBuilder()
+                .setColor('#e91e63')
+                .addFields({
+                    name: `**${client.user?.username} - ${capitalise(interaction.message.interaction?.commandName ?? '')}**`,
+                    value: '**◎ Error:** Only the command executor can select an option!',
+                });
+            await interaction.reply({ ephemeral: true, embeds: [wrongUser] });
+            return;
+        }
+
         // Receive value from select menu
         const value = interaction.values?.[0];
 
