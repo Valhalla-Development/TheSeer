@@ -25,6 +25,7 @@
     "discordx": "^11.7.0",
     "dotenv": "^16.0.3",
     "moment": "^2.29.4",
+    "mongoose": "^6.9.2",
     "systeminformation": "^5.17.9"
   },
   "devDependencies": {
