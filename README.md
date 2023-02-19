@@ -18,13 +18,15 @@
 <br>
 </div>
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/539c2d29d8e34346bbec2f95ceb3a20b)](https://app.codacy.com/manual/hudsonjd/TheSeer-Discord?utm_source=github.com&utm_medium=referral&utm_content=RagnarLothbrok-Odin/TheSeer-Discord&utm_campaign=Badge_Grade_Settings)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/3f4ffef2c47e446582867ec02a961dc5)](https://www.codacy.com/gh/RagnarLothbrok-Odin/TheSeer-Discord/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=RagnarLothbrok-Odin/TheSeer-Discord&amp;utm_campaign=Badge_Grade)
 
-The Seer is a bot designed to monitor other bots status, this can be useful if you are a developer and wish to monitor your bots while you work on them. You can opt to receive alerts via DM, or a channel of your choosing.
+The Seer is a bot designed to monitor other bots status, this can be useful if you are a developer and wish to monitor
+your bots while you work on them. You can opt to receive alerts via DM, or a channel of your choosing.
 
 You will be alerted if a bot of your choosing either goes offline, or online.
 
-You can either host this bot yourself, or you can invite it to your server by [clicking here](https://discord.com/oauth2/authorize?client_id=559113940919910406&scope=bot&permissions=2147535872).
+You can either host this bot yourself, or you can invite it to your server
+by [clicking here](https://discord.com/oauth2/authorize?client_id=559113940919910406&scope=bot&permissions=2147535872).
 
 ## Usage (Invite):
 
@@ -42,9 +44,13 @@ You can either host this bot yourself, or you can invite it to your server by [c
 
 I am going to assume you have the basics installed on your host/computer (i.e. node, npm etc.)
 
-- Download the source, by clicking 'Clone or download -> Download ZIP', or [click me](https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/archive/master.zip)
+- Download the source, by clicking 'Clone or download -> Download ZIP',
+  or [click me](https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/archive/master.zip)
 - Extract the zip with software of your choosing
-- Inside you will find a file named '.env.example', you must add the specified values. After you have edited the file, edit the file name to '.env', alternatively you can copy the example file and rename it. If you are unsure where to find your bot token & owner id, please refer to these links: [bot token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token) | [owner id](https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
+- Inside you will find a file named '.env.example', you must add the specified values. After you have edited the file,
+  edit the file name to '.env', alternatively you can copy the example file and rename it. If you are unsure where to
+  find your bot token & owner id, please refer to these
+  links: [bot token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token) | [owner id](https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
 - Open a console window in the root directory of the bot, then run the following command:
 
 ```text
