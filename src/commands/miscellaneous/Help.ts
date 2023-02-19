@@ -16,10 +16,7 @@ export class Help {
 
         const embed = new EmbedBuilder()
             .setColor('#e91e63')
-            .setDescription(
-                `Hey, I'm **__${client.user?.username}__**,
-      A bot that monitors other bots!.`,
-            )
+            .setDescription(`Hey, I'm **__${client.user?.username}__**, a bot that monitors other bots!`)
             .setAuthor({ name: `${client.user?.username} Help`, iconURL: `${interaction.guild?.iconURL()}` })
             .setThumbnail(`${client.user?.displayAvatarURL()}`)
             .setFooter({
@@ -73,10 +70,7 @@ export class Help {
 
         const embed = new EmbedBuilder()
             .setColor('#e91e63')
-            .setDescription(
-                `Hey, I'm **__${client.user?.username}__**,
-      A bot that monitors other bots!.`,
-            )
+            .setDescription(`Hey, I'm **__${client.user?.username}__**, a bot that monitors other bots!`)
             .setAuthor({ name: `${client.user?.username} Help`, iconURL: `${interaction.guild?.iconURL()}` })
             .setThumbnail(`${client.user?.displayAvatarURL()}`)
             .setFooter({
