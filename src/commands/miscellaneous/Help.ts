@@ -2,8 +2,10 @@ import type { Client } from 'discordx';
 import {
     DApplicationCommand, Discord, MetadataStorage, SelectMenuComponent, Slash,
 } from 'discordx';
-import type { CommandInteraction, SelectMenuComponentOptionData, StringSelectMenuInteraction } from 'discord.js';
-import { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder } from 'discord.js';
+import type { CommandInteraction, SelectMenuComponentOptionData } from 'discord.js';
+import {
+    ActionRowBuilder, EmbedBuilder, SelectMenuInteraction, StringSelectMenuBuilder,
+} from 'discord.js';
 import { Category, ICategory } from '@discordx/utilities';
 import { capitalise, deletableCheck } from '../../utils/Util.js';
 
@@ -50,7 +52,8 @@ export class Help {
     }
 
     @SelectMenuComponent({ id: 'helpSelect' })
-    async handle(interaction: StringSelectMenuInteraction, client: Client): Promise<void> {
+    async handle(interaction: SelectMenuInteraction, client: Client): Promise<void> {
+        console.log(interaction.message);
         // Receive value from select menu
         const value = interaction.values?.[0];
 
