@@ -8,7 +8,7 @@ export class InteractionCreate {
     @On({ event: 'interactionCreate' })
     async onInteraction([interaction]: ArgsOf<'interactionCreate'>, client: Client) {
         if (!interaction.guild || !interaction.channel || interaction.channel.type !== ChannelType.GuildText
-            || !interaction.isChatInputCommand()) return;
+            || (!interaction.isStringSelectMenu() && !interaction.isChatInputCommand())) return;
 
         try {
             await client.executeInteraction(interaction);
@@ -17,6 +17,8 @@ export class InteractionCreate {
         }
 
         if (process.env.Logging && process.env.Logging.toLowerCase() === 'true') {
+            if (!interaction.isChatInputCommand()) return;
+
             const nowInMs = Date.now();
             const nowInSecond = Math.round(nowInMs / 1000);
 
