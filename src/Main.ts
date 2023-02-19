@@ -4,6 +4,7 @@ import {
 } from 'discord.js';
 import { Client } from 'discordx';
 import 'dotenv/config';
+import { loadMongoEvents } from './utils/Util.js';
 
 export const client = new Client({
     intents: [
@@ -60,6 +61,7 @@ async function run() {
     if (!process.env.Token) throw Error(missingTokenError);
 
     await client.login(process.env.Token);
+    await loadMongoEvents();
 }
 
 await run();
