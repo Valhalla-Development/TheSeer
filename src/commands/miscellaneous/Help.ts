@@ -53,7 +53,7 @@ export class Help {
     }
 
     @SelectMenuComponent({ id: 'helpSelect' })
-    async handle(interaction: StringSelectMenuInteraction, client: Client): Promise<unknown> {
+    async handle(interaction: StringSelectMenuInteraction, client: Client): Promise<void> {
         // Receive value from select menu
         const value = interaction.values?.[0];
 

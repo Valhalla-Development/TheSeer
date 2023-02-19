@@ -1,6 +1,6 @@
 {
   "name": "theseer",
-  "version": "3.0.079",
+  "version": "3.0.080",
   "description": "A bot that monitors other bots.",
   "main": "build/Main.js",
   "repository": "https://github.com/RagnarLothbrok-Odin/TheSeer-Discord.git",
