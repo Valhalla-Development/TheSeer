@@ -58,7 +58,9 @@ export class Help {
         const value = interaction.values?.[0];
 
         // Return if no value
-        if (!value.length) return deletableCheck(interaction.message, 0);
+        if (!value.length) {
+            return deletableCheck(interaction.message, 0);
+        }
 
         // Search for category
         const selectedCategory = value.replace(/^help-/, '').toLowerCase();
