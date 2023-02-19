@@ -28,10 +28,11 @@ export class Help {
             });
 
         // This just filters all command categories where a: it exists and then b: removes duplicates
-        const categories: string[] = MetadataStorage.instance.applicationCommands
-            .filter((cmd: DApplicationCommand & ICategory) => cmd.category)
-            .map((cmd: DApplicationCommand & ICategory) => cmd.category as string);
-        const uniqueCategories = Array.from(new Set(categories));
+        const uniqueCategories = Array.from(new Set(
+            MetadataStorage.instance.applicationCommands
+                .filter((cmd: DApplicationCommand & ICategory) => cmd.category)
+                .map((cmd: DApplicationCommand & ICategory) => cmd.category as string),
+        ));
 
         // Now we want to create a new object for each category
         const cats: SelectMenuComponentOptionData[] = uniqueCategories.map((cat) => ({
