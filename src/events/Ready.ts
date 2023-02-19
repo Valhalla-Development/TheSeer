@@ -13,7 +13,7 @@ export class Ready {
 
         // Bot Info
         console.log(chalk.red.bold(`\n——————————[${client.user?.username} Info]——————————`));
-        console.log(chalk.white.bold('Users:'), chalk.yellow.bold(client.guilds.cache.reduce((a, b) => a + b.memberCount, 0).toLocaleString('en')));
+        console.log(chalk.white.bold('Users:'), chalk.yellow.bold(client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0).toLocaleString('en')));
         console.log(chalk.white.bold('Guilds:'), chalk.yellow.bold(client.guilds.cache.size.toLocaleString('en')));
         console.log(chalk.white.bold('Slash Commands:'), chalk.yellow.bold(client.applicationCommands.length));
         console.log(chalk.white.bold('Events:'), chalk.yellow.bold(client.events.length));
