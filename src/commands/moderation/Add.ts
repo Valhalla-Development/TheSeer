@@ -24,19 +24,23 @@ export class Add {
             client: Client,
     ) {
         if (bot.user.id === client.user?.id) {
-            const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                name: `**${client.user?.username} - Add**`,
-                value: '**◎ Error:** I can not monitor myself.',
-            });
+            const embed = new EmbedBuilder()
+                .setColor('#e91e63')
+                .addFields({
+                    name: `**${client.user?.username} - Add**`,
+                    value: '**◎ Error:** I can not monitor myself.',
+                });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
             return;
         }
 
         if (!bot.user.bot) {
-            const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                name: `**${client.user?.username} - Add**`,
-                value: '**◎ Error:** The target was not a bot.',
-            });
+            const embed = new EmbedBuilder()
+                .setColor('#e91e63')
+                .addFields({
+                    name: `**${client.user?.username} - Add**`,
+                    value: '**◎ Error:** The target was not a bot.',
+                });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
             return;
         }
@@ -45,10 +49,12 @@ export class Add {
 
         const found = status ? status.BotIds : [];
         if (found.includes(bot.user.id)) {
-            const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                name: `**${client.user?.username} - Add**`,
-                value: '**◎ Error:** The target is already being monitored.',
-            });
+            const embed = new EmbedBuilder()
+                .setColor('#e91e63')
+                .addFields({
+                    name: `**${client.user?.username} - Add**`,
+                    value: '**◎ Error:** The target is already being monitored.',
+                });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
         } else {
             found.push(bot.user.id);
@@ -57,10 +63,12 @@ export class Add {
                 upsert: true,
             });
 
-            const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                name: `**${client.user?.username} - Channel**`,
-                value: `**◎ Success:** Target ${bot} is now being monitored.`,
-            });
+            const embed = new EmbedBuilder()
+                .setColor('#e91e63')
+                .addFields({
+                    name: `**${client.user?.username} - Channel**`,
+                    value: `**◎ Success:** Target ${bot} is now being monitored.`,
+                });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
         }
     }

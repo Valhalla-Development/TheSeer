@@ -15,20 +15,24 @@ export class Clear {
         const status = await WatchedBots.findOne({ GuildId: interaction.guild?.id });
 
         if (!status) {
-            const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                name: `**${client.user?.username} - Clear**`,
-                value: `**◎ Error:** ${client.user} is not enabled in this server.`,
-            });
+            const embed = new EmbedBuilder()
+                .setColor('#e91e63')
+                .addFields({
+                    name: `**${client.user?.username} - Clear**`,
+                    value: `**◎ Error:** ${client.user} is not enabled in this server.`,
+                });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
             return;
         }
 
         await WatchedBots.deleteOne({ GuildId: interaction.guild?.id });
 
-        const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-            name: `**${client.user?.username} - Channel**`,
-            value: `**◎ Success:** ${client.user} has been disabled in this server.`,
-        });
+        const embed = new EmbedBuilder()
+            .setColor('#e91e63')
+            .addFields({
+                name: `**${client.user?.username} - Channel**`,
+                value: `**◎ Success:** ${client.user} has been disabled in this server.`,
+            });
         await interaction.reply({ ephemeral: true, embeds: [embed] });
     }
 }

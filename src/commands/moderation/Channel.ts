@@ -25,28 +25,34 @@ export class Channel {
         const status = await WatchedBots.findOne({ GuildId: interaction.guild?.id });
 
         if (!status || !status.BotIds) {
-            const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                name: `**${client.user?.username} - Channel**`,
-                value: '**◎ Error:** Please use `/add @bot` before setting the channel.',
-            });
+            const embed = new EmbedBuilder()
+                .setColor('#e91e63')
+                .addFields({
+                    name: `**${client.user?.username} - Channel**`,
+                    value: '**◎ Error:** Please use `/add @bot` before setting the channel.',
+                });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
             return;
         }
 
         if (channel.type !== ChannelType.GuildText) {
-            const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                name: `**${client.user?.username} - Channel**`,
-                value: '**◎ Error:** Please enter a valid **text** channel.',
-            });
+            const embed = new EmbedBuilder()
+                .setColor('#e91e63')
+                .addFields({
+                    name: `**${client.user?.username} - Channel**`,
+                    value: '**◎ Error:** Please enter a valid **text** channel.',
+                });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
             return;
         }
 
         if (!interaction.guild?.members.me?.permissionsIn(channel).has(PermissionsBitField.Flags.SendMessages)) {
-            const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                name: `**${client.user?.username} - Channel**`,
-                value: `**◎ Error:** I do not have permissions to send messages in ${channel}!`,
-            });
+            const embed = new EmbedBuilder()
+                .setColor('#e91e63')
+                .addFields({
+                    name: `**${client.user?.username} - Channel**`,
+                    value: `**◎ Error:** I do not have permissions to send messages in ${channel}!`,
+                });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
             return;
         }
@@ -62,10 +68,12 @@ export class Channel {
         } else {
             await WatchedBots.findOneAndUpdate({ GuildId: interaction?.guild.id }, { Channel: channel.id });
 
-            const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                name: `**${client.user?.username} - Channel**`,
-                value: `**◎ Success:** Alerts have been updated to ${channel}`,
-            });
+            const embed = new EmbedBuilder()
+                .setColor('#e91e63')
+                .addFields({
+                    name: `**${client.user?.username} - Channel**`,
+                    value: `**◎ Success:** Alerts have been updated to ${channel}`,
+                });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
         }
     }

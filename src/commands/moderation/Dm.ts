@@ -23,10 +23,12 @@ export class Dm {
         const status = await WatchedBots.findOne({ GuildId: interaction.guild?.id });
 
         if (!status || !status.BotIds) {
-            const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                name: `**${client.user?.username} - Channel**`,
-                value: '**◎ Error:** Please use `/add @bot` before setting the DM module.',
-            });
+            const embed = new EmbedBuilder()
+                .setColor('#e91e63')
+                .addFields({
+                    name: `**${client.user?.username} - Channel**`,
+                    value: '**◎ Error:** Please use `/add @bot` before setting the DM module.',
+                });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
             return;
         }
@@ -35,19 +37,23 @@ export class Dm {
 
         if (response === 'enabled') {
             if (status.Dm) {
-                const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                    name: `**${client.user?.username} - DM**`,
-                    value: '**◎ Error:** DM module already enabled.',
-                });
+                const embed = new EmbedBuilder()
+                    .setColor('#e91e63')
+                    .addFields({
+                        name: `**${client.user?.username} - DM**`,
+                        value: '**◎ Error:** DM module already enabled.',
+                    });
                 await interaction.reply({ ephemeral: true, embeds: [embed] });
                 return;
             }
 
             try {
-                const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                    name: `**${client.user?.username} - DM**`,
-                    value: `**◎ Success:** You will now receive monitoring reports from ${client.user}`,
-                });
+                const embed = new EmbedBuilder()
+                    .setColor('#e91e63')
+                    .addFields({
+                        name: `**${client.user?.username} - DM**`,
+                        value: `**◎ Success:** You will now receive monitoring reports from ${client.user}`,
+                    });
                 await interaction.user.send({ embeds: [embed] });
 
                 await interaction.deferReply();
@@ -55,28 +61,34 @@ export class Dm {
 
                 await WatchedBots.findOneAndUpdate({ GuildId: interaction.guild?.id }, { Dm: true });
             } catch {
-                const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                    name: `**${client.user?.username} - DM**`,
-                    value: `**◎ Error:** ${client.user} was unable to send you a DM, cancelling request.`,
-                });
+                const embed = new EmbedBuilder()
+                    .setColor('#e91e63')
+                    .addFields({
+                        name: `**${client.user?.username} - DM**`,
+                        value: `**◎ Error:** ${client.user} was unable to send you a DM, cancelling request.`,
+                    });
                 await interaction.reply({ ephemeral: true, embeds: [embed] });
             }
         } else if (response === 'disabled') {
             if (!status.Dm) {
-                const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                    name: `**${client.user?.username} - DM**`,
-                    value: '**◎ Error:** DM module already disabled.',
-                });
+                const embed = new EmbedBuilder()
+                    .setColor('#e91e63')
+                    .addFields({
+                        name: `**${client.user?.username} - DM**`,
+                        value: '**◎ Error:** DM module already disabled.',
+                    });
                 await interaction.reply({ ephemeral: true, embeds: [embed] });
                 return;
             }
 
             await WatchedBots.findOneAndUpdate({ GuildId: interaction.guild?.id }, { Dm: false });
 
-            const embed = new EmbedBuilder().setColor('#e91e63').addFields({
-                name: `**${client.user?.username} - Channel**`,
-                value: '**◎ Success:** DM module has disabled.',
-            });
+            const embed = new EmbedBuilder()
+                .setColor('#e91e63')
+                .addFields({
+                    name: `**${client.user?.username} - Channel**`,
+                    value: '**◎ Success:** DM module has disabled.',
+                });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
         }
     }
