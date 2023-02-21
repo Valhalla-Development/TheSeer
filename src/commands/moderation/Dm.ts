@@ -3,7 +3,7 @@ import { Discord, Slash, SlashOption } from 'discordx';
 import type { CommandInteraction } from 'discord.js';
 import { ApplicationCommandOptionType, EmbedBuilder, PermissionsBitField } from 'discord.js';
 import { Category } from '@discordx/utilities';
-import WatchedBots from '../../mongo/schemas/WatchedBots';
+import WatchedBots from '../../mongo/schemas/WatchedBots.js';
 
 @Discord()
 @Category('Moderation')
@@ -33,20 +33,20 @@ export class Dm {
             return;
         }
 
-        const response = status.Dm ? (toggle ? 'alreadyEnabled' : 'disabled') : (toggle ? 'enabled' : 'alreadyDisabled');
+        const response = status.Dm ? (toggle ? 'already enabled' : 'disabled') : (toggle ? 'enabled' : 'already disabled');
+
+        if (response === 'already disabled' || response === 'already enabled') {
+            const embed = new EmbedBuilder()
+                .setColor('#e91e63')
+                .addFields({
+                    name: `**${client.user?.username} - DM**`,
+                    value: `**◎ Error:** DM module is ${response}.`,
+                });
+            await interaction.reply({ ephemeral: true, embeds: [embed] });
+            return;
+        }
 
         if (response === 'enabled') {
-            if (status.Dm) {
-                const embed = new EmbedBuilder()
-                    .setColor('#e91e63')
-                    .addFields({
-                        name: `**${client.user?.username} - DM**`,
-                        value: '**◎ Error:** DM module already enabled.',
-                    });
-                await interaction.reply({ ephemeral: true, embeds: [embed] });
-                return;
-            }
-
             try {
                 const embed = new EmbedBuilder()
                     .setColor('#e91e63')
@@ -70,17 +70,6 @@ export class Dm {
                 await interaction.reply({ ephemeral: true, embeds: [embed] });
             }
         } else if (response === 'disabled') {
-            if (!status.Dm) {
-                const embed = new EmbedBuilder()
-                    .setColor('#e91e63')
-                    .addFields({
-                        name: `**${client.user?.username} - DM**`,
-                        value: '**◎ Error:** DM module already disabled.',
-                    });
-                await interaction.reply({ ephemeral: true, embeds: [embed] });
-                return;
-            }
-
             await WatchedBots.findOneAndUpdate({ GuildId: interaction.guild?.id }, { Dm: false });
 
             const embed = new EmbedBuilder()
