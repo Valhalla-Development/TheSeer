@@ -27,6 +27,7 @@ module.exports = {
         'no-inner-declarations': 'off',
         'import/extensions': 'off',
         'consistent-return': 'off',
-        'import/no-unresolved': 'off'
+        'import/no-unresolved': 'off',
+        'no-nested-ternary': 'off'
     },
 };
