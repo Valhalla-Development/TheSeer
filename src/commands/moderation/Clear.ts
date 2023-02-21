@@ -1,14 +1,14 @@
 import type { Client } from 'discordx';
 import { Discord, Slash } from 'discordx';
 import type { CommandInteraction } from 'discord.js';
-import { EmbedBuilder } from 'discord.js';
+import { EmbedBuilder, PermissionsBitField } from 'discord.js';
 import { Category } from '@discordx/utilities';
-import WatchedBots from '../../mongo/schemas/WatchedBots';
+import WatchedBots from '../../mongo/schemas/WatchedBots.js';
 
 @Discord()
 @Category('Moderation')
 export class Clear {
-    @Slash({ description: 'Disables monitoring' })
+    @Slash({ description: 'Disables monitoring', defaultMemberPermissions: [PermissionsBitField.Flags.ManageGuild] })
     async clear(interaction: CommandInteraction, client: Client) {
         if (!interaction.channel) return;
 
