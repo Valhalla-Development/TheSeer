@@ -60,10 +60,7 @@ export class Channel {
                 });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
         } else {
-            await WatchedBots.findOneAndUpdate({ GuildId: interaction?.guild.id }, { Channel: channel.id }, {
-                new: true,
-                upsert: true,
-            });
+            await WatchedBots.findOneAndUpdate({ GuildId: interaction?.guild.id }, { Channel: channel.id });
 
             const embed = new EmbedBuilder().setColor('#e91e63').addFields({
                 name: `**${client.user?.username} - Channel**`,
