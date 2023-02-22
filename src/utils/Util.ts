@@ -1,6 +1,9 @@
 import type { Message } from 'discord.js';
+import { ActivityType } from 'discord.js';
 import mongoose from 'mongoose';
 import chalk from 'chalk';
+import type { Client } from 'discordx';
+import WatchedBots from '../mongo/schemas/WatchedBots.js';
 
 export function deletableCheck(message: Message, time: number): void {
     setTimeout(() => {
@@ -43,5 +46,39 @@ export async function loadMongoEvents(): Promise<void> {
 
     mongoose.connection.on('disconnected', () => {
         console.log(chalk.red.bold('[Database Status]: Disconnected'));
+    });
+}
+
+export async function updateActivity(client: Client, db: typeof WatchedBots) {
+    const totalBotIdsLength = await db.aggregate([
+        {
+            $group: {
+                _id: null,
+                total: {
+                    $sum: {
+                        $size: {
+                            $ifNull: ['$BotIds', []],
+                        },
+                    },
+                },
+            },
+        },
+        {
+            $project: {
+                _id: 0,
+                total: { $sum: ['$total', 0] },
+            },
+        },
+        {
+            $project: {
+                total: { $ifNull: ['$total', 0] },
+            },
+        },
+    ]);
+
+    const count = totalBotIdsLength.length === 0 ? 0 : totalBotIdsLength[0].total;
+
+    client.user?.setActivity(`${count.toLocaleString('en')} Bots Across ${client.guilds.cache.size.toLocaleString('en')} Guilds`, {
+        type: ActivityType.Watching,
     });
 }
