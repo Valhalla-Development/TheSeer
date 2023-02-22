@@ -18,6 +18,6 @@ export class GuildDelete {
 
         await updateActivity(client, WatchedBots);
 
-        // TODO Delete all from database
+        WatchedBots.deleteOne({ GuildId: guild.id });
     }
 }
