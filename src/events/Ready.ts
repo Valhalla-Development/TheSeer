@@ -1,8 +1,9 @@
 import type { Client } from 'discordx';
 import { Discord, Once } from 'discordx';
-import { ActivityType } from 'discord.js';
 import si from 'systeminformation';
 import chalk from 'chalk';
+import WatchedBots from '../mongo/schemas/WatchedBots.js';
+import { updateActivity } from '../utils/Util.js';
 
 @Discord()
 export class Ready {
@@ -47,9 +48,6 @@ export class Ready {
         console.log(chalk.white.bold('Discord.js Version:'), chalk.green.bold(process.env.npm_package_dependencies_discord_js?.substring(1)));
         console.log(chalk.white.bold(`${client.user?.username} Version:`), chalk.green.bold(process.env.npm_package_version), '\n');
 
-        const count = 1; // TODO placeholder
-        client.user?.setActivity(`${count.toLocaleString('en')} Bots Across ${client.guilds.cache.size.toLocaleString('en')} Guilds`, {
-            type: ActivityType.Watching,
-        });
+        await updateActivity(client, WatchedBots);
     }
 }

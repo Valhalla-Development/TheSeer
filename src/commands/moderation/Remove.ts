@@ -4,6 +4,7 @@ import type { CommandInteraction, GuildMember } from 'discord.js';
 import { ApplicationCommandOptionType, EmbedBuilder, PermissionsBitField } from 'discord.js';
 import { Category } from '@discordx/utilities';
 import WatchedBots from '../../mongo/schemas/WatchedBots.js';
+import { updateActivity } from '../../utils/Util.js';
 
 @Discord()
 @Category('Moderation')
@@ -58,6 +59,8 @@ export class Remove {
                     value: '**◎ Success:** The target is no longer being monitored.',
                 });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
+
+            await updateActivity(client, WatchedBots);
         } else {
             const embed = new EmbedBuilder()
                 .setColor('#e91e63')

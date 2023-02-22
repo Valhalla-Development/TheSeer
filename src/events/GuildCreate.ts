@@ -1,7 +1,8 @@
 import type { ArgsOf, Client } from 'discordx';
 import { Discord, On } from 'discordx';
-import { ActivityType } from 'discord.js';
 import chalk from 'chalk';
+import WatchedBots from '../mongo/schemas/WatchedBots.js';
+import { updateActivity } from '../utils/Util.js';
 
 @Discord()
 export class GuildCreate {
@@ -17,9 +18,6 @@ export class GuildCreate {
             chalk.white.bold('members.'),
         );
 
-        const count = 1;// TODO placeholder
-        client.user?.setActivity(`${count.toLocaleString('en')} Bots Across ${client.guilds.cache.size.toLocaleString('en')} Guilds`, {
-            type: ActivityType.Watching,
-        });
+        await updateActivity(client, WatchedBots);
     }
 }
