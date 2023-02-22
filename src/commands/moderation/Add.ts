@@ -4,6 +4,7 @@ import type { CommandInteraction, GuildMember } from 'discord.js';
 import { ApplicationCommandOptionType, EmbedBuilder, PermissionsBitField } from 'discord.js';
 import { Category } from '@discordx/utilities';
 import WatchedBots from '../../mongo/schemas/WatchedBots.js';
+import { updateActivity } from '../../utils/Util.js';
 
 @Discord()
 @Category('Moderation')
@@ -47,7 +48,7 @@ export class Add {
 
         const status = await WatchedBots.findOne({ GuildId: interaction.guild?.id });
 
-        const found = status ? status.BotIds : [];
+        const found = status?.BotIds ?? [];
         if (found.includes(bot.user.id)) {
             const embed = new EmbedBuilder()
                 .setColor('#e91e63')
@@ -70,6 +71,8 @@ export class Add {
                     value: `**◎ Success:** Target ${bot} is now being monitored.`,
                 });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
+
+            await updateActivity(client, WatchedBots);
         }
     }
 }
