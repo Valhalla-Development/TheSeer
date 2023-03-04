@@ -14,7 +14,7 @@ export const client = new Client({
         IntentsBitField.Flags.GuildPresences,
     ],
     partials: [Partials.User, Partials.Channel, Partials.GuildMember],
-    silent: false,
+    silent: true,
 });
 
 process.on('unhandledRejection', (error: Error) => {
@@ -64,11 +64,11 @@ async function run() {
     const time = 200;
 
     const loadSequentially = async () => {
+        await loadMongoEvents();
+        await sleep(time);
         await importx(`${dirname(import.meta.url)}/{events,commands}/**/*.{ts,js}`);
         await sleep(time);
         await client.login(process.env.Token as string);
-        await sleep(time);
-        await loadMongoEvents();
     };
 
     await loadSequentially();
