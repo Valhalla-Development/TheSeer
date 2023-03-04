@@ -18,8 +18,6 @@ export function capitalise(string: string) {
 }
 
 export async function loadMongoEvents(): Promise<void> {
-    mongoose.set('strictQuery', false);
-
     await new Promise<void>((resolve, reject) => {
         mongoose.connect(`${process.env.MongoUri}`)
             .then(() => {
