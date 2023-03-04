@@ -35,9 +35,10 @@ export class InteractionCreate {
             }\x1b[0m)`;
             console.log(LoggingNoArgs);
 
-            // TODO Create .env variable for command logging
-            // const channel = client.channels.cache.get('978272607990321152');
-            // if (channel && channel.type === ChannelType.GuildText) channel.send({ embeds: [logEmbed] })
+            if (process.env.CommandLogging) {
+                const channel = client.channels.cache.get(process.env.CommandLogging);
+                if (channel && channel.type === ChannelType.GuildText) channel.send({ embeds: [logEmbed] });
+            }
         }
     }
 }
