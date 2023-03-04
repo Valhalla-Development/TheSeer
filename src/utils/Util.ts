@@ -48,33 +48,13 @@ export async function loadMongoEvents(): Promise<void> {
 }
 
 export async function updateActivity(client: Client, db: typeof WatchedBots) {
-    const totalBotIdsLength = await db.aggregate([
-        {
-            $group: {
-                _id: null,
-                total: {
-                    $sum: {
-                        $size: {
-                            $ifNull: ['$BotIds', []],
-                        },
-                    },
-                },
-            },
-        },
-        {
-            $project: {
-                _id: 0,
-                total: { $sum: ['$total', 0] },
-            },
-        },
-        {
-            $project: {
-                total: { $ifNull: ['$total', 0] },
-            },
-        },
-    ]);
+    const pipeline = db.aggregate();
+    pipeline.group({ _id: null, total: { $sum: { $size: { $ifNull: ['$BotIds', []] } } } });
+    pipeline.project({ _id: 0, total: { $sum: ['$total', 0] } });
+    pipeline.project({ total: { $ifNull: ['$total', 0] } });
+    const result = await pipeline;
 
-    const count = totalBotIdsLength.length === 0 ? 0 : totalBotIdsLength[0].total;
+    const count = result.length === 0 ? 0 : result[0].total;
 
     client.user?.setActivity(`${count.toLocaleString('en')} Bots Across ${client.guilds.cache.size.toLocaleString('en')} Guilds`, {
         type: ActivityType.Watching,
