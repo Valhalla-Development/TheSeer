@@ -68,7 +68,8 @@ export class Add {
                 .setColor('#e91e63')
                 .addFields({
                     name: `**${client.user?.username} - Channel**`,
-                    value: `**◎ Success:** Target ${bot} is now being monitored.`,
+                    value: `**◎ Success:** Target ${bot} is now being monitored.
+                    If you have not set a channel, or enabled DM alerts. Please do so now.`,
                 });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
 
