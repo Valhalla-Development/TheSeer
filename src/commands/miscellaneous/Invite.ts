@@ -23,7 +23,7 @@ export class Invite {
         const buttonA = new ButtonBuilder()
             .setStyle(ButtonStyle.Link)
             .setLabel('Invite')
-            .setURL(`https://discordapp.com/oauth2/authorize?client_id=${client.user?.id}&scope=bot%20applications.commands&permissions=415306870006`);
+            .setURL(`https://discordapp.com/oauth2/authorize?client_id=${client.user?.id}&scope=bot%20applications.commands&permissions=414464724032`);
 
         const row = new ActionRowBuilder<ButtonBuilder>().addComponents(buttonA);
         await interaction.reply({ components: [row], embeds: [embed] });
