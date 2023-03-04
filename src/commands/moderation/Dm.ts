@@ -59,7 +59,7 @@ export class Dm {
                 await interaction.deferReply();
                 await interaction.deleteReply();
 
-                await WatchedBots.findOneAndUpdate({ GuildId: interaction.guild?.id }, { Dm: true });
+                await WatchedBots.findOneAndUpdate({ GuildId: interaction.guild?.id }, { Dm: interaction.user.id });
             } catch {
                 const embed = new EmbedBuilder()
                     .setColor('#e91e63')
@@ -70,7 +70,7 @@ export class Dm {
                 await interaction.reply({ ephemeral: true, embeds: [embed] });
             }
         } else if (response === 'disabled') {
-            await WatchedBots.findOneAndUpdate({ GuildId: interaction.guild?.id }, { Dm: false });
+            await WatchedBots.findOneAndUpdate({ GuildId: interaction.guild?.id }, { Dm: null });
 
             const embed = new EmbedBuilder()
                 .setColor('#e91e63')
