@@ -53,15 +53,25 @@ async function run() {
     const missingDefaultPermsError = 'You must pass default perm(s) for the Client.';
     const invalidLoggingChannel = 'You must pass a logging channel if logging is set to true.';
 
-    await importx(`${dirname(import.meta.url)}/{events,commands}/**/*.{ts,js}`);
-
     if (process.env.Logging !== 'true' && process.env.Logging !== 'false') throw new Error(invalidLoggingValueError);
     if (process.env.Logging === 'true' && !process.env.LoggingChannel) throw new Error(invalidLoggingChannel);
     if (!process.env.DefaultPerms) throw new Error(missingDefaultPermsError);
     if (!process.env.Token) throw Error(missingTokenError);
 
-    await client.login(process.env.Token);
-    await loadMongoEvents();
+    const sleep = (ms: number): Promise<void> => new Promise<void>((resolve) => {
+        setTimeout(resolve, ms);
+    });
+    const time = 200;
+
+    const loadSequentially = async () => {
+        await importx(`${dirname(import.meta.url)}/{events,commands}/**/*.{ts,js}`);
+        await sleep(time);
+        await client.login(process.env.Token as string);
+        await sleep(time);
+        await loadMongoEvents();
+    };
+
+    await loadSequentially();
 }
 
 await run();
