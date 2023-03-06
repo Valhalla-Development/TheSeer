@@ -14,7 +14,7 @@
 <img src="https://img.shields.io/github/issues-pr/RagnarLothbrok-Odin/TheSeer-Discord.svg?style=for-the-badge">
 </a>
 <a href="https://www.codacy.com/gh/RagnarLothbrok-Odin/TheSeer-Discord/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=RagnarLothbrok-Odin/TheSeer-Discord&amp;utm_campaign=Badge_Grade">
-<img src="https://img.shields.io/codacy/grade/3f4ffef2c47e446582867ec02a961dc5?style=for-the-badge">
+<img src="https://img.shields.io/codacy/grade/4b105f15f160452ba49165f8ab759ad6?style=for-the-badge">
 <br>
 </div>
 
