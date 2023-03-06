@@ -31,7 +31,7 @@ export class Clear {
             return;
         }
 
-        WatchedBots.deleteOne({ GuildId: interaction.guild?.id });
+        await WatchedBots.deleteOne({ GuildId: interaction.guild?.id });
 
         const embed = new EmbedBuilder()
             .setColor('#e91e63')
