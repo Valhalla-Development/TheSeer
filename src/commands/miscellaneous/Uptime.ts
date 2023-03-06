@@ -7,6 +7,11 @@ import { Category } from '@discordx/utilities';
 @Discord()
 @Category('Miscellaneous')
 export class Uptime {
+    /**
+     * Displays uptime information for the bot.
+     * @param interaction - The command interaction.
+     * @param client - The Discord client.
+     */
     @Slash({ description: 'Displays bot uptime.' })
     async uptime(interaction: CommandInteraction, client: Client) {
         if (!interaction.channel) return;

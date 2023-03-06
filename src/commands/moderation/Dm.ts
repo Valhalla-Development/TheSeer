@@ -8,6 +8,12 @@ import WatchedBots from '../../mongo/schemas/WatchedBots.js';
 @Discord()
 @Category('Moderation')
 export class Dm {
+    /**
+     * Toggles the DM module for a bot.
+     * @param toggle - Whether to enable or disable the DM module.
+     * @param interaction - The slash command interaction.
+     * @param client - The Discord client.
+     */
     @Slash({ description: 'Toggle the DM module', defaultMemberPermissions: [PermissionsBitField.Flags.ManageGuild] })
     async dm(
         @SlashOption({

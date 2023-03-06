@@ -10,6 +10,11 @@ import { capitalise, deletableCheck } from '../../utils/Util.js';
 @Discord()
 @Category('Miscellaneous')
 export class Help {
+    /**
+     * Slash command to display list of commands.
+     * @param interaction - The command interaction.
+     * @param client - The Discord client.
+     */
     @Slash({ description: 'Display list of commands.' })
     async help(interaction: CommandInteraction, client: Client) {
         if (!interaction.channel) return;
@@ -49,6 +54,11 @@ export class Help {
         await interaction.reply({ embeds: [embed], components: [row] });
     }
 
+    /**
+     * Select menu component handler to display commands of a specific category.
+     * @param interaction - The select menu interaction.
+     * @param client - The Discord client.
+     */
     @SelectMenuComponent({ id: 'helpSelect' })
     async handle(interaction: StringSelectMenuInteraction, client: Client): Promise<void> {
         if (interaction.user.id !== interaction.message.interaction?.user.id) {

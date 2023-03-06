@@ -10,6 +10,12 @@ import WatchedBots from '../../mongo/schemas/WatchedBots.js';
 @Discord()
 @Category('Moderation')
 export class Channel {
+    /**
+     * Sets the alert channel for watched bots
+     * @param channel - The channel alerts will be sent to
+     * @param interaction - The command interaction
+     * @param client - The Discord client.
+     */
     @Slash({ description: 'Sets the alert channel', defaultMemberPermissions: [PermissionsBitField.Flags.ManageGuild] })
     async channel(
         @SlashOption({

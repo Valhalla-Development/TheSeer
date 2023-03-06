@@ -5,8 +5,16 @@ import chalk from 'chalk';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 import { updateActivity } from '../utils/Util.js';
 
+/**
+ * Discord.js Ready event handler.
+ */
 @Discord()
 export class Ready {
+    /**
+     * Executes when the ready event is emitted.
+     * @param client - The Discord client.
+     * @returns void
+     */
     @Once({ event: 'ready' })
     async onReady([client]: [Client]) {
         // Init slash commands

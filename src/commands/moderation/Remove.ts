@@ -9,6 +9,12 @@ import { updateActivity } from '../../utils/Util.js';
 @Discord()
 @Category('Moderation')
 export class Remove {
+    /**
+     * Handler for the /remove slash command
+     * @param bot - The bot to remove from the watchlist
+     * @param interaction - The command interaction
+     * @param client - The Discord client.
+     */
     @Slash({
         description: 'Removes a bot from the watchlist',
         defaultMemberPermissions: [PermissionsBitField.Flags.ManageGuild],

@@ -1,5 +1,8 @@
 import { model, Schema } from 'mongoose';
 
+/**
+ * Represents a schema for storing information about watched bots in a guild.
+ */
 const WatchedBots = new Schema({
     GuildId: { type: String, unique: true },
     BotIds: { type: Array, default: null },

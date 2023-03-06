@@ -6,6 +6,9 @@ import { Client } from 'discordx';
 import 'dotenv/config';
 import { loadMongoEvents } from './utils/Util.js';
 
+/**
+ * The Discord.js client instance.
+ */
 export const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
@@ -17,6 +20,11 @@ export const client = new Client({
     silent: true,
 });
 
+/**
+ * Handles unhandled rejections by logging the error and sending an embed to a designated logging channel, if enabled.
+ * @param error - The error that was not handled.
+ * @returns void
+ */
 process.on('unhandledRejection', (error: Error) => {
     if (!error.stack) return;
 
@@ -47,6 +55,12 @@ process.on('unhandledRejection', (error: Error) => {
     }
 });
 
+/**
+ * Runs the bot by loading the required components and logging in the client.
+ * @async
+ * @returns A Promise that resolves with void when the bot is started.
+ * @throws An Error if any required environment variables are missing or invalid.
+ */
 async function run() {
     const missingTokenError = 'You must pass the token for the client.';
     const invalidLoggingValueError = 'The \'logging\' value must be true or false.';
@@ -58,11 +72,20 @@ async function run() {
     if (!process.env.DefaultPerms) throw new Error(missingDefaultPermsError);
     if (!process.env.Token) throw Error(missingTokenError);
 
+    /**
+     * Delays the execution of the function for a specified time in milliseconds.
+     * @param ms - The time in milliseconds to delay the execution of the function.
+     * @returns A promise that resolves after the specified time has passed.
+     */
     const sleep = (ms: number): Promise<void> => new Promise<void>((resolve) => {
         setTimeout(resolve, ms);
     });
     const time = 200;
 
+    /**
+     * Loads the Mongo events, imports the commands and events, and logs in the client.
+     * @returns A Promise that resolves with void when everything is loaded sequentially.
+     */
     const loadSequentially = async () => {
         await loadMongoEvents();
         await sleep(time);
@@ -70,7 +93,6 @@ async function run() {
         await sleep(time);
         await client.login(process.env.Token as string);
     };
-
     await loadSequentially();
 }
 

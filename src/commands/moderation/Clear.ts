@@ -9,6 +9,11 @@ import { updateActivity } from '../../utils/Util.js';
 @Discord()
 @Category('Moderation')
 export class Clear {
+    /**
+     * Slash command to disable bot monitoring for a server.
+     * @param interaction - The interaction triggering the command.
+     * @param client - The Discord client.
+     */
     @Slash({ description: 'Disables monitoring', defaultMemberPermissions: [PermissionsBitField.Flags.ManageGuild] })
     async clear(interaction: CommandInteraction, client: Client) {
         if (!interaction.channel) return;

@@ -9,6 +9,12 @@ import { updateActivity } from '../../utils/Util.js';
 @Discord()
 @Category('Moderation')
 export class Add {
+    /**
+     * Adds a bot to the watchlist
+     * @param bot - The bot you wish to monitor
+     * @param interaction - The command interaction
+     * @param client - The Discord client.
+     */
     @Slash({
         description: 'Adds a bot to the watchlist',
         defaultMemberPermissions: [PermissionsBitField.Flags.ManageGuild],

@@ -8,6 +8,11 @@ import { deletableCheck } from '../../utils/Util.js';
 @Discord()
 @Category('Miscellaneous')
 export class Ping {
+    /**
+     * Displays ping information for the bot.
+     * @param interaction - The command interaction.
+     * @param client - The Discord client.
+     */
     @Slash({ description: 'Displays bot and API ping.' })
     async ping(interaction: CommandInteraction, client: Client) {
         if (!interaction.channel) return;

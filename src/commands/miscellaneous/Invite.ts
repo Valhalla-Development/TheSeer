@@ -9,6 +9,11 @@ import { Category } from '@discordx/utilities';
 @Discord()
 @Category('Miscellaneous')
 export class Invite {
+    /**
+     * Displays an invitation link for the bot.
+     * @param interaction - The command interaction.
+     * @param client - The Discord client.
+     */
     @Slash({ description: 'Displays an invite link for the bot.' })
     async invite(interaction: CommandInteraction, client: Client) {
         if (!interaction.channel) return;

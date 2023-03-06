@@ -5,6 +5,12 @@ import chalk from 'chalk';
 import type { Client } from 'discordx';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 
+/**
+ * Checks if a message is deletable, and deletes it after a specified amount of time.
+ * @param message - The message to check.
+ * @param time - The amount of time to wait before deleting the message, in milliseconds.
+ * @returns void
+ */
 export function deletableCheck(message: Message, time: number): void {
     setTimeout(() => {
         if (message && message.deletable) {
@@ -13,10 +19,19 @@ export function deletableCheck(message: Message, time: number): void {
     }, time);
 }
 
+/**
+ * Capitalises the first letter of each word in a string.
+ * @param string - The string to be capitalised.
+ * @returns The capitalised string.
+ */
 export function capitalise(string: string) {
     return string.replace(/\S+/g, (word) => word.slice(0, 1).toUpperCase() + word.slice(1));
 }
 
+/**
+ * Connects to the MongoDB database and sets up event listeners for the connection.
+ * @returns A promise that resolves with void when the connection is established.
+ */
 export async function loadMongoEvents(): Promise<void> {
     await new Promise<void>((resolve, reject) => {
         mongoose.connect(`${process.env.MongoUri}`)
@@ -47,6 +62,12 @@ export async function loadMongoEvents(): Promise<void> {
     });
 }
 
+/**
+ * Updates the activity of the bot user with the number of watched bots and guilds.
+ * @param client - The Discord client.
+ * @param db - The MongoDB model for the watched bots.
+ * @returns A promise that resolves with void when the activity is updated.
+ */
 export async function updateActivity(client: Client, db: typeof WatchedBots) {
     const pipeline = db.aggregate();
     pipeline.group({ _id: null, total: { $sum: { $size: { $ifNull: ['$BotIds', []] } } } });

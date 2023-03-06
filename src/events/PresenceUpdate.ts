@@ -6,6 +6,12 @@ import WatchedBots from '../mongo/schemas/WatchedBots.js';
 
 @Discord()
 export class PresenceUpdate {
+    /**
+     * Listens for presence updates and sends notifications if watched bots' statuses change.
+     * @param oldPresence - The presence information before the update.
+     * @param newPresence - The presence information after the update.
+     * @param client - The Discord client.
+     */
     @On({ event: 'presenceUpdate' })
     async onPresenceUpdate([oldPresence, newPresence]: ArgsOf<'presenceUpdate'>, client: Client) {
         const watchedBots = await WatchedBots.findOne({ GuildId: newPresence.guild?.id });

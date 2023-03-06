@@ -6,6 +6,11 @@ import { updateActivity } from '../utils/Util.js';
 
 @Discord()
 export class GuildDelete {
+    /**
+     * Handles the 'guildDelete' event, which is triggered when the bot is removed from a guild.
+     * @param args - An array containing the guild that was deleted.
+     * @param client - The Discord client.
+     */
     @On({ event: 'guildDelete' })
     async onGuildDelete([guild]: ArgsOf<'guildDelete'>, client: Client) {
         console.log(
