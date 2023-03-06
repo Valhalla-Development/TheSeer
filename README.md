@@ -36,7 +36,9 @@ by [clicking here](https://discord.com/oauth2/authorize?client_id=55911394091991
 ```text
 /add <@bot> // tag a bot of your choosing, there is no limit to how many bots you can watch
 /channel <#channel> // (optional) tag a channel you wish the alerts to be sent to
+/clear // removes all data from database containing any information matching your guild id
 /dm // (optional) if enabled, you will receive DM alerts for the bot
+/remove <@bot> // tag a bot of your choosing to remove from the watch list
 ```
 
 ## Usage (Self Host)
