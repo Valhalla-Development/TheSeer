@@ -1,6 +1,6 @@
 import type { ArgsOf, Client } from 'discordx';
 import { Discord, On } from 'discordx';
-import chalk from 'chalk';
+import 'colors';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 import { updateActivity } from '../utils/Util.js';
 
@@ -14,13 +14,13 @@ export class GuildCreate {
     @On({ event: 'guildCreate' })
     async onGuildCreate([guild]: ArgsOf<'guildCreate'>, client: Client) {
         console.log(
-            chalk.white.bold('New guild joined:'),
-            chalk.red.bold(guild.name),
-            chalk.white.bold('(id:'),
-            chalk.red.bold(guild.id),
-            chalk.white.bold(')'),
-            chalk.red.bold(guild.memberCount),
-            chalk.white.bold('members.'),
+            'New guild joined:'.white.bold,
+            `${guild.name}`.red.bold,
+            '(id:'.white.bold,
+            `${guild.id}`.red.bold,
+            ')'.white.bold,
+            `${guild.memberCount}`.red.bold,
+            'members.'.white.bold,
         );
 
         await updateActivity(client, WatchedBots);

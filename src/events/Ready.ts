@@ -1,9 +1,9 @@
 import type { Client } from 'discordx';
 import { Discord, Once } from 'discordx';
 import si from 'systeminformation';
-import chalk from 'chalk';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 import { updateActivity } from '../utils/Util.js';
+import 'colors';
 
 /**
  * Discord.js Ready event handler.
@@ -20,41 +20,63 @@ export class Ready {
         // Init slash commands
         await client.initApplicationCommands();
 
-        // Bot Info
-        console.log(chalk.red.bold(`\n——————————[${client.user?.username} Info]——————————`));
-        console.log(chalk.white.bold('Users:'), chalk.yellow.bold(client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0).toLocaleString('en')));
-        console.log(chalk.white.bold('Guilds:'), chalk.yellow.bold(client.guilds.cache.size.toLocaleString('en')));
-        console.log(chalk.white.bold('Slash Commands:'), chalk.yellow.bold(client.applicationCommands.length));
-        console.log(chalk.white.bold('Events:'), chalk.yellow.bold(client.events.length));
-        console.log(
-            chalk.white.bold('Invite:'),
-            chalk.blue.underline.bold(
-                `https://discordapp.com/oauth2/authorize?client_id=${client.user?.id}&scope=bot%20applications.commands&permissions=415306870006`,
-            ),
-        );
-
-        // Bot Specs
-        console.log(chalk.red.bold(`\n——————————[${client.user?.username} Specs]——————————`));
-        console.log(
-            chalk.white.bold('Running Node:'),
-            chalk.magenta.bold(`${process.version}`, chalk.white.bold('on'), chalk.magenta.bold(`${process.platform} ${process.arch}`)),
-        );
-
+        // Fetch stats
         const memory = await si.mem();
         const totalMemory = Math.floor(memory.total / 1024 / 1024);
         const cachedMem = memory.buffcache / 1024 / 1024;
         const memoryUsed = memory.used / 1024 / 1024;
         const realMemUsed = Math.floor(memoryUsed - cachedMem);
 
+        // Bot Info
         console.log(
-            chalk.white.bold('Memory:'),
-            chalk.yellow.bold(realMemUsed.toLocaleString('en')),
-            chalk.white.bold('/'),
-            chalk.yellow.bold(totalMemory.toLocaleString('en')),
-            chalk.white.bold('MB'),
+            '\n',
+            `——————————[${client.user?.username} Info]——————————`.red.bold,
         );
-        console.log(chalk.white.bold('Discord.js Version:'), chalk.green.bold(process.env.npm_package_dependencies_discord_js?.substring(1)));
-        console.log(chalk.white.bold(`${client.user?.username} Version:`), chalk.green.bold(process.env.npm_package_version), '\n');
+        console.log(
+            'Users:'.white.bold,
+            `${client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0).toLocaleString('en')}`.yellow.bold,
+        );
+        console.log(
+            'Guilds:'.white.bold,
+            `${client.guilds.cache.size.toLocaleString('en')}`.yellow.bold,
+        );
+        console.log(
+            'Slash Commands:'.white.bold,
+            `${client.applicationCommands.length}`.yellow.bold,
+        );
+        console.log(
+            'Events:'.white.bold,
+            `${client.events.length}`.yellow.bold,
+        );
+        console.log(
+            'Invite:'.white.bold,
+            `https://discordapp.com/oauth2/authorize?client_id=${client.user?.id}&scope=bot%20applications.commands&permissions=415306870006`.blue.underline.bold,
+        );
+
+        // Bot Specs
+        console.log(`\n——————————[${client.user?.username} Specs]——————————`.red.bold);
+        console.log(
+            'Running Node:'.white.bold,
+            `${process.version}`.magenta.bold,
+            'on'.white.bold,
+            `${process.platform} ${process.arch}`.magenta.bold,
+        );
+        console.log(
+            'Memory:'.white.bold,
+            `${realMemUsed.toLocaleString('en')}`.yellow.bold,
+            '/'.white.bold,
+            `${totalMemory.toLocaleString('en')}`.yellow.bold,
+            'MB'.white.bold,
+        );
+        console.log(
+            'Discord.js Version:'.white.bold,
+            `${process.env.npm_package_dependencies_discord_js?.substring(1)}`.green.bold,
+        );
+        console.log(
+            `${client.user?.username} Version:`.white.bold,
+            `${process.env.npm_package_version}`.green.bold,
+            '\n',
+        );
 
         await updateActivity(client, WatchedBots);
     }

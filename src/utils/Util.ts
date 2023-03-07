@@ -1,7 +1,7 @@
 import type { Message } from 'discord.js';
 import { ActivityType } from 'discord.js';
 import mongoose from 'mongoose';
-import chalk from 'chalk';
+import 'colors';
 import type { Client } from 'discordx';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 
@@ -36,29 +36,29 @@ export async function loadMongoEvents(): Promise<void> {
     await new Promise<void>((resolve, reject) => {
         mongoose.connect(`${process.env.MongoUri}`)
             .then(() => {
-                console.log(chalk.green.bold('[Database Status]: Connected.'));
+                console.log('[Database Status]: Connected.'.green.bold);
                 resolve();
             })
             .catch((err) => {
-                console.error(chalk.red.bold(`[Database Status]: An error occurred with the Mongo connection:\n${err}`));
+                console.error(`[Database Status]: An error occurred with the Mongo connection:\n${err}`.red.bold);
                 reject();
             });
     });
 
     mongoose.connection.on('connecting', () => {
-        console.log(chalk.cyan.bold('[Database Status]: Connecting.'));
+        console.log('[Database Status]: Connecting.'.cyan.bold);
     });
 
     mongoose.connection.on('connected', () => {
-        console.log(chalk.green.bold('[Database Status]: Connected.'));
+        console.log('[Database Status]: Connected.'.green.bold);
     });
 
     mongoose.connection.on('error', (err) => {
-        console.error(chalk.red.bold(`[Database Status]: An error occurred with the Mongo connection:\n${err}`));
+        console.error(`[Database Status]: An error occurred with the Mongo connection:\n${err}`.red.bold);
     });
 
     mongoose.connection.on('disconnected', () => {
-        console.log(chalk.red.bold('[Database Status]: Disconnected'));
+        console.log('[Database Status]: Disconnected'.red.bold);
     });
 }
 

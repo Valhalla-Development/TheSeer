@@ -1,6 +1,6 @@
 import type { ArgsOf, Client } from 'discordx';
 import { Discord, On } from 'discordx';
-import chalk from 'chalk';
+import 'colors';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 import { updateActivity } from '../utils/Util.js';
 
@@ -14,11 +14,11 @@ export class GuildDelete {
     @On({ event: 'guildDelete' })
     async onGuildDelete([guild]: ArgsOf<'guildDelete'>, client: Client) {
         console.log(
-            chalk.white.bold('I have been removed from:'),
-            chalk.red.bold(guild.name),
-            chalk.white.bold('(id:'),
-            chalk.red.bold(guild.id),
-            chalk.white.bold(')'),
+            'I have been removed from:'.white.bold,
+            `${guild.name}`.red.bold,
+            '(id:'.white.bold,
+            `${guild.id}`.red.bold,
+            ')'.white.bold,
         );
 
         await updateActivity(client, WatchedBots);
