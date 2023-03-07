@@ -54,7 +54,10 @@ export class Ready {
         );
 
         // Bot Specs
-        console.log(`\n——————————[${client.user?.username} Specs]——————————`.red.bold);
+        console.log(
+            '\n',
+            `——————————[${client.user?.username} Specs]——————————`.red.bold,
+        );
         console.log(
             'Running Node:'.white.bold,
             `${process.version}`.magenta.bold,
