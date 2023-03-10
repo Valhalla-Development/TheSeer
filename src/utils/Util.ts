@@ -40,7 +40,10 @@ export async function loadMongoEvents(): Promise<void> {
                 resolve();
             })
             .catch((err) => {
-                console.error(`[Database Status]: An error occurred with the Mongo connection:\n${err}`.red.bold);
+                console.error(
+                    '[Database Status]: An error occurred with the Mongo connection:'.red.bold,
+                    `\n${err}`,
+                );
                 reject();
             });
     });
@@ -54,7 +57,10 @@ export async function loadMongoEvents(): Promise<void> {
     });
 
     mongoose.connection.on('error', (err) => {
-        console.error(`[Database Status]: An error occurred with the Mongo connection:\n${err}`.red.bold);
+        console.error(
+            '[Database Status]: An error occurred with the Mongo connection:'.red.bold,
+            `\n${err}`,
+        );
     });
 
     mongoose.connection.on('disconnected', () => {
