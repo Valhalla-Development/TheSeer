@@ -1,6 +1,6 @@
 {
   "name": "theseer",
-  "version": "3.0.149",
+  "version": "3.0.153",
   "description": "A bot that monitors other bots.",
   "main": "build/Main.js",
   "repository": "https://github.com/RagnarLothbrok-Odin/TheSeer-Discord.git",
@@ -32,7 +32,7 @@
     "discord-api-types": "0.37.20"
   },
   "devDependencies": {
-    "@types/node": "^18.14.6",
+    "@types/node": "^18.15.0",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "eslint": "^8.35.0",
