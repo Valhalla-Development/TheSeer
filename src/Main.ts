@@ -26,7 +26,7 @@ export const client = new Client({
  * @returns void
  */
 process.on('unhandledRejection', (error: Error) => {
-    if (!error.stack) return;
+    if (!error?.stack) return;
 
     console.error(error.stack);
 
@@ -64,12 +64,10 @@ process.on('unhandledRejection', (error: Error) => {
 async function run() {
     const missingTokenError = 'You must pass the token for the client.';
     const invalidLoggingValueError = 'The \'logging\' value must be true or false.';
-    const missingDefaultPermsError = 'You must pass default perm(s) for the Client.';
     const invalidLoggingChannel = 'You must pass a logging channel if logging is set to true.';
 
     if (process.env.Logging !== 'true' && process.env.Logging !== 'false') throw new Error(invalidLoggingValueError);
     if (process.env.Logging === 'true' && !process.env.LoggingChannel) throw new Error(invalidLoggingChannel);
-    if (!process.env.DefaultPerms) throw new Error(missingDefaultPermsError);
     if (!process.env.Token) throw Error(missingTokenError);
 
     /**
