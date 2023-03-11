@@ -52,8 +52,9 @@ export class List {
                 .addFields({
                     name: `**${client.user?.username} - List**`,
                     value: `${arr.slice(i, i + 5).join('\n')}`,
-                })
-                .setFooter({ text: `${TotalPage > 1 ? `Page: ${PageNo}/${TotalPage}` : 'Page 1/1'}` });
+                });
+
+            if (TotalPage > 1) Embed.setFooter({ text: `Page: ${PageNo}/${TotalPage}` });
 
             Embeds.push(Embed);
             PageNo += 1;
