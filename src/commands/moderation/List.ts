@@ -28,6 +28,7 @@ export class List {
                     value: `**◎ Error:** ${client.user} is not monitoring any bots.`,
                 });
             await interaction.reply({ ephemeral: true, embeds: [embed] });
+            return;
         }
 
         const fetchUser = (key: string) => client.users.fetch(key);
