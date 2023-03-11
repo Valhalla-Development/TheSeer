@@ -1,5 +1,9 @@
-import type { Message } from 'discord.js';
-import { ActivityType } from 'discord.js';
+import type {
+    ButtonInteraction, CommandInteraction, EmbedBuilder, Interaction, Message,
+} from 'discord.js';
+import {
+    ActionRowBuilder, ActivityType, ButtonBuilder, ButtonStyle,
+} from 'discord.js';
 import mongoose from 'mongoose';
 import 'colors';
 import type { Client } from 'discordx';
@@ -86,4 +90,110 @@ export async function updateActivity(client: Client, db: typeof WatchedBots) {
     client.user?.setActivity(`${count.toLocaleString('en')} Bots Across ${client.guilds.cache.size.toLocaleString('en')} Guilds`, {
         type: ActivityType.Watching,
     });
+}
+
+export async function pagination(interaction: CommandInteraction, embeds: EmbedBuilder[], emojiNext: string, emojiHome: string, emojiBack: string) {
+    const back = new ButtonBuilder()
+        .setCustomId('back')
+        .setEmoji(emojiBack || '◀️')
+        .setStyle(ButtonStyle.Primary)
+        .setDisabled(true);
+
+    const home = new ButtonBuilder()
+        .setCustomId('home')
+        .setEmoji(emojiHome || '🏠')
+        .setStyle(ButtonStyle.Primary)
+        .setDisabled(true);
+
+    const next = new ButtonBuilder()
+        .setCustomId('next')
+        .setEmoji(emojiNext || '▶️')
+        .setStyle(ButtonStyle.Primary);
+
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(back, home, next);
+
+    const m = await interaction.reply({
+        embeds: [embeds[0]],
+        components: [row],
+    });
+
+    const filter = (i: Interaction) => {
+        if (!i.isButton()) return false;
+        const button = i as ButtonInteraction;
+        return button.user.id === interaction.user.id;
+    };
+
+    const collector = m.createMessageComponentCollector({
+        filter,
+        time: 30000,
+    });
+
+    let currentPage = 0;
+
+    collector.on('collect', async (b) => {
+        collector.resetTimer();
+
+        if (b.customId === 'back') {
+            if (currentPage !== 0) {
+                if (currentPage === embeds.length - 1) {
+                    next.setDisabled(false);
+                }
+
+                currentPage -= 1;
+
+                if (currentPage === 0) {
+                    back.setDisabled(true);
+                    home.setDisabled(true);
+                }
+
+                const rowNew = new ActionRowBuilder<ButtonBuilder>().addComponents(back, home, next);
+
+                await b.update({
+                    embeds: [embeds[currentPage]],
+                    components: [rowNew],
+                });
+            }
+        }
+
+        if (b.customId === 'next') {
+            if (currentPage < embeds.length - 1) {
+                currentPage += 1;
+
+                if (currentPage === embeds.length - 1) {
+                    next.setDisabled(true);
+                }
+
+                home.setDisabled(false);
+                back.setDisabled(false);
+
+                const rowNew = new ActionRowBuilder<ButtonBuilder>().addComponents(back, home, next);
+
+                await b.update({
+                    embeds: [embeds[currentPage]],
+                    components: [rowNew],
+                });
+            }
+        }
+
+        if (b.customId === 'home') {
+            currentPage = 0;
+            home.setDisabled(true);
+            back.setDisabled(true);
+            next.setDisabled(false);
+
+            const rowNew = new ActionRowBuilder<ButtonBuilder>().addComponents(back, home, next);
+
+            await b.update({ embeds: [embeds[currentPage]], components: [rowNew] });
+        }
+    });
+
+    collector.on('end', () => {
+        home.setDisabled(true);
+        back.setDisabled(true);
+        next.setDisabled(true);
+
+        interaction.editReply({ embeds: [embeds[currentPage]], components: [row] });
+    });
+
+    collector.on('error', (e: Error) => console.log(e));
 }
