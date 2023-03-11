@@ -45,8 +45,8 @@ by [clicking here](https://discord.com/oauth2/authorize?client_id=55911394091991
 
 I am going to assume you have the basics installed on your host/computer (i.e. node, npm etc.)
 
-- Download the source, by clicking 'Clone or download -> Download ZIP',
-  or [click me](https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/archive/master.zip)
+- Download the source, by clicking 'Releases -> Latest version -> Source code (zip)',
+  or [click me](https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/releases)
 - Extract the zip with software of your choosing
 - Inside you will find a file named '.env.example', you must add the specified values. After you have edited the file,
   edit the file name to '.env', alternatively you can copy the example file and rename it. If you are unsure where to
