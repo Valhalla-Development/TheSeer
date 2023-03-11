@@ -28,6 +28,7 @@ module.exports = {
         'import/extensions': 'off',
         'consistent-return': 'off',
         'import/no-unresolved': 'off',
-        'no-nested-ternary': 'off'
+        'no-nested-ternary': 'off',
+        'no-unused-expressions': 'off'
     },
 };
