@@ -82,5 +82,11 @@ export class Ready {
         );
 
         await updateActivity(client, WatchedBots);
+
+        // This exists, due to a common issue with Discord API, since I don't updateActivity often
+        // Discord can *sometimes* reset the status to null
+        setInterval(async () => {
+            await updateActivity(client, WatchedBots);
+        }, 6 * 60 * 60 * 1000);
     }
 }
