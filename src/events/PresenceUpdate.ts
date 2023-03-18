@@ -20,13 +20,11 @@ export class PresenceUpdate {
         const { Channel, Dm, BotIds = [] } = watchedBots;
 
         const offlineEmbed = new EmbedBuilder()
-            .setTitle('The Seer Report')
             .setDescription(`<@${newPresence.userId}> is **OFFLINE**`)
             .setColor('#ff2f2f')
             .setTimestamp();
 
         const onlineEmbed = new EmbedBuilder()
-            .setTitle('The Seer Report')
             .setDescription(`<@${newPresence.userId}> is **ONLINE**`)
             .setColor('#27d200')
             .setTimestamp();
