@@ -1,5 +1,10 @@
 import { Client, ContextMenu, Discord } from 'discordx';
-import { ApplicationCommandType, EmbedBuilder, UserContextMenuCommandInteraction } from 'discord.js';
+import {
+    ApplicationCommandType,
+    EmbedBuilder,
+    PermissionsBitField,
+    UserContextMenuCommandInteraction,
+} from 'discord.js';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 import { updateActivity } from '../utils/Util.js';
 
@@ -14,6 +19,7 @@ export class RemoveContext {
     @ContextMenu({
         name: 'Remove from monitor list',
         type: ApplicationCommandType.User,
+        defaultMemberPermissions: [PermissionsBitField.Flags.ManageGuild],
     })
     async userHandler(interaction: UserContextMenuCommandInteraction, client: Client): Promise<void> {
         const status = await WatchedBots.findOne({ GuildId: interaction.guild?.id });

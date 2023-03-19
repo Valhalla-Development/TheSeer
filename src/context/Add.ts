@@ -1,5 +1,10 @@
 import { Client, ContextMenu, Discord } from 'discordx';
-import { ApplicationCommandType, EmbedBuilder, UserContextMenuCommandInteraction } from 'discord.js';
+import {
+    ApplicationCommandType,
+    EmbedBuilder,
+    PermissionsBitField,
+    UserContextMenuCommandInteraction,
+} from 'discord.js';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 import { updateActivity } from '../utils/Util.js';
 
@@ -14,6 +19,7 @@ export class AddContext {
     @ContextMenu({
         name: 'Add to monitor list',
         type: ApplicationCommandType.User,
+        defaultMemberPermissions: [PermissionsBitField.Flags.ManageGuild],
     })
     async userHandler(interaction: UserContextMenuCommandInteraction, client: Client): Promise<void> {
         if (interaction.targetUser.id === client.user?.id) {
