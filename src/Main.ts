@@ -87,7 +87,7 @@ async function run() {
     const loadSequentially = async () => {
         await loadMongoEvents();
         await sleep(time);
-        await importx(`${dirname(import.meta.url)}/{events,commands}/**/*.{ts,js}`);
+        await importx(`${dirname(import.meta.url)}/{events,commands,context}/**/*.{ts,js}`);
         await sleep(time);
         await client.login(process.env.Token as string);
     };
