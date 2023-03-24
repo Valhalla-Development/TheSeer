@@ -92,22 +92,31 @@ export async function updateActivity(client: Client, db: typeof WatchedBots) {
     });
 }
 
+/**
+ * Creates a pagination system for a list of embeds with next, back, and home buttons.
+ * @param interaction - The interaction that triggered the pagination.
+ * @param embeds - An array of EmbedBuilders to paginate.
+ * @param emojiNext - The emoji to use for the next button. Defaults to '▶️'.
+ * @param emojiHome - The emoji to use for the home button. Defaults to '🏠'.
+ * @param emojiBack - The emoji to use for the back button. Defaults to '◀️'.
+ * @returns A promise that resolves with void when the pagination is complete.
+ */
 export async function pagination(interaction: CommandInteraction, embeds: EmbedBuilder[], emojiNext: string, emojiHome: string, emojiBack: string) {
     const back = new ButtonBuilder()
         .setCustomId('back')
-        .setEmoji(emojiBack || '◀️')
+        .setEmoji(emojiBack)
         .setStyle(ButtonStyle.Primary)
         .setDisabled(true);
 
     const home = new ButtonBuilder()
         .setCustomId('home')
-        .setEmoji(emojiHome || '🏠')
+        .setEmoji(emojiHome)
         .setStyle(ButtonStyle.Primary)
         .setDisabled(true);
 
     const next = new ButtonBuilder()
         .setCustomId('next')
-        .setEmoji(emojiNext || '▶️')
+        .setEmoji(emojiNext)
         .setStyle(ButtonStyle.Primary);
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(back, home, next);
