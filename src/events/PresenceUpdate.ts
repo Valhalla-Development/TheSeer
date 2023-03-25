@@ -18,6 +18,7 @@ export class PresenceUpdate {
         if (!watchedBots) return;
 
         const { Channel, Dm, BotIds = [] } = watchedBots;
+        if ((!Channel && !Dm) || !BotIds) return;
 
         const offlineEmbed = new EmbedBuilder()
             .setDescription(`<@${newPresence.userId}> is **OFFLINE**`)
