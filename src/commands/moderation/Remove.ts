@@ -56,7 +56,7 @@ export class Remove {
 
         if (status.BotIds.includes(bot.user.id)) {
             const updatedBotIds = status.BotIds.filter((id) => id !== bot.user.id);
-            await WatchedBots.findOneAndUpdate({ GuildId: interaction.guild?.id }, { BotIds: updatedBotIds.length ? updatedBotIds : null });
+            await WatchedBots.findOneAndUpdate({ GuildId: interaction.guild?.id }, { BotIds: updatedBotIds.length ? updatedBotIds : [] });
 
             const embed = new EmbedBuilder()
                 .setColor('#e91e63')
