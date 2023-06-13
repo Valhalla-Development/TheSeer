@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TheSeer-Discord.iml" filepath="$PROJECT_DIR$/TheSeer-Discord.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/TheSeer.iml" filepath="$PROJECT_DIR$/.idea/TheSeer.iml" />
     </modules>
   </component>
 </project>
