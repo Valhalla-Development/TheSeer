@@ -4,17 +4,17 @@
 <a href="https://discord.gg/Q3ZhdRJ">
 <img src="https://img.shields.io/discord/495602800802398212.svg?colorB=Blue&logo=discord&label=Support&style=for-the-badge" alt="Support">
 </a>
-<a href="https://github.com/RagnarLothbrok-Odin/TheSeer-Discord">
-<img src="https://img.shields.io/github/languages/top/RagnarLothbrok-Odin/TheSeer-Discord.svg?style=for-the-badge">
+<a href="https://github.com/Valhalla-Development/TheSeer">
+<img src="https://img.shields.io/github/languages/top/Valhalla-Development/TheSeer.svg?style=for-the-badge">
 </a>
-<a href="https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/issues">
-<img src="https://img.shields.io/github/issues/RagnarLothbrok-Odin/TheSeer-Discord.svg?style=for-the-badge">
+<a href="https://github.com/Valhalla-Development/TheSeer/issues">
+<img src="https://img.shields.io/github/issues/Valhalla-Development/TheSeer.svg?style=for-the-badge">
 </a>
-<a href="https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/pulls">
-<img src="https://img.shields.io/github/issues-pr/RagnarLothbrok-Odin/TheSeer-Discord.svg?style=for-the-badge">
+<a href="https://github.com/Valhalla-Development/TheSeer/pulls">
+<img src="https://img.shields.io/github/issues-pr/Valhalla-Development/TheSeer.svg?style=for-the-badge">
 </a>
-<a href="https://www.codacy.com/gh/RagnarLothbrok-Odin/TheSeer-Discord/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=RagnarLothbrok-Odin/TheSeer-Discord&amp;utm_campaign=Badge_Grade">
-<img src="https://img.shields.io/codacy/grade/4b105f15f160452ba49165f8ab759ad6?style=for-the-badge">
+<a href="https://app.codacy.com/gh/Valhalla-Development/TheSeer/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade">
+<img src="https://img.shields.io/codacy/grade/49b97351b8604c9a904991e633afc0be?style=for-the-badge">
 <br>
 </div>
 
@@ -46,7 +46,7 @@ by [clicking here](https://discord.com/oauth2/authorize?client_id=55911394091991
 I am going to assume you have the basics installed on your host/computer (i.e. node, npm etc.)
 
 - Download the source, by clicking 'Releases -> Latest version -> Source code (zip)',
-  or [click me](https://github.com/RagnarLothbrok-Odin/TheSeer-Discord/releases)
+  or [click me](https://github.com/Valhalla-Development/TheSeer/releases)
 - Extract the zip with software of your choosing
 - Inside you will find a file named '.env.example', you must add the specified values. After you have edited the file,
   edit the file name to '.env', alternatively you can copy the example file and rename it. If you are unsure where to
