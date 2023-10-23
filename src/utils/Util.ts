@@ -37,20 +37,13 @@ export function capitalise(string: string) {
  * @returns A promise that resolves with void when the connection is established.
  */
 export async function loadMongoEvents(): Promise<void> {
-    await new Promise<void>((resolve, reject) => {
-        mongoose.connect(`${process.env.MongoUri}`)
-            .then(() => {
-                console.log('[Database Status]: Connected.'.green.bold);
-                resolve();
-            })
-            .catch((err) => {
-                console.error(
-                    '[Database Status]: An error occurred with the Mongo connection:'.red.bold,
-                    `\n${err}`,
-                );
-                reject();
-            });
-    });
+    try {
+        await mongoose.connect(`${process.env.MongoUri}`);
+        console.log('[Database Status]: Connected.'.green.bold);
+    } catch (err) {
+        console.error('[Database Status]: An error occurred with the Mongo connection:'.red.bold, `\n${err}`);
+        throw err;
+    }
 
     mongoose.connection.on('connecting', () => {
         console.log('[Database Status]: Connecting.'.cyan.bold);
