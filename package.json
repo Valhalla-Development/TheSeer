@@ -1,6 +1,6 @@
 {
   "name": "theseer",
-  "version": "3.0.174",
+  "version": "3.0.175",
   "description": "A bot that monitors other bots.",
   "main": "build/Main.js",
   "repository": "https://github.com/Valhalla-Development/TheSeer.git",
