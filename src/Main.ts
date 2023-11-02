@@ -21,12 +21,12 @@ export const client = new Client({
 });
 
 /**
- * Handles unhandled rejections by logging the error and sending an embed to a designated logging channel, if enabled.
+ * Error function, takes exceptions and exception monitors and logs the error and sending the embed to a designated logging channel, if enabled.
  * @param error - The error that was not handled.
  * @returns void
  */
-process.on('unhandledRejection', (error: Error) => {
-    if (!error?.stack) return;
+function sendErr(error: Error) {
+    if (!error?.stack) return console.error(error);
 
     console.error(error.stack);
 
@@ -53,7 +53,16 @@ process.on('unhandledRejection', (error: Error) => {
         const embed = new EmbedBuilder().setTitle('Error').setDescription(truncateDescription(fullString));
         channel.send({ embeds: [embed] });
     }
-});
+}
+
+/**
+ * Handles unhandled rejections, exceptions and exception monitors by logging the error and sending an embed to a designated logging channel, if enabled.
+ * @param error - The error that was not handled.
+ * @returns void
+ */
+process.on('unhandledRejection', (error: Error) => sendErr(error));
+process.on('uncaughtException', (error: Error) => sendErr(error));
+process.on('uncaughtExceptionMonitor', (error: Error) => sendErr(error));
 
 /**
  * Runs the bot by loading the required components and logging in the client.
