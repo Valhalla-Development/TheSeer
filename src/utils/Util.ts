@@ -199,3 +199,33 @@ export async function pagination(interaction: CommandInteraction, embeds: EmbedB
 
     collector.on('error', (e: Error) => console.log(e));
 }
+
+/**
+ * Fetches the registered global application commands and returns an object
+ * containing the command names as keys and their corresponding IDs as values.
+ * @param client - The Discord Client instance.
+ * @returns An object containing command names and their corresponding IDs.
+ * If there are no commands or an error occurs, an empty object is returned.
+ */
+export async function getCommandIds(client: Client): Promise<{ [name: string]: string }> {
+    try {
+        // Fetch the registered global application commands
+        const commands = await client.application?.commands.fetch();
+
+        if (!commands) {
+            return {};
+        }
+
+        // Create an object to store the command IDs
+        const commandIds: { [name: string]: string } = {};
+
+        commands.forEach((command) => {
+            commandIds[command.name] = command.id;
+        });
+
+        return commandIds;
+    } catch (error) {
+        console.error('Error fetching global commands:', error);
+        return {};
+    }
+}
