@@ -1,11 +1,26 @@
-# Node FIles
-node_modules/
+# ========================
+# System generated files
+# ========================
 
-# Config File
-.env
-
-# Irritating file create by Mac
+# macOS generated files
 .DS_Store
 
-# Build files
+# Environment variables
+.env
+
+# ========================
+# Build output
+# ========================
+
+# Build directory
 build/
+
+# ========================
+# Dependency management
+# ========================
+
+# Yarn: lock file and error log
+yarn-error.log
+.yarn/
+.pnp.cjs
+.pnp.loader.mjs
