@@ -1,6 +1,7 @@
 import type { Client } from 'discordx';
 import { Discord, Once } from 'discordx';
 import si from 'systeminformation';
+import { version } from 'discord.js';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 import { updateActivity } from '../utils/Util.js';
 import 'colors';
@@ -73,7 +74,7 @@ export class Ready {
         );
         console.log(
             'Discord.js Version:'.white.bold,
-            `${process.env.npm_package_dependencies_discord_js?.substring(1)}`.green.bold,
+            `${version}`.green.bold,
         );
         console.log(
             `${client.user?.username} Version:`.white.bold,
@@ -83,7 +84,7 @@ export class Ready {
 
         await updateActivity(client, WatchedBots);
 
-        // This exists, due to a common issue with Discord API, since I don't updateActivity often
+        // This exists due to a common issue with Discord API; since I don't updateActivity often,
         // Discord can *sometimes* reset the status to null
         setInterval(async () => {
             await updateActivity(client, WatchedBots);
