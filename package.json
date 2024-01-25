@@ -1,6 +1,6 @@
 {
   "name": "theseer",
-  "version": "3.0.184",
+  "version": "3.0.185",
   "description": "A bot that monitors other bots.",
   "main": "build/Main.js",
   "repository": "https://github.com/Valhalla-Development/TheSeer.git",
@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-esm src/Main.ts",
-    "start": "node build/Main.js",
+    "start": "tsc && node build/Main.js",
     "watch": "nodemon --exec ts-node-esm src/Main.ts",
     "upgrade": "yarn-upgrade-all"
   },
