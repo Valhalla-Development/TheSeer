@@ -35,7 +35,7 @@ export class Help {
             MetadataStorage.instance.applicationCommands
                 .filter((cmd: DApplicationCommand & ICategory) => cmd.category)
                 .map((cmd: DApplicationCommand & ICategory) => cmd.category as string),
-                ));
+        ));
 
         // Create options for the select menu
         const cats: SelectMenuComponentOptionData[] = uniqueCategories.map((cat) => ({
@@ -48,7 +48,7 @@ export class Help {
             const selectedCategory = cats[0].value.replace(/^help-/, '').toLowerCase();
             const filteredCommands = MetadataStorage.instance.applicationCommands.filter(
                 (cmd: DApplicationCommand & ICategory) => cmd.category?.toLowerCase() === selectedCategory && cmd.name?.toLowerCase() !== 'help',
-                );
+            );
             const commandIds = await getCommandIds(client);
             filteredCommands.forEach((cmd) => {
                 const commandId = commandIds[cmd.name];
@@ -69,7 +69,7 @@ export class Help {
                         .setCustomId('helpSelect')
                         .setPlaceholder('Nothing selected')
                         .addOptions(...cats),
-                        );
+                );
             await interaction.reply({ embeds: [embed], components: [row] });
         }
     }
@@ -109,7 +109,7 @@ export class Help {
         // Filter application commands based on the selected category
         const filteredCommands = MetadataStorage.instance.applicationCommands.filter(
             (cmd: DApplicationCommand & ICategory) => cmd.category?.toLowerCase() === selectedCategory && cmd.name?.toLowerCase() !== 'help',
-            );
+        );
 
         // Retrieve command IDs for mentions
         const commandIds = await getCommandIds(client);

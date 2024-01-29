@@ -1,0 +1,30 @@
+name: Close Stale Issues and PRs
+'on':
+  schedule:
+    - cron: 0 0 * * *
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9.0.0
+        with:
+          days-before-stale: 30
+          days-before-close: 5
+          stale-issue-message: >-
+            This issue has been automatically flagged as stale due to a lack of
+            recent updates. It will be closed if no further activity is
+            observed. We appreciate your contributions.
+          stale-pr-message: >-
+            This pull request has been automatically flagged as stale due to a
+            lack of recent updates. It will be closed if no further activity is
+            observed. We appreciate your contributions.
+          close-issue-message: >-
+            This issue has been closed due to inactivity. Please feel free to
+            reopen if further action is required or additional information is
+            provided.
+          close-pr-message: >-
+            This pull request has been closed due to inactivity. Please feel
+            free to reopen if further action is required or additional
+            information is provided.
+          exempt-issue-labels: in-progress
+          exempt-pr-labels: in-progress
