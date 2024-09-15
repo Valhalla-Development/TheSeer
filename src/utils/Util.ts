@@ -5,7 +5,7 @@ import {
     ActionRowBuilder, ActivityType, ButtonBuilder, ButtonStyle,
 } from 'discord.js';
 import mongoose from 'mongoose';
-import 'colors';
+import '@colors/colors';
 import type { Client } from 'discordx';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 
@@ -228,4 +228,38 @@ export async function getCommandIds(client: Client): Promise<{ [name: string]: s
         console.error('Error fetching global commands:', error);
         return {};
     }
+}
+
+/**
+ * Applies a reversed rainbow effect to the input string.
+ * Each character in the string is colored in a sequence of colors in the reversed rainbow order.
+ *
+ * @param str - The string to which the reversed rainbow effect will be applied.
+ * @returns The input string with each character colored according to the reversed rainbow sequence.
+ */
+export function reversedRainbow(str: string): string {
+    // Define color functions that apply the color to the text
+    const colorFunctions = {
+        red: (text: string) => text.red,
+        magenta: (text: string) => text.magenta,
+        blue: (text: string) => text.blue,
+        green: (text: string) => text.green,
+        yellow: (text: string) => text.yellow,
+    };
+
+    // Type for valid color names based on the colorFunctions object keys
+    type ColorName = keyof typeof colorFunctions;
+
+    // Array of colors to use in the reversed rainbow order
+    const colors: ColorName[] = ['red', 'magenta', 'blue', 'green', 'yellow', 'red'];
+
+    // Map each character of the string to its corresponding color and join them back into a string
+    return str.split('')
+        .map((char, i) => {
+            // Determine the color for the current character
+            const color = colors[i % colors.length];
+            // Apply the color function to the character
+            return colorFunctions[color](char);
+        })
+        .join('');
 }

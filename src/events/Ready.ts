@@ -4,7 +4,7 @@ import si from 'systeminformation';
 import { version } from 'discord.js';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 import { updateActivity } from '../utils/Util.js';
-import 'colors';
+import '@colors/colors';
 
 /**
  * Discord.js Ready event handler.

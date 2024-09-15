@@ -1,6 +1,6 @@
 import type { ArgsOf, Client } from 'discordx';
 import { Discord, On } from 'discordx';
-import 'colors';
+import '@colors/colors';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 import { updateActivity } from '../utils/Util.js';
 
