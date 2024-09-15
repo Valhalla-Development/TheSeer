@@ -1,7 +1,6 @@
 import type { ArgsOf, Client } from 'discordx';
 import { Discord, On } from 'discordx';
-import type { TextBasedChannel } from 'discord.js';
-import { EmbedBuilder } from 'discord.js';
+import { ChannelType, TextBasedChannel, EmbedBuilder } from 'discord.js';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 
 @Discord()
@@ -42,7 +41,8 @@ export class PresenceUpdate {
         const channel = client.channels.cache.get(Channel) as TextBasedChannel;
 
         if (newPresence.status === 'offline') {
-            channel?.send({ embeds: [offlineEmbed] });
+            if (channel?.type === ChannelType.GuildText) channel?.send({ embeds: [offlineEmbed] });
+
             if (Dm) {
                 const user = client.users.cache.get(Dm);
                 if (user) {
@@ -54,7 +54,8 @@ export class PresenceUpdate {
                 }
             }
         } else {
-            channel?.send({ embeds: [onlineEmbed] });
+            if (channel?.type === ChannelType.GuildText) channel?.send({ embeds: [onlineEmbed] });
+
             if (Dm) {
                 const user = client.users.cache.get(Dm);
                 if (user) {
