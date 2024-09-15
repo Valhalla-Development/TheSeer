@@ -1,7 +1,6 @@
 import type { Client } from 'discordx';
 import { Discord, Slash } from 'discordx';
-import type { CommandInteraction } from 'discord.js';
-import { EmbedBuilder } from 'discord.js';
+import { ChannelType, CommandInteraction, EmbedBuilder } from 'discord.js';
 import { Category } from '@discordx/utilities';
 import { deletableCheck } from '../../utils/Util.js';
 
@@ -15,7 +14,7 @@ export class Ping {
      */
     @Slash({ description: 'Displays bot and API ping.' })
     async ping(interaction: CommandInteraction, client: Client) {
-        if (!interaction.channel) return;
+        if (!interaction.channel || interaction.channel.type !== ChannelType.GuildText) return;
 
         const msg = await interaction.channel.send({ content: 'Pinging...' });
         const latency = msg.createdTimestamp - interaction.createdTimestamp;
