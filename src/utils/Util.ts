@@ -10,26 +10,21 @@ import type { Client } from 'discordx';
 import WatchedBots from '../mongo/schemas/WatchedBots.js';
 
 /**
- * Checks if a message is deletable, and deletes it after a specified amount of time.
- * @param message - The message to check.
- * @param time - The amount of time to wait before deleting the message, in milliseconds.
- * @returns void
+ * Capitalises the first letter of each word in a string.
+ * @param str - The string to be capitalised.
+ * @returns The capitalised string.
+ */
+export const capitalise = (str: string): string => str.replace(/\b\w/g, (c) => c.toUpperCase());
+
+/**
+ * Deletes a message after a specified delay if it's deletable.
+ * @param message - The message to delete.
+ * @param time - The delay before deletion, in milliseconds.
  */
 export function deletableCheck(message: Message, time: number): void {
     setTimeout(() => {
-        if (message && message.deletable) {
-            message.delete().catch(console.error);
-        }
+        message.delete().catch((error) => console.error('Error deleting message:', error));
     }, time);
-}
-
-/**
- * Capitalises the first letter of each word in a string.
- * @param string - The string to be capitalised.
- * @returns The capitalised string.
- */
-export function capitalise(string: string) {
-    return string.replace(/\S+/g, (word) => word.slice(0, 1).toUpperCase() + word.slice(1));
 }
 
 /**
@@ -201,29 +196,14 @@ export async function pagination(interaction: CommandInteraction, embeds: EmbedB
 }
 
 /**
- * Fetches the registered global application commands and returns an object
- * containing the command names as keys and their corresponding IDs as values.
- * @param client - The Discord Client instance.
- * @returns An object containing command names and their corresponding IDs.
- * If there are no commands or an error occurs, an empty object is returned.
+ * Fetches all registered global application command IDs.
+ * @param client - The Discord client instance.
+ * @returns A record of command names to their corresponding IDs.
  */
-export async function getCommandIds(client: Client): Promise<{ [name: string]: string }> {
+export async function getCommandIds(client: Client): Promise<Record<string, string>> {
     try {
-        // Fetch the registered global application commands
         const commands = await client.application?.commands.fetch();
-
-        if (!commands) {
-            return {};
-        }
-
-        // Create an object to store the command IDs
-        const commandIds: { [name: string]: string } = {};
-
-        commands.forEach((command) => {
-            commandIds[command.name] = command.id;
-        });
-
-        return commandIds;
+        return commands ? Object.fromEntries(commands.map((c) => [c.name, c.id])) : {};
     } catch (error) {
         console.error('Error fetching global commands:', error);
         return {};
@@ -232,34 +212,13 @@ export async function getCommandIds(client: Client): Promise<{ [name: string]: s
 
 /**
  * Applies a reversed rainbow effect to the input string.
- * Each character in the string is colored in a sequence of colors in the reversed rainbow order.
- *
- * @param str - The string to which the reversed rainbow effect will be applied.
- * @returns The input string with each character colored according to the reversed rainbow sequence.
+ * @param str - The string to apply the reversed rainbow effect.
+ * @returns The input string with reversed rainbow coloring.
  */
-export function reversedRainbow(str: string): string {
-    // Define color functions that apply the color to the text
-    const colorFunctions = {
-        red: (text: string) => text.red,
-        magenta: (text: string) => text.magenta,
-        blue: (text: string) => text.blue,
-        green: (text: string) => text.green,
-        yellow: (text: string) => text.yellow,
-    };
-
-    // Type for valid color names based on the colorFunctions object keys
-    type ColorName = keyof typeof colorFunctions;
-
-    // Array of colors to use in the reversed rainbow order
-    const colors: ColorName[] = ['red', 'magenta', 'blue', 'green', 'yellow', 'red'];
-
-    // Map each character of the string to its corresponding color and join them back into a string
-    return str.split('')
-        .map((char, i) => {
-            // Determine the color for the current character
-            const color = colors[i % colors.length];
-            // Apply the color function to the character
-            return colorFunctions[color](char);
-        })
+export const reversedRainbow = (str: string): string => {
+    const colors = ['red', 'magenta', 'blue', 'green', 'yellow', 'red'] as const;
+    return str
+        .split('')
+        .map((char, i) => char[colors[i % colors.length] as keyof typeof char])
         .join('');
-}
+};
